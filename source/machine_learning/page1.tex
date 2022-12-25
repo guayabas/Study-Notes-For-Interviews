@@ -1,0 +1,90 @@
+%%%%%%%%%% Page 1 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{machine learning}
+
+\begin{minipage}[t]{0.485\textwidth}
+    A \textbf{machine learning algorithm} is the process that shows underlying \textbf{relationship with the data}. Its outcome is a function $F$ that outputs certain result provided an input. The function $F$ is not a fixed function and can change depending the data injected.\\
+
+    For example, in the scenario of \textbf{image recognition} one can train an machine learning model that recognize a object in photos. The model in this case is a mapping between multiple dimensional pixel values and a binary value. The process of \textit{discovering} this mapping (between pixels and yes/no answer) is what is called \textbf{machine learning} (ML).\\
+
+    Given that ML models are approximations, no model is $100\%$ accurate, but state of the art ones (e.g. deep-learning approaches) can make fewer errors ($<5\%$) than humans.\\
+
+    Three \textit{learning} types,
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item \textbf{Supervised}. Data sample contains a \textbf{ground truth} or target attribute $y$. The function $F$ is one that takes non-target attributes $X$ and outputs an approximation $\hat{y}$, i.e. $F\parenthesisA{X} = \hat{y} \approx y$. Data with target attributes is commonly referred as \textbf{labeled}.
+        \item \textbf{Unsupervised}. Some ways of learning without ground truth data are \textbf{Clustering} -samples into groups with similarities- (e.g. same color pixels, same shapes, same preference is listening, etc.), or \textbf{Association} -uncover hidden patterns among attributes- (e.g. someone listening podcast A also likes podcast B, someone buying item X also buys item Y, etc.)
+        \item \textbf{Semi-supervised}. The data set is massive but the labeled samples are few (e.g. videos without category group/title, images with few of them segmented, etc.). To solve it one can combine previous approaches (supervised and unsupervised) to get results, for example if we can to predict images but only $10\%$ of them are labeled one can do
+        \begin{enumerate}
+            \setlength\itemsep{0pt}
+            \item Apply supervised learning on the $10\%$ to obtain a model and then use that model in the rest of the data
+            \item Apply unsupervised learning via clustering to obtain groups of all the images and then apply supervised learning on each group individually.
+        \end{enumerate}
+    \end{itemize}
+    Output of $F$ can be divided in\\
+
+    \textbf{Classification} (for discrete values, such as boolean answers) . Given an image $I$ with dimensions $W\times H$ and gray scale values in the range $\bracketA{0,255}$, the expected output of the classification model is a binary value True $\parenthesisA{1}$ or False $\parenthesisA{0}$
+    \begin{align*}
+        & F\parenthesisA{I_{ij}} = 1|0,\hspace{3pt} I\bracketA{i}\bracketA{j}\in\bracketA{0, 255}, 0 \leq i < W,  0 \leq j < H \\
+        & \text{Discrete}\xrightarrow[\text{modelA : }1\%\hspace{5pt}\text{modelB : }50\%]{\text{Logistic Regression}}\text{Continuous}
+    \end{align*}
+    \rule{\textwidth}{1pt}
+    \textbf{UF}: Significantly deviated from ground truth. A cause is a over-simplified model for the data. \textbf{OF}: Little or no error thus does not generalize well to unseen data.A cause is over-complicated model for the data.
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{10pt}
+%%%%%%%%%% Page 1 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    \textbf{Regression} (for continuous values, such as stock prices). Given data for real estate such as property surface, type of property (apartment, house, etc.), and location one expects to output a real value $p\in\mathcal{R}$. Each characteristic can be represented in a vector $V$ that commonly is referred as \textbf{features}. Notice that one of those features is \textit{categorical} (type of property) and would require a \textbf{transform} (unless on decision tree) to have a numerical representation.
+    \begin{align*}
+        & F\parenthesisA{V} = p\in\mathcal{R} \\
+        & \text{Continuous}\xrightarrow[\text{buckets}]{\text{Price Ranges}}\text{Discrete}
+    \end{align*}
+    \begin{customcenter}[0pt]
+        \begin{tabular}{|c|c|}
+            \hline
+            \cellcolor{yellow!25}Regression & \cellcolor{cyan!25}Classification \\
+            \hline
+            Linear & K-means \\
+            \hline
+            Logistic & Gaussian Mixture \\
+            \hline
+            Decision Tree & Recommender \\
+            \hline
+            Support Vector Machine (SVM) & Non-Maximum Suppression \\
+            \hline
+        \end{tabular}
+    \end{customcenter}
+    \vspace{5pt}
+    ML workflow
+    \begin{customcenter}[0pt]
+        \begin{tikzpicture}
+            \node (start) [fancynode, text centered, fill=blue!30] {Raw Data};
+            \node (features) [fancynode, text width=3.5cm, right of=start, xshift=2.5cm, fill=orange!30] {Features Engineering \\ $\ast$ Splitting \\ $\ast$ Normalization \\ $\ast$ Cleaning \\ $\ast$\hspace{4pt}$\dots$ };
+            \node (training) [fancynode, below of=features, xshift=-1.5cm, yshift=-1cm, fill=green!30] {Training Data};
+            \node (testing) [fancynode, below of=features, xshift=+1.5cm, yshift=-1cm, fill=green!30] {Testing Data};
+            \node (model) [fancynode, below of=features, yshift=-2.5cm, fill=red!30] {Model};
+            \node (hyperparameters) [fancynode, text width=2.8cm, text centered, right of=features, xshift=2.7cm, yshift=-1cm, fill=orange!30] {Hyperparameters Tuning};
+            \draw [arrow] (start) -- node[anchor=south]{1} (features);
+            \draw [arrow] (features) -- node[anchor=west, yshift=-2pt]{2} (training);
+            \draw [arrow] (features) -- node[anchor=east, yshift=-2pt]{2} (testing);
+            \draw [arrow] (training) -- node[anchor=east, yshift=-5pt, xshift=1pt]{3} (model);
+            \draw [arrow] (model) -- node[anchor=west, yshift=-5pt, xshift=-1pt]{4} (testing);
+            \draw [thick, <->, >=stealth] (model) -| node[anchor=south east]{5} (hyperparameters);
+            \draw [thick, ->] (hyperparameters) |- node[anchor=north east] {6} (features);
+        \end{tikzpicture}
+    \end{customcenter}
+    \begin{enumerate}
+        \setlength\itemsep{0pt}
+        \item Decides what type of ML should be used: supervised or unsupervised? discrete or continuous?
+        \item Transforms data to be used in the ML algorithm. Some examples are \textbf{splitting} (commonly via 80/20 rule) in training and testing data sets; \textbf{augmenting} data such as rotations, scalings, shifting, etc; \textbf{encoding} categorical strings into numerical values; etc.
+        \item Creates the initial model (via training data + algorithm). It is called \textbf{training process}.
+        \item Test the model with the reserved testing data. It is called \textbf{testing process}.
+        \item Initial model commonly requires tuning to achieve higher confidence.
+        \item \textit{Hyper} comes from the fact of manipulating external parameters that change the internal parameters of the model, for example in decision trees the \textbf{maximum height of the tree}; or how many items are processed, also known as \textbf{batch size}; etc. 
+    \end{enumerate}
+    In supervised algorithms there are two cases where the generated model does not fit well the data: \textbf{underfitting} (UF) and \textbf{overfitting} (OF).\\
+
+    Overall $\text{OF} > \text{UF}$ since one can add \textbf{regularization} to OF steering it to a less complex model while fitting the data.
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

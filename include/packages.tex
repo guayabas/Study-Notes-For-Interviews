@@ -1,0 +1,147 @@
+%=======================================================
+% Timings
+% No packages     - 1.00 s
+% * geometry      - 1.02 s
+% * color         - 1.05 s
+% * xcolor        - 1.10 s
+% * listings      - 1.20 s
+% * tcolorbox     - 1.90 s
+% * inputenc      -
+% * lstautogobble - 
+% * stackengine   -
+% * mathtools     -
+% * ragged2e      -
+% * enumitem      -
+% * hyperref      -
+%=======================================================
+\usepackage[]{geometry}
+\geometry
+{
+    paper=letterpaper,
+    textwidth=8.15in,
+    textheight=10.8in,
+    left=0.0in,
+    top=0.1in
+}
+% \pagenumbering{gobble}
+% \usepackage[usenames,dvipsnames]{color}
+
+\usepackage[table,dvipsnames]{xcolor}
+
+% \usepackage[formats]{listings}
+% \usepackage[most]{tcolorbox}
+% \usepackage[utf8]{inputenc}
+% \usepackage{lstautogobble}
+% \usepackage{stackengine}
+% \usepackage{mathtools}
+% \usepackage{ragged2e}
+
+\usepackage{enumitem}
+\usepackage{amssymb}
+
+% \usepackage{hyperref}
+% \usepackage{placeins}
+\usepackage{multirow}
+
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{diagbox}
+
+% \usepackage{lipsum}
+% \usepackage{array}
+% \usepackage{float}
+% \usepackage{tikz}
+% \tcbset
+% {
+%     frame code={}
+%     center title,
+%     left=0pt,
+%     right=0pt,
+%     top=0pt,
+%     bottom=0pt,
+%     colback=blue!15,
+%     colframe=white,
+%     width=\dimexpr\textwidth\relax,
+%     enlarge left by=0mm,
+%     boxsep=5pt,
+%     arc=0pt,outer arc=0pt,
+% }
+%=======================================================
+% Miscellaneous definitions
+%=======================================================
+\definecolor{darkgreen}{rgb}{0.00, 0.60, 0.00}
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{mauve}{rgb}{0.58, 0.00, 0.82}
+\captionsetup[figure]{skip=3pt}
+\setlist{leftmargin=15pt}
+\setlength{\parindent}{10pt}
+\def\layersep{2cm}
+%=======================================================
+% Tikz setup
+%=======================================================
+% \usetikzlibrary{decorations.pathreplacing,calligraphy}
+% \usetikzlibrary{shapes.geometric}
+% \usetikzlibrary{shapes.misc}
+% \usetikzlibrary{calc}
+% \tikzstyle{fancynode}=[rectangle,rounded corners,minimum width=2cm,minimum height=0.6cm,draw=black]
+% \tikzstyle{bluenode}=[scale=0.4,diamond,draw,fill=blue!30]
+% \tikzstyle{arrow}=[thick,->,>=stealth]
+% \tikzset
+% {
+%     cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+%     cross/.default={1pt}
+% }
+%=======================================================
+% Code style setup
+%=======================================================
+% \lstdefineformat{R}{~=\( \sim \)}
+% \lstset
+% {
+%     language=C++,
+%     aboveskip=5pt,
+%     belowskip=0pt,
+%     lineskip=0pt,
+%     showstringspaces=false,
+%     columns=flexible,
+%     basicstyle={\small\ttfamily},
+%     numbers=none,
+%     numberstyle=\tiny\color{black},
+%     keywordstyle=\color{blue},
+%     commentstyle=\color{darkgreen},
+%     stringstyle=\color{mauve},
+%     breaklines=true,
+%     breakatwhitespace=true,
+%     % tabsize=2,
+%     backgroundcolor=\color{blue!10!white},
+%     numberstyle=\color{red},
+%     rulecolor=\color{black},
+%     frame=leftline,
+%     xleftmargin=0.1cm,
+%     % format=R,
+%     % %emph=
+%     % %{       
+%     % %},
+%     emphstyle={\color{purple}\bfseries},
+%     autogobble=true
+% }
+%=======================================================
+% New commands setup
+%=======================================================
+\newcommand\XOR{\mathbin{\char`\^}}
+\newcommand{\inlinecode}[1]{\colorbox{blue!15}{\texttt{#1}}}
+\newcommand{\curlybracket}[1]{$\left\{\text{#1}\right\}$}
+\newcommand{\curlybracketA}[1]{\left\{#1\right\}}
+\newcommand{\parenthesis}[1]{$\left(\text{#1}\right)$}
+\newcommand{\parenthesisA}[1]{\left(#1\right)}
+\newcommand{\DSC}[1]{$O\parenthesisA{#1}$}
+\newcommand{\bracket}[1]{$\left[\text{#1}\right]$}
+\newcommand{\bracketA}[1]{\left[#1\right]}
+\newcommand{\optionalkeyword}[1]{\textcolor{gray}{#1}}
+\newcommand{\quotes}[1]{``#1''}
+\newcommand{\quotescode}[1]{"#1"}
+\newcommand{\charactercode}[1]{\texttt{'#1'}}
+\newcommand{\norm}[1]{||#1||}
+\newcommand{\colorfulheader}[1]{\colorbox{cyan!10}{\makebox[\textwidth][c]{\textsc{#1}}}\\}
+\newcommand{\emptyline}{\\\vspace{-1pt}}
+\newenvironment{customcenter}[1][\topsep]{\setlength{\topsep}{#1}\par\kern\topsep\centering}{\par\kern\topsep}
+\newcommand\xrowht[2][0]{\addstackgap[0.5\dimexpr#2\relax]{\vphantom{#1}}}

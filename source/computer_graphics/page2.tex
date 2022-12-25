@@ -1,0 +1,56 @@
+\colorfulheader{computer graphics}
+
+\begin{minipage}[t]{\textwidth}
+    \begin{center}
+        \begin{tikzpicture}
+            % \draw[step=1cm,blue,very thin] (0,0) grid (15,+3);
+            % \draw[step=1cm,red ,very thin] (0,0) grid (15,-3);
+            \node (input) [ellipse,minimum height=1cm,text centered,fill=blue!30] {$\substack{\text{VBO}\\\text{Data}}$};
+            \node (vp) [rounded corners,minimum width=2.5cm,minimum height=1cm,right of=input,text centered,fill=green!30,xshift=1.25cm] {$\substack{\text{Vertex}\\\text{Processor}}$};
+            \node (vs) [ellipse,minimum height=1cm,minimum width=2cm,above of=vp,fill=blue!30,yshift=0.25cm] {$\substack{\text{Vertex}\\\text{Shader}}$};
+            \node (pa) [minimum width=4cm,minimum height=1cm,right of=vp,text centered,fill=red!30,xshift=2.75cm] {$\substack{\text{Primitive Assembly}\\\text{And Clipping}}$};
+            \node (gs) [ellipse,minimum height=1cm,minimum width=2cm,above left of=pa,yshift=0.5cm,fill=blue!30,xshift=-0.5cm] {$\substack{\text{Geometry}\\\text{Shader}}$};
+            \node (ts) [ellipse,minimum height=1cm,minimum width=2cm,above right of=pa,yshift=0.5cm,fill=blue!30,xshift=+0.5cm] {$\substack{\text{Tessellation}\\\text{Shader}}$};
+            \node (ra) [minimum width=2.5cm,minimum height=1cm,right of=pa,text centered,fill=red!30,xshift=2.8cm] {Rasterizer};
+            \node (fp) [rounded corners,minimum width=2.5cm,minimum height=1cm,right of=ra,text centered,fill=green!30,xshift=2cm] {$\substack{\text{Fragment}\\\text{Processor}}$};
+            \node (fs) [ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm] {$\substack{\text{Fragment}\\\text{Shader}}$};
+            \node (td) [ellipse,minimum height=1cm,minimum width=2cm,below of=fp,fill=blue!30,yshift=-0.25cm] {$\substack{\text{Texture}\\\text{Data}}$};
+            \node (fb) [minimum width=2.5cm,minimum height=1cm,right of=fp,text centered,fill=cyan!30,xshift=2cm] {Framebuffer};
+            \node [minimum width=2.5cm,minimum height=1cm,fill=gray!30,above of=fb,yshift=0.25cm] {Display};
+            \node [ellipse,minimum width=2cm,minimum height=1cm,fill=blue!30,below of=fb,yshift=-0.25cm] {FBO};
+            \begin{scope}[below of=vp,xshift=1.2cm,yshift=-0.5cm,scale=0.8]
+                \node[scale=0.5,circle,fill=red] at (0,0) {};
+                \node[scale=0.5,circle,fill=red] at (0.5,0.25) {};
+                \node[scale=0.5,circle,fill=red] at (0.25,0.75) {};
+                \draw[thick,->] (-0.2,-0.2) -- (1,-0.2);
+                \draw[thick,->] (-0.2,-0.2) -- (-0.2,1);
+                \node[scale=0.5,circle,fill=blue] at (2.5,0.25) {};
+                \node[scale=0.5,circle,fill=blue] at (2.3,0.1) {};
+                \node[scale=0.5,circle,fill=blue] at (2.0,0.5) {};
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (1,-0.2);
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.2,1);
+                \draw[ultra thick,->,line width=0.1cm] (1,0.5) -- (1.5,0.5);
+            \end{scope}
+            \begin{scope}[below of=pa,xshift=5cm,yshift=-0.5cm,scale=0.8]
+                \node[scale=0.5,circle,fill=blue] at (0.5,0.25) {};
+                \node[scale=0.5,circle,fill=blue] at (0.3,0.1) {};
+                \node[scale=0.5,circle,fill=blue] at (0.0,0.5) {};
+                \draw[ultra thick,->,line width=0.1cm] (1,0.5) -- (1.5,0.5);
+                \node[scale=0.3,circle,fill=blue] at (2.5,0.25) {};
+                \node[scale=0.3,circle,fill=blue] at (2.3,0.1) {};
+                \node[scale=0.3,circle,fill=blue] at (2.0,0.5) {};
+                \draw[blue,line width=2pt](2.5,0.25) -- (2.3,0.1){};
+                \draw[blue,line width=2pt](2.5,0.25) -- (2.0,0.5){};
+                \draw[blue,line width=2pt](2.3,0.1) -- (2.0,0.5){};
+            \end{scope}
+        \end{tikzpicture}
+    \end{center}
+\textbf{1 Vertex Processor}: Transforms vertex position/attributes (color, normal, texture)\\
+
+\textbf{2 Primitive Assembly And Clipping}: Assembles data into primitives (points, lines, triangles)\\
+
+\textbf{3 Rasterization}: Determine which pixel locations are associated with each primitive\\
+
+\textbf{4 Fragment Processor}: Final appearance of each fragment
+\end{minipage}
+

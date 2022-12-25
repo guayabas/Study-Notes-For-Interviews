@@ -1,0 +1,134 @@
+%%%%%%%%%% Page 3 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{\texttt{C++} programming}
+
+\begin{minipage}[t]{0.485\textwidth}
+    \textbf{Data Structures}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item \inlinecode{struct \optionalkeyword{type\_name}} \\
+        \inlinecode{\curlybracket{ member\_type\_n member\_name\_n; } \optionalkeyword{object};}
+        \item Accessing of members via the \inlinecode{.} operator
+        \begin{lstlisting}
+            struct data { int x; int y; int z; } coordinates;
+            coordinates.x = 1; // Assigning 1 to member x
+            // Assigning members y and z
+            coordinates.y = coordinates.z = 0;
+        \end{lstlisting}
+        \item Use the \inlinecode{$\rightarrow$} to access the members of a pointer to struct. Alternatively, one can dereference and then access a member, i.e. \inlinecode{\parenthesis{*pointer\_to\_struct}.}
+        \begin{lstlisting}
+            struct fruits_t 
+            { std::string apple; std::string banana; };
+            fruits_t afruit;
+            fruits_t * pfruit = &afruit;
+            pfruit->apple = "apple"; // Access via -> operator
+            // Access via dereference-member, i.e. (*). 
+            (*pfruit).banana = "banana";
+        \end{lstlisting}
+        \item \inlinecode{class} keyword is similar to struct (in holding variables) but with different default access to members \\ \inlinecode{struct} $\mapsto$ default \textbf{public} access \\ \inlinecode{class} $\mapsto$ default \textbf{private} access
+        \begin{lstlisting}
+            class foo_ct { public: int x;  } foo_c;
+            struct foo_st { int x; } foo_s;
+            foo_c.x = 0; // Accessible with public: modifier
+            foo_s.x = 0; // Accessible by default
+        \end{lstlisting}
+        \item Another keyword similar to struct is \inlinecode{union}. While struct (and class) allocates memory for each of its members, union will allocate only a chunk to be reused among members
+        \begin{lstlisting}
+        union mix_t { 
+            int l; struct { short hi; short lo; }; char c[4]; 
+        } mix_example;
+        printf("%d\n", sizeof(mix_example)); // Prints 4
+        \end{lstlisting}
+    \end{itemize}
+    \textbf{Enumerated Types}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item \inlinecode{enum \optionalkeyword{class} type\_name \optionalkeyword{:\hspace{4pt}data\_type}} \\ \inlinecode{\curlybracket{ value1 \optionalkeyword{=\hspace{4pt}init\_val}, value2, ... } \optionalkeyword{object\_names}; }
+        \item Default underlying memory is \inlinecode{int}
+        \begin{lstlisting}
+            enum ColorEnumDefault { red = 42, green, blue };
+            enum class ColorEnum : char { red, green, blue };
+            printf("%d\n", red); // OK but easily to do name clash
+            printf("%d\n", green); // Prints 43
+            // Prints 4 and better intent for access
+            printf("%d\n", sizeof(ColorEnumDefault::red));
+            // Prints 1 and no ambiguity
+            printf("%d\n", sizeof(ColorEnum::red));
+            printf("%d\n", ColorEnum::green); // Prints 1
+        \end{lstlisting}
+    \end{itemize}
+    \textbf{Aliases}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item Two keywords, \inlinecode{typedef} or \inlinecode{using} \\ \inlinecode{typedef existing\_type new\_type\_name;} \\ \inlinecode{using new\_type\_name = existing\_type;}
+        \begin{lstlisting}
+            typedef unsigned char uchar; using uint = unsigned int;
+            uchar a = 0; // OK to use
+            uint b = 1; // Also OK to use
+        \end{lstlisting}
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{5pt}
+%%%%%%%%%% Page 3 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    \textbf{Classes}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item \inlinecode{class \optionalkeyword{class\_name}} \\
+        \inlinecode{\curlybracket{ \optionalkeyword{access\_n :}\hspace{4pt}type\_m member\_name\_m; } \optionalkeyword{object};}
+        \item Creation of object $\mapsto$ Constructor \inlinecode{\parenthesis{}, =, \curlybracket{}} \\ Destruction of object $\mapsto$ Destructor \inlinecode{$\sim$}
+        \item Keyword \inlinecode{this} is a pointer to the object whose member functions is being executed
+        \begin{lstlisting}
+            class Rectangle 
+            {
+                int w, h;
+            public:
+                void log_values() { printf("w:%d, h:%d\n", w, h); }
+                void set(int, int);
+                // This function could be inlined
+                int area() { return w * h; }
+            };
+            void Rectangle::set(int _w, int _h) 
+            {
+                // w, h are private but accessible in class scope
+                // *this* keyword represents members of the class
+                this->w = _w;
+                h = _h; 
+            }
+            // OK, call default constructor but might init garbage
+            Rectangle r_1;
+            r_1.log_values();
+            // Warning, r_2() is calling a function not constructor
+            Rectangle r_2();
+            // Error, r_2 has not been created as Rectangle
+            // r_2.log_values();
+            // Also default constructor but init to zero
+            Rectangle r_3{};
+            r_3.log_values();
+        \end{lstlisting}
+        \item Class instantiation can be done in multiple forms : \textbf{default or functional}, \textbf{assignment}, \textbf{copy}. \textbf{move}, \textbf{list}
+        \begin{lstlisting}
+            class Circle 
+            {
+                double r;
+            public:
+                void log_values() { printf("%f\n", r); }
+                Circle(double _r) { r = _r; }
+                Circle& operator=(const Circle& c) 
+                { r = c.r; return *this; } 
+            };
+            // Default construct is not available
+            // due to defining one constructor with a parameter
+            Circle foo(10.0); // Functional form
+            Circle bar = 20.0; // Default assignment
+            Circle but = bar; // Defined assignment?
+            Circle baz{ 30.0 }; // Uniform init
+            Circle qux = { 40.0 }; // ?
+            foo.log_values(); // 10
+            bar.log_values(); but.log_values(); // 20
+            baz.log_values(); qux.log_values(); // 30, 40
+        \end{lstlisting}
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

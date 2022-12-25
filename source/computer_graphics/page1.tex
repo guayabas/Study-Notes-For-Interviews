@@ -1,0 +1,109 @@
+%%%%%%%%%% Page 1 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{computer graphics}
+
+\begin{minipage}[t]{0.485\textwidth}
+    A \textbf{pixel} (picture element) represents a single \quotes{\textit{point}} in a raster image. Its intensity has typically 3 components: \textbf{red}, \textbf{green}, and \textbf{blue}.\emptyline
+
+    Graphics can be \textbf{raster}-type, where an image is an array of pixels, or \textbf{vector}-type consisting of encoding information about shape and color of an image.\emptyline
+
+    A \textbf{primitive} represents a \textbf{basic unit} to create more complex objects. For example, sprites, text characters, or geometric shapes (\textbf{point}, \textbf{line}, and \textbf{triangle}) are primitives\emptyline
+
+    The term \textbf{rendering} can be explained as \textbf{generating a 2D image from a 3D scene} by means of a computer. The scene can contain information about the geometry, camera, texture mapping, lighting model, shading effects, etc.\emptyline
+    
+    Rendering can be implemented by 3 methods
+    \begin{enumerate}
+        \setlength\itemsep{0pt}
+        \item \textbf{scan-line} (also know as rasterization) algorithms
+        \item \textbf{ray-tracing} techniques
+        \item via solving the \textbf{rendering equation}
+    \end{enumerate}
+    Methods 2 and 3 are realistic rendering that simulates 2 relevant aspects of light: [1] \textbf{transport} (how much light passes from one place to another), and [2] \textbf{scattering} (how surfaces interact with light). Method 1 uses \textbf{shading} (approximation of local light), such as the \textbf{Phong illumination model}, to decide the coloring of the rasterized image\emptyline    
+
+    One can add detailed color or patterns into a surface of a 3D model via \textbf{texture mapping}. Polygonal surfaces would require the addition of \textbf{texture coordinates} (also know as UV mapping) while parametric surfaces (such as non-uniform rational b-spline -NURB-) would have an intrinsic texture coordinate.\emptyline
+
+    To add realism in shaders, there are various texture techniques (\textbf{mappings}) such as: normal, bump, parallax, specular, shadow, environmental, etc.\emptyline
+
+    In raster images, an \textit{artifact} called \textbf{aliasing} is presented by introducing low frequency information that is visually shown as noise in geometric edges or boundaries of textures. Some possible solutions are \textbf{supersampling}, \textbf{mipmapping}, or \textbf{texture filtering} (nearest-neighbor, bilinear, trilinear, anisotropic, etc.)\emptyline
+
+    \textbf{Curves}
+    \emptyline
+    Can be defined as a \textbf{trajectory of a moving point}. It can be represented as follow
+    \begin{customcenter}[5pt]
+        \begin{tabular}{|l|l|l|l|}
+            \hline
+            & \textbf{Explicit} & \textbf{Implicit} & \textbf{Parametric} \\
+            & $y = f\parenthesisA{x}$ & $f\parenthesisA{x, y} = 0$ & $q\parenthesisA{t} = \bracketA{x\parenthesisA{t}, y\parenthesisA{t}}$ \\
+            \hline
+            Circle & $\sqrt{r^2 - x^2}$ & $x^2 + y^2 - r^2$ & $r\bracketA{\sin\parenthesisA{t}, \cos\parenthesisA{t}}$ \\
+            \hline
+            Parabola & $x^2$ & $y - x^2$ & $\bracketA{t, t^2}$ \\
+            \hline
+        \end{tabular}
+    \end{customcenter}
+    The \textbf{parametrization of a line} given 2 points, $\mathcal{A}$ and $\mathcal{B}$, can be thought as an initial \textbf{point} and a \textbf{direction} as
+    \begin{align*}
+        \text{Line}\parenthesisA{t} &= \mathcal{A} + t\parenthesisA{\mathcal{B - A}},\;t\in\mathbb{R} \\
+        \text{Line}\parenthesisA{t} &= \parenthesisA{1 - t}\mathcal{A} + t\mathcal{B} \\
+        \text{Line}\parenthesisA{t} &= \bracketA{\parenthesisA{1 - t}x_0 + ty_0, \dots, \parenthesisA{1 - t}x_n + ty_n}
+    \end{align*}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{5pt}
+%%%%%%%%%% Page 1 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    The \textbf{derivative} of a curve is the \textbf{tangent vector} at a given point.\emptyline
+
+    Given the \textbf{weights} $a_i$ and the \textbf{basis functions} $b_i$, for $i\in\bracketA{0, n}$, a \textbf{polynomial curve} can be represented as
+    \begin{align*}
+        q\parenthesisA{t} = a_0b_0\parenthesisA{t} + \dots + a_nb_n\parenthesisA{t} = \sum_{k = 0}^{n} a_kb_k\parenthesisA{t}
+    \end{align*}
+    For example, a line would be $b_0 = \parenthesisA{1 - t}$, $b_1 = t$, and $b_{i \geq 2} = 0.$\emptyline
+
+    \textbf{Relevant} curves are \textbf{degree 3} (also know as \textbf{cubics}) given that 3 is the lowest degree that can represented an \textbf{S-shape} (shape with an inflection point). Since the cubic curve
+    \begin{align*}
+        q\parenthesisA{t} = \bracketA{f_0\parenthesisA{t}, f_1\parenthesisA{t}, f_2\parenthesisA{t}},\;f_u\parenthesisA{t} = x_u + y_ut + z_ut^2 + w_ut^3
+    \end{align*}
+    suffers from too many coefficients to define a shape, a solution is to use \textbf{control points}.
+    \begin{customcenter}[5pt]
+        \begin{tabular}{|l|c|c|c|c|}
+            \hline
+            \diagbox[width=2.1cm]{Schema}{Basis} & $b_0$ & $b_1$ & $b_2$ & $b_3$ \\
+            \hline
+            \textbf{Bezier} & $\parenthesisA{1 - t}^3$ & $3t\parenthesisA{1 - t}^2$ & $3t^2\parenthesisA{1 - t}$ & $t^3$ \\
+            \hline
+            \textbf{Hermite} & $2t^3 - 3t^2 + 1$ & $-2t^3 + 3t^2$ & $t^3 - 2t^2 + t$ & $t^3 - t^2$ \\            
+            \hline
+        \end{tabular}
+    \end{customcenter}    
+    \textbf{Ray Tracing}\emptyline
+    A color in the computer needs the discretization mapping
+    \begin{align*}
+    f = \left[0, 1\right)\mapsto\bracketA{0, \dots, 255} = i
+    \end{align*}
+    Due to non-linearity on screens one might do a \textbf{gamma correction}, $i = \text{\texttt{int}}\parenthesisA{256 * f^{\gamma}}$\emptyline
+
+    With vectors $\mathbf{u}$ and $\mathbf{v}$, relevant relations between them are
+    \begin{align*}
+        & \parenthesisA{\text{Dot Product}}\hspace{5pt}\mathbf{u}\cdot\mathbf{v} = \norm{\mathbf{u}}\hspace{1pt}\norm{\mathbf{v}}\cos\theta \\
+        & \parenthesisA{\text{Cross Product Orthogonality}}\hspace{5pt}\parenthesisA{\mathbf{u}\times\mathbf{v}}\cdot\mathbf{u} = \parenthesisA{\mathbf{u}\times\mathbf{v}}\cdot\mathbf{v} = 0 \\
+        & \parenthesisA{\text{Cross Product Norm}}\hspace{5pt}\norm{\mathbf{u}\times\mathbf{v}} = \norm{\mathbf{u}}\hspace{1pt}\norm{\mathbf{v}}\sin\theta
+    \end{align*}
+    Given the ray $\mathcal{R} = \mathbf{a}_r + t\mathbf{u},\; t\in\left[0,\infty\right)$ and an implicit surface $f\parenthesisA{\mathbf{p}} = 0$ closed solutions for the \textbf{intersection surface-ray} are
+    \begin{customcenter}[5pt]
+        \begin{tabular}{|l|c|}
+            \hline
+            Surface & \textbf{Intersection}\\
+            \hline
+            \textbf{Plane} & \multirow{2}{*}{$\frac{\parenthesisA{\mathbf{a}_p - \mathbf{a}_r}\cdot\mathbf{n}}{\mathbf{u}\cdot\mathbf{n}}$} \\
+            $\parenthesisA{\mathbf{p} - \mathbf{a}_p}\cdot\mathbf{n} = 0$ & \\
+            \hline
+            \textbf{Sphere} & \multirow{2}{*}{$\frac{-\mathbf{u}\cdot\mathbf{b}\pm\bracketA{\parenthesisA{\mathbf{u}\cdot\mathbf{c}}^2 - \norm{\mathbf{u}}^2\parenthesisA{\norm{\mathbf{c}}^2 - r^2}}}{\norm{\mathbf{u}}^2}^{\frac{1}{2}}\begin{aligned}&\mathbf{b} = \parenthesisA{\mathbf{a}_r-\mathbf{u}}\\&\mathbf{c} = \parenthesisA{\mathbf{a}_r - \mathbf{a}_c}\end{aligned}$}\\
+            $\norm{\mathbf{p} - \mathbf{a}_c}^2 - r^2 = 0$ &  \\[3pt]
+            \hline
+            Triangle & \\
+            \hline
+        \end{tabular}
+    \end{customcenter}
+\end{minipage}
+

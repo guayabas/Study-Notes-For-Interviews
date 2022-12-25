@@ -1,0 +1,154 @@
+%%%%%%%%%% Page 5 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{\texttt{C++} programming}
+
+\begin{minipage}[t]{0.500\textwidth}
+    \textbf{Inheritance}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item \inlinecode{class derived\_class :}\\ \inlinecode{\optionalkeyword{qualifier} base\_class\_name \curlybracket{\hspace{4pt}}; }
+        \item Base class can be an \textbf{interface} using the \inlinecode{virtual} keyword and the \inlinecode{= 0} post-declaration to get \textbf{pure virtual} behavior
+        \item The \inlinecode{\optionalkeyword{qualifier}} can be \inlinecode{public}, \inlinecode{protected}, or \inlinecode{private}
+        \begin{center}
+            \begin{tabular}{|l|c|c|c|}
+                \hline
+                \textbf{Access} & \inlinecode{public} & \inlinecode{protected} & \inlinecode{private} \\
+                \hline
+                base members & Y & Y & Y\\
+                \hline
+                derived members & Y & Y & N\\
+                \hline
+                not members & Y & N & N \\
+                \hline
+            \end{tabular}
+        \end{center}
+        \begin{lstlisting}
+        namespace MX
+        {
+            class Polygon 
+            {
+            protected:
+                int w = 0, h = 0;
+            public: 
+                Polygon() {}
+                ~Polygon() { printf("Destructor Polygon\n"); }
+                Polygon(int w, int h) : w(w), h(h) {}                
+                virtual float area() = 0; // pure virtual function
+                void log() { printf("Area : %f\n", this->area()); }
+            };
+            class Rectangle : public Polygon {
+            public:
+                Rectangle(int w = 1, int h = 1) : Polygon(w, h) {}
+                ~Rectangle() { printf("Destructor Rectangle\n"); }
+                float area() { return float(w * h); }
+            };
+            class Triangle : public Polygon {
+            public:
+                Triangle(int w = 1, int h = 1) : Polygon(w, h) {}
+                float area() { return (w * h * 0.5f); }
+            };
+            class Pentagon : public Polygon {
+            public:
+                Pentagon(int side = 1) {
+                    // TODO: Compute w,h for a pentagon using side
+                    this->w = 0; this->h = 0; }
+            };
+        }
+        // auto polygon = MX::Polygon(0, 0); Error, Pure virtual
+        // Polymorphism (* base_class = * derived_class)
+        MX::Polygon * rectangle1 = new MX::Rectangle();
+        rectangle1->log();
+        delete rectangle1; // Call to MX::~Polygon()
+        { auto rectangle2 = MX::Rectangle(2, 2); 
+        // Call to MX::~Rectangle and then MX::~Polygon()
+        rectangle2.log(); }
+        auto triangle = MX::Triangle();
+        // Call to MX::~Polygon, MX::~Triangle() not defined
+        triangle.log();
+        // MX::Pentagon(); Error, area() does not have overrider
+        \end{lstlisting}
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{5pt}
+%%%%%%%%%% Page 5 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.470\textwidth}
+    \textbf{STL (Standard Template Library) Containers}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item A \textbf{container} is an object that \textbf{stores a collection} of other objects
+        \item The container \textbf{manages the storage space} for its elements and gives member \textbf{functions to access} them
+        \item STL uses the namespace \inlinecode{std}
+        \item Can be subdivided in \textbf{four categories} \\ \\
+        \begin{raggedleft}
+            \begin{tabular}{|l|l|}
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Sequence Containers}} \\
+                \multicolumn{2}{|c|}{Data structures that can be accessed sequentially} \\
+                \hline
+                \cellcolor{blue!15}\inlinecode{array} & Static contiguous array \\
+                \cellcolor{blue!15}\inlinecode{vector} & Dynamic contiguous array \\
+                \cellcolor{blue!15}\inlinecode{deque} & Double-ended queue \\
+                \cellcolor{blue!15}\inlinecode{forward\_list} & Singly-linked list \\
+                \cellcolor{blue!15}\inlinecode{list} & Doubly-linked list \\
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{n}$} \\
+                \hline
+            \end{tabular}
+        \end{raggedleft}
+        \emptyline
+        \emptyline
+        \begin{raggedleft}
+            \begin{tabular}{|l|l|}
+                \hline
+                \multicolumn{2}{|c|}{\textbf{\optionalkeyword{Ordered} Associative Containers}} \\
+                \multicolumn{2}{|c|}{Data structure that is kept sorted (by keys)} \\
+                \hline
+                \cellcolor{blue!15}\inlinecode{set} & Collection of unique keys \\
+                \cellcolor{blue!15}\inlinecode{map} & Collection of key-value pairs \\[-2pt]
+                \cellcolor{blue!15} & with unique keys \\
+                \cellcolor{blue!15}\inlinecode{multiset} & Collection of keys \\
+                \cellcolor{blue!15}\inlinecode{multimap} & Collection of key-value pairs \\
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{\log n}$} \\
+                \hline
+            \end{tabular}
+        \end{raggedleft}
+        \emptyline
+        \emptyline
+        \begin{raggedleft}
+            \begin{tabular}{|l|l|}
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Unordered Associative Containers}} \\
+                \multicolumn{2}{|c|}{Unsorted (hashed by keys) data structure} \\
+                \hline
+                \cellcolor{blue!15}\inlinecode{unordered\_set} & Collection of unique keys \\
+                \cellcolor{blue!15}\inlinecode{unordered\_map} & Collection of key-value pairs \\
+                \cellcolor{blue!15} &  with unique keys \\
+                \cellcolor{blue!15}\inlinecode{unordered\_multiset} & Collection of keys \\
+                \cellcolor{blue!15}\inlinecode{unordered\_multimap} & Collection of key-value pairs \\
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{1}$ amortized} \\
+                \multicolumn{2}{|c|}{\textbf{Worst case search} requires $O\parenthesisA{n}$ amortized} \\
+                \hline
+            \end{tabular}
+        \end{raggedleft}
+        \emptyline
+        \emptyline
+        \begin{raggedleft}
+            \begin{tabular}{|l|l|}
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Container adaptors}} \\
+                \multicolumn{2}{|c|}{Different interface for sequential containers} \\
+                \hline
+                \cellcolor{blue!15}\inlinecode{stack} & LIFO data structure \\
+                \cellcolor{blue!15}\inlinecode{queue} & FIFO data structure \\
+                \cellcolor{blue!15}\inlinecode{priority\_queue} & First element is the greatest and  \\[-2pt]
+                \cellcolor{blue!15}& elements are in nonincreasing order \\
+                \hline
+                \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{n}$} \\
+                \hline
+            \end{tabular}
+        \end{raggedleft}
+    \end{itemize}
+\end{minipage}

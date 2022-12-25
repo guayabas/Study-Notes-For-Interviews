@@ -1,0 +1,144 @@
+%%%%%%%%%% Page 1 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{\texttt{C++} programming}
+
+\begin{minipage}[t]{0.485\textwidth}
+    \textbf{Data Types}
+    \emptyline
+    \emptyline
+    {
+        \centering
+        \begin{tabular}{l|c|l}
+            Keyword & Bytes [\texttt{sizeof()}] & Range \\
+            \hline
+            \texttt{bool} & 1 & [True,False]\\
+            \texttt{unsigned char} & 1 & $[0, 2^8)$\\
+            \texttt{\optionalkeyword{(signed)} char} & 1 & $[2^7 - 1, 2^7)$ \\
+            \texttt{unsigned int} & 4 & $[0, 2^{32})$ \\
+            \texttt{\optionalkeyword{(signed)} int} & 4 &  $[2^{31} - 1, 2^{31})$ \\
+            \texttt{long} & 8 &  $[2^{63} - 1, 2^{63})$ \\
+            \texttt{float} & 4 & Implementation-based \\
+            \texttt{double} & 8 & Implementation-based \\
+            \texttt{void} & & \\
+        \end{tabular}
+    }
+    \emptyline
+    \emptyline
+    \textbf{Operators}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item Order of assignment is \textbf{left to right}, always\\ \inlinecode{int x = y = z = 42;}
+        \item Arithmetic \inlinecode{+, -, *, /, \%}
+        \item Bitwise \inlinecode{\&, |, $\wedge$, $\sim$, <<, >>}
+        \item Logical \inlinecode{!, \&\&, ||}
+        \item Relational \inlinecode{==, !=, >, <, >=, <=}
+        \item Compound assignment \inlinecode{+=, -=, *=, /=, \%=}\\ \inlinecode{<<=, >>=, \&=, |=}
+        \item Pre-Post (In/De)crement
+        {
+            \begin{lstlisting}
+                int x = 3;
+                int y = ++x; // y contains 4
+                int z = x++; // z contains 3
+            \end{lstlisting}
+        }
+        \item Ternary \inlinecode{condition ?\hspace{5pt}option1:option2;}
+        \item Object size in bytes \inlinecode{sizeof()}
+    \end{itemize}
+    \textbf{Statement and Flow Control}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item Generic statements \inlinecode{\curlybracket{statement1; statement2; statement3;}}
+        \item Control if \inlinecode{if \parenthesis{condition} statement;}
+        \item Control while \inlinecode{while \parenthesis{expression} statement;}
+        \item Control do-while \inlinecode{do \curlybracket{statement} while \parenthesis{condition};}
+        \item For iteration \inlinecode{for \parenthesis{declaration : range} statement;}
+        \item Jump statements \inlinecode{break; continue; goto
+        \optionalkeyword{label};}
+        \item Selection
+        {
+            \begin{lstlisting}
+                switch {expression}
+                {
+                    case constant1: statement; break;
+                    case constant2: statement; break;
+                    .
+                    .
+                    .
+                    default: statement; break;
+                }
+            \end{lstlisting}
+        }
+    \end{itemize}
+    \textbf{Functions}
+    \emptyline
+    \inlinecode{type name\parenthesis{parameter1, parameter2, ...}\curlybracket{ statements; }}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item Parameters are passed \textbf{by value} (creates a copy) by default
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{5pt}
+%%%%%%%%%% Page 1 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item \inlinecode{\optionalkeyword{const} type \&} to pass by reference
+        \item Can be optimized (if small) using the \inlinecode{inline} keyword
+        \item It can be made \textbf{recursive}
+        \item Same name but different parameters types define \textbf{overloading}
+        \begin{lstlisting}
+            void prototype(unsigned int x) {};
+            void prototype(float x) {};
+            int main() 
+            {
+                prototype(0); // Call unsigned int version
+                prototype(0.0f); // Call float version
+                return; 
+            }
+        \end{lstlisting}
+        \item Can use \textbf{templates} to maintain a method independent of data type \\ \inlinecode{template <typename T>} \\ \inlinecode{T function(\optionalkeyword{const} T a, \optionalkeyword{const} T b) \curlybracket{ statements; } }
+        \item To call a template function \\ \inlinecode{function \optionalkeyword{<template\_arguments>}\parenthesis{function\_arguments};} 
+        \begin{lstlisting}
+            // The following template is to avoid
+            // writing these 2 functions
+            // 1. int sum(int a, int b) { return a + b; }
+            // 2. float sum(float a, float b) { return a + b; }
+            template <typename T> 
+            T sum(T a, T b) { return a + b; }
+            int main() 
+            {
+            sum(1, 2) // Deduces to use int version of template
+            sum(1.0f, 2) // Will not compile due miss inferencing
+            sum<float>(1.0f, 2.0f) // Redundant infer but OK 
+            return; 
+            }
+        \end{lstlisting}
+        \item Templates must be determined at \textbf{compile time}
+        \begin{lstlisting}
+            template <class T, int N>
+            T multiply(T value) { return value * N; }
+            int main 
+            {
+            multiply<int, 2>(10); // At compile time returns 20
+            multiply<int, 3>(10); // Similar but returning 30
+            return; 
+            }
+        \end{lstlisting}
+    \end{itemize}
+    \textbf{Scopes}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item \textbf{static} storage $\mapsto$ global variable $\mapsto$ init to zero
+        \item \textbf{automatic} storage $\mapsto$ local variable $\mapsto$ undetermined init
+        \item outside any block $\mapsto$ global scope $\mapsto$ \textbf{global variable}
+        \item within a block $\mapsto$ block scope $\mapsto$ \textbf{local variable}
+        \begin{lstlisting}
+        int foo; // global variable
+        int do_something() { int foo; } // local variable 
+        \end{lstlisting}
+        \item Name collisions can be prevented with namespace keyword \inlinecode{namespace identifier \curlybracket{ named\_objects}}
+        \item Access of namespace is with qualifier \inlinecode{::} \\ \inlinecode{namespace gg \curlybracket{ int x }} $\mapsto$ \inlinecode{gg::x} access x
+     \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

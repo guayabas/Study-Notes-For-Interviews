@@ -1,0 +1,26 @@
+%%%%%%%%%% Page 2 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{cuda programming}
+
+\begin{minipage}{0.485\textwidth}
+    \begin{itemize}
+        \item Global Memory: High-latency. Increase arithmetic in the program is to reduce accesses to global memory. All threads can access to it.
+        \item Constant Memory: Short-latency. Total of 64KB on CUDA devices. Memory is cached. \texttt{\_\_constant\_\_} keyword is used to declare variables in this memory.
+        \item Registers: On-chip memories. High-speed and concurrent. Kernel would store variables private to a thread into registers. SM 2.0 supports 63 registers while SM 3.5 expands to 255 registers.
+        \item Shared Memory: Can be used to inter-thread communication. For accessing shared memory, processor needs to do a LOAD operation (registers do not require this). 
+    \end{itemize}
+    \begin{customcenter}[0pt]
+        \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Variable} & \textbf{Memory} & \textbf{Scope} & \textbf{Lifetime} \\
+        \hline
+        Automatic (no array) & Register & Thread & Kernel \\
+        Automatic (array) & Local & Thread & Kernel \\
+        \texttt{\_\_device\_\_} \texttt{\_\_shared\_\_} & Shared & Block & Kernel \\
+        \texttt{\_\_device\_\_} & Global & Grid & Application \\
+        \texttt{\_\_device\_\_} \texttt{\_\_constant\_\_} & Constant & Grid & Application \\
+        \hline
+        \end{tabular}
+    \end{customcenter}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,162 @@
+%%%%%%%%%% Page 4 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{\texttt{C++} programming}
+
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}
+        \setlength\itemsep{1pt}
+        \item \inlinecode{static} keyword in a class acts like a \quotes{global} variable
+        that requires class scope for accessing
+        \item A static member function of a class cannot access non-static members
+        \begin{lstlisting}
+            class Dummy 
+            {
+                int m; // Normal member
+            public:
+                static int n; // Requires definition in global space
+                static void log_s() 
+                { 
+                    //printf("m : %d\n", m); Cannot access m member
+                    //log(); Cannot access log function
+                    printf("n : %d\n", Dummy::n);
+                }
+                void log_c() { printf("n, m : %d, %d\n", n, m); }
+                Dummy(int _m) { m = _m;  n++; } ~Dummy() { n -= 2; }
+            };
+            int Dummy::n = 0;
+            Dummy::log_s(); // Prints 0
+            Dummy dummy1(0); // n increments 1
+            dummy1.log_c(); // Prints m=0, n=1
+            Dummy::log_s(); // Prints 1
+            { 
+                Dummy dummy2(1); // n increments 1
+                dummy2.log_c(); // Prints m=1, n=2 
+                Dummy::log_s(); // Prints 2
+            } // Finish scope, dummy2 calls destructor
+            dummy1.log_c(); // Prints m=0, n=0
+            Dummy::log_s(); // Prints 0
+        \end{lstlisting}
+        \item \inlinecode{const} blocks the availability to change values, either by instantiation or by getting values
+        \begin{lstlisting}
+            class MyClass 
+            {
+            public:
+                int x;
+                MyClass(int _x) : x(_x) {};
+                int get_nonconst() { return x; }
+                // x++; Not allow to modify content in function
+                int get_const1() const { return x; }
+                // Allow to modify, but returns a const number
+                const int get_const2() 
+                { 
+                    x++; const int y = x; 
+                    return y; 
+                }
+            };
+            const MyClass MyFoo(10);
+            MyClass MyBar(20);
+            // MyFoo.x = 20; Not valid, MyFoo is const
+            // MyFoo.get_nonconst(); Not valid, non const method
+            // MyFoo.get_const2(); Also not valid
+            int x = MyFoo.get_const1(); // 10
+            int y = MyBar.get_nonconst(); // 20
+            int z = MyBar.get_const1(); // 20
+            int w = MyBar.get_const2(); // 21
+        \end{lstlisting}
+        Possible options are
+        \begin{lstlisting}
+            // const member function
+            int get() const { return x; }
+            // member function returning const &
+            const int & get() { return x; }
+            // const member function returning const &
+            const int & get() const { return x; }
+        \end{lstlisting}
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% Page 4 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item Suppose \inlinecode{C} a class
+        \begin{customcenter}[0pt]
+            \begin{tabular}{|l|l|}
+                \hline
+                \textbf{Class special member} & \textbf{Syntax} \\
+                \hline
+                Default Constructor & \inlinecode{C::C\parenthesis{};} \\
+                \hline
+                Destructor & \inlinecode{C::$\sim$C\parenthesis{};} \\
+                \hline
+                Copy Constructor & \inlinecode{C::C\parenthesis{const C\&};} \\
+                \hline
+                Copy Assignment & \inlinecode{C\& operator=\parenthesis{const C\&};} \\
+                \hline
+                Move Constructor & \inlinecode{C::C\parenthesis{C\&\&};} \\
+                \hline
+                Move Assignment & \inlinecode{C\& operator=\parenthesis{C\&\&};} \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
+        \begin{lstlisting}
+            class C {
+            private: int x = 0;
+            public:
+                C() { printf("Constructor C\n"); } 
+                ~C() { printf("Destructor C\n"); }
+                C(const C&) { printf("Copy Constructor C\n"); }
+                C& operator=(const C&) 
+                { printf("Copy Assignment C\n"); }
+                C(C&&) { printf("Move Constructor C\n"); }
+                C& operator=(C&&) { printf("Move Assignment"); }
+                void log(char s) 
+                { printf("%c : %p -> %d(%p)\n", s, this, x, &x); }
+            };
+            printf("%d\n", sizeof(C));
+            C objectC_a = C();
+            objectC_a.log('A');
+            C objectC_b = C(objectC_a);
+            objectC_b.log('B');
+            objectC_a.log('A');
+            C objectC_c = C(std::move(objectC_a));
+            objectC_c.log('C');
+            objectC_b.log('B');
+            objectC_a.log('A'); 
+        \end{lstlisting}
+    \end{itemize}
+    \textbf{Class Templates}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item Declaration $\mapsto$ \inlinecode{template <class T> class class\_name\curlybracket{\hspace{4pt}};} \\ Instantiation $\mapsto$ \inlinecode{class\_name<T> object\_name\parenthesis{\hspace{4pt}};}
+        \begin{lstlisting}
+            template <class T> class Pair {
+                T values[2];
+            public:
+                Pair(T a, T b) { values[0] = a; values[1] = b; }
+                void log() {
+                    printf("%d bytes\n", sizeof(T));
+                    printf("[0] %p->%f\n", &values[0], values[0]);
+                    printf("[1] %p->%f\n", &values[1], values[1]); 
+                }
+            };
+            // Creates a Pair float, Pair double, respectively
+            Pair<float> pairFloat(1.0f, 2.0f); pairFloat.log();
+            Pair<double> pairDouble(3.0, 4.0); pairDouble.log();
+        \end{lstlisting}
+        \item Can be specialized for specific type of data types
+        \begin{lstlisting}
+            template <typename T> class Foo {
+                public: Foo(T arg) 
+                { printf("Generic template : %s\n", arg.c_str()); } 
+            };
+            template <> class Foo<char> {
+                public: Foo(char arg) 
+                { printf("Specialized template : %c\n", arg); } 
+            };
+            Foo<std::string>(std::string("hello std::string"));
+            Foo<char>('A');
+        \end{lstlisting}
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
