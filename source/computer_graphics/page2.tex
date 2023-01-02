@@ -1,11 +1,22 @@
+%%%%%%%%%% Page 2 - Col 1 %%%%%%%%%%
+\newpage
 \colorfulheader{computer graphics}
 
 \begin{minipage}[t]{\textwidth}
-    \begin{center}
+    \begin{customcenter}[0pt]
+        \textbf{OpenGL Core Pipeline}
         \begin{tikzpicture}
-            % \draw[step=1cm,blue,very thin] (0,0) grid (15,+3);
-            % \draw[step=1cm,red ,very thin] (0,0) grid (15,-3);
-            \node (input) [ellipse,minimum height=1cm,text centered,fill=blue!30] {$\substack{\text{VBO}\\\text{Data}}$};
+            % \draw[step=1cm,blue,very thin] (0,0) grid (20,+3);
+            % \draw[step=1cm,red ,very thin] (0,0) grid (20,-3);
+            \node (descr1symbol) [ellipse,yshift=-2.5cm,fill=blue!30] {\textcolor{blue!30}{a}};
+            \node (descr1text) [right of=descr1symbol,xshift=0.95cm] {Supplied by the user};
+            \node (descr2symbol) [ellipse,yshift=-2.5cm,xshift=4.5cm,fill=green!30] {\textcolor{green!30}{a}};
+            \node (descr2text) [right of=descr2symbol,xshift=0.75cm] {Mandatory stages};
+            \node (descr3symbol) [ellipse,yshift=-2.5cm,xshift=8.5cm,fill=red!30] {\textcolor{red!30}{a}};
+            \node (descr3text) [right of=descr3symbol,xshift=0.85cm] {Non-programmable};
+            \node (input) [ellipse,minimum height=1cm,text centered,fill=blue!30] {VBO};
+            \node (gi) [rounded corners,above of=input,fill=cyan!30,minimum height=1cm,yshift=0.25cm] {$\substack{\text{Geometry}\\\text{Information}}$};
+            \node (input-text) [above of=gi,yshift=-0.25cm] {\textbf{INPUT}};
             \node (vp) [rounded corners,minimum width=2.5cm,minimum height=1cm,right of=input,text centered,fill=green!30,xshift=1.25cm] {$\substack{\text{Vertex}\\\text{Processor}}$};
             \node (vs) [ellipse,minimum height=1cm,minimum width=2cm,above of=vp,fill=blue!30,yshift=0.25cm] {$\substack{\text{Vertex}\\\text{Shader}}$};
             \node (pa) [minimum width=4cm,minimum height=1cm,right of=vp,text centered,fill=red!30,xshift=2.75cm] {$\substack{\text{Primitive Assembly}\\\text{And Clipping}}$};
@@ -13,44 +24,267 @@
             \node (ts) [ellipse,minimum height=1cm,minimum width=2cm,above right of=pa,yshift=0.5cm,fill=blue!30,xshift=+0.5cm] {$\substack{\text{Tessellation}\\\text{Shader}}$};
             \node (ra) [minimum width=2.5cm,minimum height=1cm,right of=pa,text centered,fill=red!30,xshift=2.8cm] {Rasterizer};
             \node (fp) [rounded corners,minimum width=2.5cm,minimum height=1cm,right of=ra,text centered,fill=green!30,xshift=2cm] {$\substack{\text{Fragment}\\\text{Processor}}$};
-            \node (fs) [ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm] {$\substack{\text{Fragment}\\\text{Shader}}$};
-            \node (td) [ellipse,minimum height=1cm,minimum width=2cm,below of=fp,fill=blue!30,yshift=-0.25cm] {$\substack{\text{Texture}\\\text{Data}}$};
-            \node (fb) [minimum width=2.5cm,minimum height=1cm,right of=fp,text centered,fill=cyan!30,xshift=2cm] {Framebuffer};
-            \node [minimum width=2.5cm,minimum height=1cm,fill=gray!30,above of=fb,yshift=0.25cm] {Display};
-            \node [ellipse,minimum width=2cm,minimum height=1cm,fill=blue!30,below of=fb,yshift=-0.25cm] {FBO};
-            \begin{scope}[below of=vp,xshift=1.2cm,yshift=-0.5cm,scale=0.8]
-                \node[scale=0.5,circle,fill=red] at (0,0) {};
-                \node[scale=0.5,circle,fill=red] at (0.5,0.25) {};
-                \node[scale=0.5,circle,fill=red] at (0.25,0.75) {};
-                \draw[thick,->] (-0.2,-0.2) -- (1,-0.2);
-                \draw[thick,->] (-0.2,-0.2) -- (-0.2,1);
-                \node[scale=0.5,circle,fill=blue] at (2.5,0.25) {};
-                \node[scale=0.5,circle,fill=blue] at (2.3,0.1) {};
-                \node[scale=0.5,circle,fill=blue] at (2.0,0.5) {};
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (1,-0.2);
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.2,1);
-                \draw[ultra thick,->,line width=0.1cm] (1,0.5) -- (1.5,0.5);
+            \node (fs) [ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm,xshift=-1cm] {$\substack{\text{Fragment}\\\text{Shader}}$};
+            \node (td) [ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm,xshift=1cm] {$\substack{\text{Texture}\\\text{Data}}$};
+            \node (fb) [minimum width=2.5cm,minimum height=1cm,right of=fp,text centered,fill=blue!30,xshift=2cm] {Framebuffer};
+            \node (fbo) [ellipse,minimum width=1cm,minimum height=1cm,fill=blue!30,above of=fb,yshift=0.25cm] {FBO};            
+            \node (dt) [fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=-1.15cm] {$\substack{\text{Depth}\\\text{Test}}$};
+            \node (ab) [fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=+0.4cm] {$\substack{\text{Alpha}\\\text{Blending}}$};
+            \node (so) [fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=+2cm] {$\substack{\text{Stencil}\\\text{Operations}}$};
+            \draw [decorate,decoration = {brace,mirror,amplitude=10pt},ultra thick] (13.75,-1.8) -- (18.75,-1.8) node[black,pos=0.5,below=8pt,anchor=north]{Fragment Test (Seen, Discard, etc.)};
+            \node (display) [minimum width=2.5cm,minimum height=1cm,fill=cyan!30,right of=fb,xshift=2cm] {Display};
+            \node (output-text) [above of=display,yshift=-0.25cm] {\textbf{OUTPUT}};
+            % connections
+            \draw[arrow] (input) -- (vp);
+            \draw[arrow] (vp) -- (pa);
+            \draw[arrow] (pa) -- (ra);
+            \draw[arrow] (ra) -- (fp);
+            \draw[arrow] (fp) -- (fb);
+            \draw[arrow] (fb) -- (fbo);
+            \draw[arrow] (fb) -- (display);
+            \draw[arrow] (fs) -- (fp);
+            \draw[arrow] (td) -- (fp);
+            \draw[arrow] (gs) -- (pa);
+            \draw[arrow] (ts) -- (pa);
+            \draw[arrow] (vs) -- (vp);
+            \draw[arrow] (fbo) -- (td);
+            \draw[arrow] (gi) -- (input);
+            \draw[arrow] (dt) -- (fb);
+            \draw[arrow] (ab) -- (fb);
+            \draw[arrow] (so) -- (fb);
+            % why the below of= does not work with other nodes that are not a fixed one?
+            \begin{scope}[below of=input,xshift=-0.25cm,yshift=-0.7cm,scale=0.7]
+                % input points
+                \node[scale=0.35,circle,fill=red] at (0.00,0.00) {};
+                \node[scale=0.35,circle,fill=red] at (0.60,0.25) {};
+                \node[scale=0.35,circle,fill=red] at (0.25,0.75) {};
+                \node[scale=0.35,circle,fill=red] at (1.15,0.95) {};
+                \node[scale=0.35,circle,fill=red] at (1.05,0.45) {};
+                \draw[thick,->] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,->] (-0.2,-0.2) -- (-0.20,+1.25);
             \end{scope}
-            \begin{scope}[below of=pa,xshift=5cm,yshift=-0.5cm,scale=0.8]
-                \node[scale=0.5,circle,fill=blue] at (0.5,0.25) {};
-                \node[scale=0.5,circle,fill=blue] at (0.3,0.1) {};
-                \node[scale=0.5,circle,fill=blue] at (0.0,0.5) {};
-                \draw[ultra thick,->,line width=0.1cm] (1,0.5) -- (1.5,0.5);
-                \node[scale=0.3,circle,fill=blue] at (2.5,0.25) {};
-                \node[scale=0.3,circle,fill=blue] at (2.3,0.1) {};
-                \node[scale=0.3,circle,fill=blue] at (2.0,0.5) {};
-                \draw[blue,line width=2pt](2.5,0.25) -- (2.3,0.1){};
-                \draw[blue,line width=2pt](2.5,0.25) -- (2.0,0.5){};
-                \draw[blue,line width=2pt](2.3,0.1) -- (2.0,0.5){};
+            \begin{scope}[below of=input,xshift=2.00cm,yshift=-0.7cm,scale=0.7]
+                % transformed points
+                \node[scale=0.35,circle,fill=blue] at (0.00,0.00) {};
+                \node[scale=0.35,circle,fill=blue] at (0.60,0.25) {};
+                \node[scale=0.35,circle,fill=blue] at (0.25,0.75) {};
+                \node[scale=0.35,circle,fill=red] at (0.95,0.95) {};
+                \node[scale=0.35,circle,fill=red] at (1.25,0.45) {};
+                \draw[thick,->] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,->] (-0.2,-0.2) -- (-0.20,+1.25);
+            \end{scope}
+            \begin{scope}[below of=input,xshift=4.5cm,yshift=-0.7cm,scale=0.7]
+                % shape assembly
+                \node[scale=0.35,circle,fill=blue] at (2.00,0.00) {};
+                \node[scale=0.35,circle,fill=blue] at (2.60,0.25) {};
+                \node[scale=0.35,circle,fill=blue] at (2.25,0.75) {};
+                \node[scale=0.35,circle,fill=red] at (2.95,0.95) {};
+                \node[scale=0.35,circle,fill=red] at (3.25,0.45) {};
+                \draw[blue,line width=2pt](2.00,0.00) -- (2.60,0.25){};
+                \draw[blue,line width=2pt](2.60,0.25) -- (2.25,0.75){};
+                \draw[blue,line width=2pt](2.25,0.75) -- (2.00,0.00){};
+                \draw[red,line width=2pt](2.95,0.95) -- (3.25,0.45){};
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
+            \end{scope}
+            \begin{scope}[below of=input,xshift=8cm,yshift=-0.7cm,scale=0.7]
+                % grid of pixels
+                \draw[step=5pt,black,xshift=2cm] (0,0) grid (1.59,1.24);
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
+                \filldraw[fill=blue,xshift=2cm] (0*0.175,0*0.175) rectangle (1*0.175,1*0.175);
+                \filldraw[fill=blue,xshift=2cm] (0*0.175,1*0.175) rectangle (1*0.175,2*0.175);
+                \filldraw[fill=blue,xshift=2cm] (0*0.175,2*0.175) rectangle (1*0.175,3*0.175);
+                \filldraw[fill=blue,xshift=2cm] (1*0.175,3*0.175) rectangle (2*0.175,4*0.175);
+                \filldraw[fill=blue,xshift=2cm] (1*0.175,4*0.175) rectangle (2*0.175,5*0.175);
+                \filldraw[fill=blue,xshift=2cm] (2*0.175,3*0.175) rectangle (3*0.175,4*0.175);
+                \filldraw[fill=blue,xshift=2cm] (2*0.175,2*0.175) rectangle (3*0.175,3*0.175);
+                \filldraw[fill=blue,xshift=2cm] (3*0.175,1*0.175) rectangle (4*0.175,2*0.175);
+                \filldraw[fill=blue,xshift=2cm] (1*0.175,0*0.175) rectangle (2*0.175,1*0.175);
+                \filldraw[fill=blue,xshift=2cm] (2*0.175,0*0.175) rectangle (3*0.175,1*0.175);
+                \filldraw[fill=red,xshift=2cm] (5*0.175,5*0.175) rectangle (6*0.175,6*0.175);
+                \filldraw[fill=red,xshift=2cm] (5*0.175,4*0.175) rectangle (6*0.175,5*0.175);
+                \filldraw[fill=red,xshift=2cm] (6*0.175,3*0.175) rectangle (7*0.175,4*0.175);
+                \filldraw[fill=red,xshift=2cm] (7*0.175,2*0.175) rectangle (8*0.175,3*0.175);
+            \end{scope}
+            \begin{scope}[below of=input,xshift=11cm,yshift=-0.7cm,scale=0.7]
+                % grid of pixels with modified colors
+                \draw[step=5pt,black,xshift=2cm] (0,0) grid (1.59,1.24);
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
+                \filldraw[fill=blue!70!green,xshift=2cm] (0*0.175,0*0.175) rectangle (1*0.175,1*0.175);
+                \filldraw[fill=blue!60!green,xshift=2cm] (0*0.175,1*0.175) rectangle (1*0.175,2*0.175);
+                \filldraw[fill=blue!50!green,xshift=2cm] (0*0.175,2*0.175) rectangle (1*0.175,3*0.175);
+                \filldraw[fill=blue!40!green,xshift=2cm] (1*0.175,3*0.175) rectangle (2*0.175,4*0.175);
+                \filldraw[fill=blue!30!green,xshift=2cm] (1*0.175,4*0.175) rectangle (2*0.175,5*0.175);
+                \filldraw[fill=blue!40!green,xshift=2cm] (2*0.175,3*0.175) rectangle (3*0.175,4*0.175);
+                \filldraw[fill=blue!50!green,xshift=2cm] (2*0.175,2*0.175) rectangle (3*0.175,3*0.175);
+                \filldraw[fill=blue!60!green,xshift=2cm] (3*0.175,1*0.175) rectangle (4*0.175,2*0.175);
+                \filldraw[fill=blue!70!green,xshift=2cm] (1*0.175,0*0.175) rectangle (2*0.175,1*0.175);
+                \filldraw[fill=blue!70!green,xshift=2cm] (2*0.175,0*0.175) rectangle (3*0.175,1*0.175);
+                \filldraw[fill=red!80!white,xshift=2cm] (5*0.175,5*0.175) rectangle (6*0.175,6*0.175);
+                \filldraw[fill=red!70!white,xshift=2cm] (5*0.175,4*0.175) rectangle (6*0.175,5*0.175);
+                \filldraw[fill=red!60!white,xshift=2cm] (6*0.175,3*0.175) rectangle (7*0.175,4*0.175);
+                \filldraw[fill=red!50!white,xshift=2cm] (7*0.175,2*0.175) rectangle (8*0.175,3*0.175);
             \end{scope}
         \end{tikzpicture}
-    \end{center}
-\textbf{1 Vertex Processor}: Transforms vertex position/attributes (color, normal, texture)\\
-
-\textbf{2 Primitive Assembly And Clipping}: Assembles data into primitives (points, lines, triangles)\\
-
-\textbf{3 Rasterization}: Determine which pixel locations are associated with each primitive\\
-
-\textbf{4 Fragment Processor}: Final appearance of each fragment
+    \end{customcenter}
+    \begin{enumerate}
+        \setlength\itemsep{0pt}
+        \item \textbf{Vertex Processor}: Transforms vertex position/attributes (color, normal, texture)
+        \item \textbf{Primitive Assembly And Clipping}: Assembles data into primitives (points, lines, triangles)
+        \item \textbf{Rasterizer}: Determine which pixel locations are associated with each primitive
+        \item \textbf{Fragment Processor}: Decides appearance of each fragment (lighting/texture mapping)
+    \end{enumerate}
 \end{minipage}
+\emptyline
+\vspace{5pt}
 
+\begin{minipage}[t]{0.485\textwidth}
+    \textbf{Transformations}
+    \begin{customcenter}[5pt]
+        \begin{tikzpicture}
+            % \draw[step=1cm,black,very thin] (0,0) grid (10,8);
+            \node[draw,circle,minimum size=0.3cm,fill=babyblue,thick] (one) at (7,1.5) {\textbf{1}};
+            \node[rounded corners,below of=one,draw,text width=4cm,text centered,xshift=-1.75cm] {Model Position \\ \textbf{Model Transformation}};
+            \node[draw,circle,minimum size=0.3cm,fill=babyblue,thick] (two) at (1,4.495) {\textbf{2}};
+            \node[rounded corners,above of=two,draw,text width=3.75cm,text centered,xshift=0.75cm] {Camera Position \\ \textbf{View Transformation}};
+            \node[draw,circle,minimum size=0.3cm,fill=babyblue,thick] (three) at (1,6.5) {\textbf{3}};
+            \node[rounded corners,above of=three,draw,text width=4.2cm,text centered,xshift=1cm] {Camera Lens \\ \textbf{Project Transformation}};
+            \draw[thick] (0.5,1.5) -- (1.5,0.5);
+            \draw[thick] (1.0,2.0) -- (2.0,1.0);
+            \draw[thick] (0.5,1.5) -- (1.0,2.0);
+            \draw[thick] (1.5,0.5) -- (2.0,1.0);
+            \draw[thick] (0.5,1.0) -- (1.5,0.0);
+            \draw[thick] (0.5,1.0) -- (0.5,1.5);
+            \draw[thick] (1.5,0.0) -- (1.5,0.5);
+            \draw[thick] (1.5,0.0) -- (2.0,0.5);
+            \draw[thick] (2.0,0.5) -- (2.0,1.0);
+            \draw[thick,dashed] (0.5,1.0) -- (1.0,1.5);
+            \draw[thick,dashed] (1.0,1.5) -- (1.0,2.0);
+            \draw[thick,dashed] (1.0,1.5) -- (2.0,0.5);            
+            % \node[scale=0.5,circle,fill=black] at (5,7) {};
+            % \node[scale=0.5,circle,fill=black] at (10,7) {};
+            % \node[scale=0.5,circle,fill=black] at (5,3) {};
+            % \node[scale=0.5,circle,fill=black] at (10,3) {};
+            \draw[ultra thick] (5,7) -- (10,7);
+            \draw[ultra thick] (5,7) -- (5,3);
+            \draw[ultra thick] (5,3) -- (10,3);
+            \draw[ultra thick] (10,3) -- (10,7);
+            \draw[thick] (1.5,1.2) -- (5,7);
+            \draw[thick] (1.5,1.2) -- (10,7);
+            \draw[thick] (1.5,1.2) -- (10,3);
+            \draw[thick,dashed] (1.5,1.2) -- (5,3);
+            \node[isosceles triangle,draw,fill=red,minimum size=2.5cm,isosceles triangle apex angle=60,rotate=45] at (6.0,4.5) {};
+            \node[isosceles triangle,draw,fill=red,minimum size=1.5cm,isosceles triangle apex angle=60,rotate=90] (tp) at (8.75,1.25) {};
+            \node[xshift=-3pt,yshift=-3pt] at (tp.left corner) {$v_1$};
+            \node[xshift=+5pt,yshift=-3pt] at (tp.right corner) {$v_2$};
+            \node[xshift=+0pt,yshift=+3pt] at (tp.apex) {$v_3$};
+        \end{tikzpicture}
+    \end{customcenter}
+    Using homogeneous coordinates is possible to express \textbf{translations}, \textbf{rotations}, \textbf{projections}, \textbf{scaling}, and \textbf{shearing} operations as linear transformations
+    \begin{align*}
+        & \overbrace{
+            \begin{bmatrix}
+                1 & 0 & 0 & x \\
+                0 & 1 & 0 & y \\
+                0 & 0 & 1 & z \\
+                0 & 0 & 0 & 1 
+            \end{bmatrix}
+        }^{\text{Translation}}
+        \overbrace{
+            \begin{bmatrix}
+                x & 0 & 0 & 0 \\
+                0 & y & 0 & 0 \\
+                0 & 0 & z & 0 \\
+                0 & 0 & 0 & 1
+            \end{bmatrix}
+        }^{\text{Scaling}} \\
+        & \overbrace{
+            \underbrace{
+                \begin{bmatrix}
+                    1 & 0 & 0 & 0 \\
+                    0 & c\theta & -s\theta & 0 \\
+                    0 & s\theta & +c\theta & 0 \\
+                    0 & 0 & 0 & 1
+                \end{bmatrix}
+            }_{\text{Rotation } X}
+            \underbrace{
+                \begin{bmatrix}
+                    c\theta & 0 & -s\theta & 0 \\
+                    0 & 1 & 0 & 0 \\
+                    s\theta & 0 & +c\theta & 0 \\
+                    0 & 0 & 0 & 1
+                \end{bmatrix}
+            }_{\text{Rotation } Y}
+            \underbrace{
+                \begin{bmatrix}
+                    c\theta & -s\theta & 0 & 0 \\
+                    s\theta & +c\theta & 0 & 0 \\
+                    0 & 0 & 1 & 0 \\
+                    0 & 0 & 0 & 1
+                \end{bmatrix}
+            }_{\text{Rotation } Z}
+        }^{c\theta = \cos\theta,\;s\theta = \sin\theta}
+    \end{align*}
+\end{minipage}
+\begin{minipage}[t]{0.485\textwidth}    
+    \begin{customcenter}[5pt]
+        \begin{tikzpicture}
+            \draw[step=1cm,black,very thin] (0,0) grid (10,-15);            
+            \begin{scope}[xshift=-0.25cm]
+                % boxes
+                \node[rectangle,draw,minimum width=5.75cm,minimum height=9cm,line width=2pt] (descrcoordinates) at (5,-4.05){};
+                \node[yshift=5pt] at (descrcoordinates.north){\textbf{Graphics Coordinate System}};
+                \node[rectangle,draw=blue,minimum width=4.25cm,minimum height=5cm,line width=1.5pt] (descrhomogeneous) at (5,-3.32){};
+                \node[rotate=-90,yshift=5pt] at (descrhomogeneous.east){Homogeneous};
+                % nodes
+                \node (start) [rounded corners,fill=yellow!30,draw] at (5,0) {$\parenthesisA{x_o,y_o,z_o}$ Object};
+                \node (hoco) [below of=start,rounded corners,fill=blue!30,draw,yshift=-0.35cm]{$\parenthesisA{x_m,y_m,z_m,1.0}$ Model};
+                \node (hocw) [below of=hoco,rounded corners,fill=blue!30,draw,yshift=-0.35cm]{$\parenthesisA{x_w,y_w,z_w,1.0}$ World};
+                \node (hoce) [below of=hocw,rounded corners,fill=blue!30,draw,yshift=-0.35cm]{$\parenthesisA{x_e,y_e,z_e,1.0}$ Eye};
+                \node (hocc) [below of=hoce,rounded corners,fill=blue!30,draw,yshift=-0.35cm] {$\parenthesisA{x_c,y_c,z_c,w}$ Clip};
+                \node (ndc) [below of=hocc,rounded corners,fill=yellow!30,draw,yshift=-0.35cm] {$\parenthesisA{x_{\text{ndc}},y_{\text{ndc}},z_{\text{ndc}}}$ $\substack{\text{Normalized Device}\\\parenthesisA{x,y}\in\bracketA{-1,1},z\in\bracketA{0,1}}$};
+                \node (stop) [below of=ndc,rounded corners,fill=yellow!30,draw,text centered,yshift=-0.35cm] {$\parenthesisA{x,y}$ Window $|$ $z$ Depth};
+                % connectors
+                \draw[arrow] (start) -- node[anchor=east,yshift=+3pt] {Append $1.0$} (hoco);
+                \draw[arrow] (hoco) -- node[anchor=west] {\textbf{Model}} node[anchor=east] {$\substack{\text{Scale}\\\text{Rotate}\\\text{Translate}}$} (hocw);
+                \draw[arrow] (hocw) -- node[anchor=west] {\textbf{View}} node[anchor=east] {$\substack{\text{Orient}\\\text{Scene}}$} (hoce);
+                \draw[arrow] (hoce) -- node[anchor=west] {\textbf{Projection}} node[anchor=east] {$\substack{\text{Perspective}\\\text{Ortographic}\\\text{Frustum}}$} (hocc);
+                \draw[arrow] (hocc) -- node[anchor=east,yshift=-2.5pt] {Divide by $w$} (ndc);
+                \draw[arrow] (ndc) -- node[anchor=west] {$\substack{\text{Clipping}\\\text{viewport}}$} (stop);
+            \end{scope}
+            % Projections descriptions
+            \node[yshift=+1.50cm,left of=hoce,xshift=-2.45cm,rotate=90,draw,text width=2.5cm,text centered,thick] (descrpersp) {Further objects appear smaller};
+            \node[left of=hoce,yshift=-0.425cm,xshift=-0.52cm] (perspnode) {};
+            \draw[arrow] (descrpersp.west) |- (perspnode);
+            \node[yshift=-1.75cm,left of=hocc,xshift=-2.45cm,rotate=90,draw,text width=2.5cm,text centered,thick] (descrortho) {Does not affect size of objects};
+            \node[left of=hocc,yshift=+0.700cm,xshift=-0.52cm] (orthonode) {};
+            \draw[arrow] (descrortho.east) |- (orthonode);
+            % zfighting
+            \node[xshift=2.45cm,draw,fill=red!40] (descrzfight) at (stop.east) {$z$-fighting};
+            \node[yshift=10pt,above of=descrzfight,fill=orange!40,draw] (descrzfightreason) {$\substack{\text{Caused by}\\\text{floating point}\\\text{precision}}$};
+            \node[yshift=11pt,above of=descrzfightreason,fill=green!40,draw] (solzfighting) {$\substack{\text{Possible solutions}\\\bullet\text{ Keep \texttt{near}$|$\texttt{far} close}\\\bullet\text{ Do not compress } z}$};
+            \draw[arrow] (stop) -- (descrzfight);
+            \draw[arrow] (descrzfight) -- (descrzfightreason);
+            \draw[arrow] (descrzfightreason) -- (solzfighting);
+            \node[rectangle,draw,minimum width=8cm,minimum height=4.5cm,line width=2pt] (vbobox) at (5.1,-12){};
+            \node[yshift=7pt] at (vbobox.north) {\textbf{VBO Arrangement}};
+            \begin{scope}[xshift=1cm,yshift=1cm]
+                \node[] at (2,-11.25) {\textbf{Separate VBO}};
+                \node[rectangle,draw,fill=red!20,minimum width=3cm,minimum height=1cm,line width=1pt] () at (2,-12) {VERTICES};
+                \node[rectangle,draw,fill=green!20,minimum width=3cm,minimum height=1cm,line width=1pt] () at (2,-13) {NORMALS};
+                \node[rectangle,draw,fill=blue!20,minimum width=3cm,minimum height=1cm,line width=1pt] () at (2,-14) {TEXTURES};
+                \node[] at (2,-14.75) {Dynamic Data};
+                \node[] at (6,-11.25) {\textbf{Interleaved VBO}};
+                \node[rectangle,draw,fill=red!20,minimum width=3cm,minimum height=0.75cm,line width=1pt,rotate=90] () at (4.75,-13) {$\text{VERTICES}_i$};
+                \node[rectangle,draw,fill=green!20,minimum width=3cm,minimum height=0.75cm,line width=1pt,rotate=90] () at (5.50,-13) {$\text{NORMALS}_i$};
+                \node[rectangle,draw,fill=blue!20,minimum width=3cm,minimum height=0.75cm,line width=1pt,rotate=90] () at (6.25,-13) {$\text{TEXTURES}_i$};
+                \node[rectangle,left color=red!20,right color=green!20,minimum width=0.5cm,minimum height=3cm,line width=1pt] () at (6.85,-13) {};
+                \node[rectangle,left color=green!20,right color=blue!20,minimum width=0.5cm,minimum height=3cm,line width=1pt] () at (7.35,-13) {};
+                \node[rectangle,draw,minimum width=1cm,minimum height=3cm,line width=1pt] () at (7.115,-13) {$\dots$};
+                \node[] at (6,-14.75) {Faster Access (Cache)};
+            \end{scope}
+        \end{tikzpicture}
+    \end{customcenter}
+\end{minipage}
