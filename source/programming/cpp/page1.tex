@@ -5,7 +5,7 @@
 \begin{minipage}[t]{0.485\textwidth}
     \colorfulsection{Data Types}
     \emptyline
-    \begin{customcenter}[-5pt]
+    \begin{customcenter}[0pt]
         \begin{tabular}{l|c|c|l}
             & \multicolumn{2}{c|}{Bytes [\texttt{sizeof()}]} & \\
             \hline
@@ -22,16 +22,15 @@
             \texttt{void} & \multicolumn{2}{c|}{Does not apply} & Does not apply \\
         \end{tabular}
     \end{customcenter}
-    \emptyspace\\
     \colorfulsection{Operators}\vspace{-5pt}
     \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
-        \item Order of assignment is always \textbf{left to right}, \inlinecode{int x = y = 42;}
+        \item Order of assignment is \textbf{left to right}, \inlinecode{int x = y = 42;}
         \item Arithmetic \inlinecode{+, -, *, /, \%}
         \item Bitwise \inlinecode{\&, |, $\wedge$, $\sim$, <<, >>}
         \item Logical \inlinecode{!, \&\&, ||}
         \item Relational \inlinecode{==, !=, >, <, >=, <=}
-        \item \stack{Compound \\ Assignment} \inlinecode{+=, -=, *=, /=, \%=} \inlinecode{<<=, >>=, \&=, |=}
+        \item $\substack{\text{Compound} \\ \text{Assignment}}$ \inlinecode{+=, -=, *=, /=, \%=} \inlinecode{<<=, >>=, \&=, |=}
         \item Pre-Post (In/De)crement
         {
             \begin{lstlisting}
