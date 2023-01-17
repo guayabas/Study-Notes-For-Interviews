@@ -3,9 +3,9 @@
 \colorfulheader{\texttt{C++} programming}
 
 \begin{minipage}[t]{0.485\textwidth}
-    \textbf{Data Structures}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \colorfulsection{Data Structures}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item \inlinecode{struct \optionalkeyword{type\_name}} \\
         \inlinecode{\curlybracket{ member\_type\_n member\_name\_n; } \optionalkeyword{object};}
         \item Accessing of members via the \inlinecode{.} operator
@@ -40,9 +40,9 @@
         printf("%d\n", sizeof(mix_example)); // Prints 4
         \end{lstlisting}
     \end{itemize}
-    \textbf{Enumerated Types}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \colorfulsection{Enumerated Types}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item \inlinecode{enum \optionalkeyword{class} type\_name \optionalkeyword{:\hspace{4pt}data\_type}} \\ \inlinecode{\curlybracket{ value1 \optionalkeyword{=\hspace{4pt}init\_val}, value2, ... } \optionalkeyword{object\_names}; }
         \item Default underlying memory is \inlinecode{int}
         \begin{lstlisting}
@@ -57,8 +57,8 @@
             printf("%d\n", ColorEnum::green); // Prints 1
         \end{lstlisting}
     \end{itemize}
-    \textbf{Aliases}
-    \begin{itemize}
+    \colorfulsection{Aliases}
+    \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
         \item Two keywords, \inlinecode{typedef} or \inlinecode{using} \\ \inlinecode{typedef existing\_type new\_type\_name;} \\ \inlinecode{using new\_type\_name = existing\_type;}
         \begin{lstlisting}
@@ -69,11 +69,11 @@
     \end{itemize}
 \end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hspace{5pt}
+\hspace{10pt}
 %%%%%%%%%% Page 3 - Col 2 %%%%%%%%%%
 \begin{minipage}[t]{0.485\textwidth}
-    \textbf{Classes}
-    \begin{itemize}
+    \colorfulsection{Classes}
+    \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
         \item \inlinecode{class \optionalkeyword{class\_name}} \\
         \inlinecode{\curlybracket{ \optionalkeyword{access\_n :}\hspace{4pt}type\_m member\_name\_m; } \optionalkeyword{object};}

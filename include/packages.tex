@@ -25,9 +25,7 @@
 }
 \pagenumbering{gobble}
 \usepackage[usenames,dvipsnames]{color}
-
 \usepackage[table,dvipsnames]{xcolor}
-
 \usepackage[formats]{listings}
 \usepackage[most]{tcolorbox}
 \usepackage[utf8]{inputenc}
@@ -35,24 +33,18 @@
 \usepackage{stackengine}
 \usepackage{mathtools}
 \usepackage{ragged2e}
-
 \usepackage{enumitem}
-\usepackage{amssymb}
-
 \usepackage{hyperref}
 \usepackage{placeins}
 \usepackage{multirow}
-
 \usepackage{amsmath}
 \usepackage{caption}
 \usepackage{diagbox}
-
+\usepackage{amssymb}
 \usepackage{lipsum}
 \usepackage{array}
 \usepackage{float}
-
 \usepackage{tikz}
-
 \tcbset
 {
     frame code={}
@@ -75,6 +67,7 @@
 \definecolor{darkgreen}{rgb}{0.00, 0.60, 0.00}
 \definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
 \definecolor{mauve}{rgb}{0.58, 0.00, 0.82}
+\definecolor{mint}{HTML}{DDFFE7}
 \captionsetup[figure]{skip=3pt}
 \setlist{leftmargin=15pt}
 \setlength{\parindent}{10pt}
@@ -83,16 +76,13 @@
 % Tikz setup
 %=======================================================
 \usetikzlibrary{decorations.pathreplacing,calligraphy}
-
 \usetikzlibrary{shapes.geometric}
 \usetikzlibrary{shapes.misc}
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{calc}
 \tikzstyle{fancynode}=[rectangle,rounded corners,minimum width=2cm,minimum height=0.6cm,draw=black]
 \tikzstyle{bluenode}=[scale=0.4,diamond,draw,fill=blue!30]
-
 \tikzstyle{arrow}=[thick,->,>=stealth]
-
 \tikzset
 {
     cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
@@ -149,6 +139,8 @@
 \newcommand{\charactercode}[1]{\texttt{'#1'}}
 \newcommand{\norm}[1]{||#1||}
 \newcommand{\colorfulheader}[1]{\colorbox{cyan!10}{\makebox[\textwidth][c]{\textsc{#1}}}\\}
+\newcommand{\colorfulsection}[1]{\colorbox{mint}{\parbox[c][10pt][c]{\textwidth}{\textbf{#1}}}}
 \newcommand{\emptyline}{\\\vspace{-1pt}}
+\newcommand{\emptyspace}{\vspace{3pt}}
 \newenvironment{customcenter}[1][\topsep]{\setlength{\topsep}{#1}\par\kern\topsep\centering}{\par\kern\topsep}
 \newcommand\xrowht[2][0]{\addstackgap[0.5\dimexpr#2\relax]{\vphantom{#1}}}

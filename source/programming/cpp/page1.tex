@@ -3,36 +3,35 @@
 \colorfulheader{\texttt{C++} programming}
 
 \begin{minipage}[t]{0.485\textwidth}
-    \textbf{Data Types}
+    \colorfulsection{Data Types}
     \emptyline
-    \emptyline
-    {
-        \centering
-        \begin{tabular}{l|c|l}
-            Keyword & Bytes [\texttt{sizeof()}] & Range \\
+    \begin{customcenter}[-5pt]
+        \begin{tabular}{l|c|c|l}
+            & \multicolumn{2}{c|}{Bytes [\texttt{sizeof()}]} & \\
             \hline
-            \texttt{bool} & 1 & [True,False]\\
-            \texttt{unsigned char} & 1 & $[0, 2^8)$\\
-            \texttt{\optionalkeyword{(signed)} char} & 1 & $[2^7 - 1, 2^7)$ \\
-            \texttt{unsigned int} & 4 & $[0, 2^{32})$ \\
-            \texttt{\optionalkeyword{(signed)} int} & 4 &  $[2^{31} - 1, 2^{31})$ \\
-            \texttt{long} & 8 &  $[2^{63} - 1, 2^{63})$ \\
-            \texttt{float} & 4 & Implementation-based \\
-            \texttt{double} & 8 & Implementation-based \\
-            \texttt{void} & & \\
+            Keyword & \texttt{g++7.5} & \texttt{msvc++19} & Range \\
+            \hline
+            \texttt{bool} & 1 & 1 & [True,False]\\
+            \texttt{unsigned char} & 1 & 1 & $[0, 2^8)$\\
+            \texttt{\optionalkeyword{(signed)} char} & 1 & 1 & $[2^7 - 1, 2^7)$ \\
+            \texttt{unsigned int} & 4 & 4 & $[0, 2^{32})$ \\
+            \texttt{\optionalkeyword{(signed)} int} & 4 & 4 & $[2^{31} - 1, 2^{31})$ \\
+            \texttt{long} & 8 & 4 & $[2^{63} - 1, 2^{63})$ \\
+            \texttt{float} & 4 & 4 & Implementation-based \\
+            \texttt{double} & 8 & 8 & Implementation-based \\
+            \texttt{void} & \multicolumn{2}{c|}{Does not apply} & Does not apply \\
         \end{tabular}
-    }
-    \emptyline
-    \emptyline
-    \textbf{Operators}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
-        \item Order of assignment is \textbf{left to right}, always\\ \inlinecode{int x = y = z = 42;}
+    \end{customcenter}
+    \emptyspace\\
+    \colorfulsection{Operators}\vspace{-5pt}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item Order of assignment is always \textbf{left to right}, \inlinecode{int x = y = 42;}
         \item Arithmetic \inlinecode{+, -, *, /, \%}
         \item Bitwise \inlinecode{\&, |, $\wedge$, $\sim$, <<, >>}
         \item Logical \inlinecode{!, \&\&, ||}
         \item Relational \inlinecode{==, !=, >, <, >=, <=}
-        \item Compound assignment \inlinecode{+=, -=, *=, /=, \%=}\\ \inlinecode{<<=, >>=, \&=, |=}
+        \item \stack{Compound \\ Assignment} \inlinecode{+=, -=, *=, /=, \%=} \inlinecode{<<=, >>=, \&=, |=}
         \item Pre-Post (In/De)crement
         {
             \begin{lstlisting}
@@ -44,9 +43,9 @@
         \item Ternary \inlinecode{condition ?\hspace{5pt}option1:option2;}
         \item Object size in bytes \inlinecode{sizeof()}
     \end{itemize}
-    \textbf{Statement and Flow Control}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \colorfulsection{Statement and Flow Control}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item Generic statements \inlinecode{\curlybracket{statement1; statement2; statement3;}}
         \item Control if \inlinecode{if \parenthesis{condition} statement;}
         \item Control while \inlinecode{while \parenthesis{expression} statement;}
@@ -61,31 +60,29 @@
                 {
                     case constant1: statement; break;
                     case constant2: statement; break;
-                    .
-                    .
-                    .
+                    ...
                     default: statement; break;
                 }
             \end{lstlisting}
         }
     \end{itemize}
-    \textbf{Functions}
+    \colorfulsection{Functions}
     \emptyline
     \inlinecode{type name\parenthesis{parameter1, parameter2, ...}\curlybracket{ statements; }}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item Parameters are passed \textbf{by value} (creates a copy) by default
-    \end{itemize}
-\end{minipage}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hspace{5pt}
-%%%%%%%%%% Page 1 - Col 2 %%%%%%%%%%
-\begin{minipage}[t]{0.485\textwidth}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
         \item \inlinecode{\optionalkeyword{const} type \&} to pass by reference
         \item Can be optimized (if small) using the \inlinecode{inline} keyword
         \item It can be made \textbf{recursive}
+    \end{itemize}
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{10pt}
+%%%%%%%%%% Page 1 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item Same name but different parameters types define \textbf{overloading}
         \begin{lstlisting}
             void prototype(unsigned int x) {};
@@ -97,21 +94,58 @@
                 return; 
             }
         \end{lstlisting}
-        \item Can use \textbf{templates} to maintain a method independent of data type \\ \inlinecode{template <typename T>} \\ \inlinecode{T function(\optionalkeyword{const} T a, \optionalkeyword{const} T b) \curlybracket{ statements; } }
+        \item Deciding correct function to use between 2 (or more) objects at \textbf{runtime} is done via \textbf{virtual} keyword
+        \item Compiler decides virtual functions via \textbf{vtable}
+        \begin{customcenter}[-5pt]
+            \begin{tikzpicture}
+                \draw[step=1cm,white,very thin] (0,0) grid (9.5,2.75);
+                \node[] (nodea) at (1.0, -0.1) {$\substack{\text{\textbf{Overhead of}}\\\text{\textbf{one pointer size}}}$};
+                \node[rectangle, minimum width=2cm, minimum height=0.75cm, text centered, draw=black, fill=cyan!10] (nodev) at (1.25,0.6) {$\substack{\text{\textbf{V}}\\\text{Vector\_container}}$};
+                \node[rectangle, minimum width=2cm, minimum height=0.75cm, text centered, draw=black, fill=cyan!10] (nodel) at (1.25,2.15) {$\substack{\text{\textbf{L}}\\\text{List\_container}}$};
+                \begin{scope}
+                    \node[right of=nodev,xshift=1.5cm,yshift=0.425cm] (nodev1) {\scriptsize \textbf{vtable}};
+                    \node[rectangle,below of=nodev1,minimum width=1cm,minimum height=0.4cm,draw,yshift=0.6cm] (nodev2) {};
+                    \node[rectangle,below of=nodev2,minimum width=1cm,minimum height=0.4cm,draw,yshift=0.6cm] (nodev3) {};
+                    \node[rectangle,below of=nodev3,minimum width=1cm,minimum height=0.4cm,draw,yshift=0.6cm] (nodev4) {};
+                    \node[rectangle,right of=nodev2,minimum height=0.1cm,draw,xshift=2.5cm] (nodev2t) {\tiny Vector\_container::operator[]()};
+                    \node[rectangle,right of=nodev3,minimum height=0.1cm,draw,xshift=2.5cm] (nodev3t) {\tiny Vector\_container::size()};
+                    \node[rectangle,right of=nodev4,minimum height=0.1cm,draw,xshift=2.5cm] (nodev4t) {\tiny Vector\_container::$\sim$Vector\_container()};
+                \end{scope}
+                \begin{scope}
+                    \node[right of=nodel,xshift=1.5cm,yshift=0.4cm] (nodel1) {\scriptsize \textbf{vtable}};
+                    \node[rectangle,below of=nodel1,minimum width=1cm,minimum height=0.4cm,draw,yshift=0.6cm] (nodel2) {};
+                    \node[rectangle,below of=nodel2,minimum width=1cm,minimum height=0.4cm,draw,yshift=0.6cm] (nodel3) {};
+                    \node[rectangle,below of=nodel3,minimum width=1cm,minimum height=0.4cm,draw,yshift=0.6cm] (nodel4) {};
+                    \node[rectangle,right of=nodel2,minimum height=0.1cm,draw,xshift=2.5cm] (nodel2t) {\tiny List\_container::operator[]()};
+                    \node[rectangle,right of=nodel3,minimum height=0.1cm,draw,xshift=2.5cm] (nodel3t) {\tiny List\_container::size()};
+                    \node[rectangle,right of=nodel4,minimum height=0.1cm,draw,xshift=2.5cm] (nodel4t) {\tiny List\_container::$\sim$List\_container()};
+                \end{scope}
+                \draw[arrow] (nodev) -- (nodev2);
+                \draw[arrow] (nodel) -- (nodel2);
+                \draw[arrow] (nodev2) -- (nodev2t);
+                \draw[arrow] (nodev3) -- (nodev3t);
+                \draw[arrow] (nodev4) -- (nodev4t);
+                \draw[arrow] (nodel2) -- (nodel2t);
+                \draw[arrow] (nodel3) -- (nodel3t);
+                \draw[arrow] (nodel4) -- (nodel4t);
+                \draw[arrow] (nodea.west) |- (nodev);
+                \draw[arrow] (nodea.west) |- (nodel);
+            \end{tikzpicture}
+        \end{customcenter}
+        \item \textbf{Templates} maintain a method independent of the data type \\ \inlinecode{template <typename T>} \\ \inlinecode{T function(\optionalkeyword{const} T a, \optionalkeyword{const} T b) \curlybracket{ statements; } }
         \item To call a template function \\ \inlinecode{function \optionalkeyword{<template\_arguments>}\parenthesis{function\_arguments};} 
         \begin{lstlisting}
-            // The following template is to avoid
-            // writing these 2 functions
+            // The following template is to avoid writing
             // 1. int sum(int a, int b) { return a + b; }
             // 2. float sum(float a, float b) { return a + b; }
             template <typename T> 
             T sum(T a, T b) { return a + b; }
             int main() 
             {
-            sum(1, 2) // Deduces to use int version of template
-            sum(1.0f, 2) // Will not compile due miss inferencing
-            sum<float>(1.0f, 2.0f) // Redundant infer but OK 
-            return; 
+                sum(1, 2) // Deduces to use int version of template
+                sum(1.0f, 2) // Will not compile due miss inferencing
+                sum<float>(1.0f, 2.0f) // Redundant infer but OK 
+                return; 
             }
         \end{lstlisting}
         \item Templates must be determined at \textbf{compile time}
@@ -120,15 +154,15 @@
             T multiply(T value) { return value * N; }
             int main 
             {
-            multiply<int, 2>(10); // At compile time returns 20
-            multiply<int, 3>(10); // Similar but returning 30
-            return; 
+                multiply<int, 2>(10); // At compile time returns 20
+                multiply<int, 3>(10); // Similar but returning 30
+                return; 
             }
         \end{lstlisting}
     \end{itemize}
-    \textbf{Scopes}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \colorfulsection{Scopes}\vspace{-5pt}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item \textbf{static} storage $\mapsto$ global variable $\mapsto$ init to zero
         \item \textbf{automatic} storage $\mapsto$ local variable $\mapsto$ undetermined init
         \item outside any block $\mapsto$ global scope $\mapsto$ \textbf{global variable}

@@ -3,9 +3,9 @@
 \colorfulheader{\texttt{C++} programming}
 
 \begin{minipage}[t]{0.485\textwidth}
-    \textbf{Arrays}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \colorfulsection{Arrays}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item \inlinecode{type array\_name\bracket{\#elements}} $\mapsto$ declaration
         \item \inlinecode{array\_name\bracket{array\_index}} $\mapsto$ accessing
         \item Initialization does not need to be \quotes{complete}
@@ -76,8 +76,8 @@
         \end{lstlisting}
         \item An alternative for raw arrays in \inlinecode{C++} is the container \inlinecode{std::array<type, size>}, which can be accessed via the \inlinecode{\#include <array>} header
     \end{itemize}
-    \textbf{Pointers}
-    \begin{itemize}
+    \colorfulsection{Pointers}
+    \begin{itemize}[leftmargin=*]
         \item \inlinecode{type *} represents a \textbf{pointer} to a type
         \item \inlinecode{\&} is the \textbf{reference} operator and can be read as \quotes{address of}
         \item \inlinecode{*} is the \textbf{dereference} operator and can be read as \quotes{value pointed by}
@@ -90,11 +90,11 @@
     \end{itemize}
 \end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hspace{5pt}
+\hspace{10pt}
 %%%%%%%%%% Page 2 - Col 2 %%%%%%%%%%
 \begin{minipage}[t]{0.485\textwidth}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item Pointers can be manipulated \quotes{arithmetically}
         \begin{lstlisting}
             void console_log_p(int * p) { printf("%p:%d, ", p, *p); }
@@ -155,9 +155,9 @@
         \inlinecode{void *} $\mapsto$ can point to somewhere
         \item Pointer to function \\ \inlinecode{type \parenthesis{*name}(parameters) = function\_name;}
     \end{itemize}
-    \textbf{Dynamic Memory}
-    \begin{itemize}
-        \setlength\itemsep{1pt}
+    \colorfulsection{Dynamic Memory}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
         \item Uses keyword \inlinecode{new} to allocate memory as in \\ \inlinecode{pointer = new type} or \inlinecode{pointer = new type\bracket{\#elements}}
         \item To release memory use \inlinecode{delete} or \inlinecode{delete[]} keyword
         \begin{lstlisting}
