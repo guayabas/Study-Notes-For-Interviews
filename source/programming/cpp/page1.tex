@@ -49,7 +49,7 @@
         \item Control if \inlinecode{if \parenthesis{condition} statement;}
         \item Control while \inlinecode{while \parenthesis{expression} statement;}
         \item Control do-while \inlinecode{do \curlybracket{statement} while \parenthesis{condition};}
-        \item For iteration \inlinecode{for \parenthesis{declaration : range} statement;}
+        \item For iteration \inlinecode{for \parenthesis{declaration :\hspace{5pt}range} statement;}
         \item Jump statements \inlinecode{break; continue; goto
         \optionalkeyword{label};}
         \item Selection
@@ -70,10 +70,10 @@
     \inlinecode{type name\parenthesis{parameter1, parameter2, ...}\curlybracket{ statements; }}
     \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
-        \item Parameters are passed \textbf{by value} (creates a copy) by default
-        \item \inlinecode{\optionalkeyword{const} type \&} to pass by reference
-        \item Can be optimized (if small) using the \inlinecode{inline} keyword
-        \item It can be made \textbf{recursive}
+        \item Parameters are passed \textbf{by value} (creates a copy) \textbf{by default}
+        \item \inlinecode{\optionalkeyword{const} type \&} to pass by reference (makes alias)
+        \item \inlinecode{\optionalkeyword{const} type *} to pass pointer (memory location)
+        \item Can be optimized using the \inlinecode{inline} keyword
     \end{itemize}
 \end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -82,6 +82,7 @@
 \begin{minipage}[t]{0.485\textwidth}
     \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
+        \item It can be made \textbf{recursive}
         \item Same name but different parameters types define \textbf{overloading}
         \begin{lstlisting}
             void prototype(unsigned int x) {};
@@ -131,14 +132,13 @@
                 \draw[arrow] (nodea.west) |- (nodel);
             \end{tikzpicture}
         \end{customcenter}
-        \item \textbf{Templates} maintain a method independent of the data type \\ \inlinecode{template <typename T>} \\ \inlinecode{T function(\optionalkeyword{const} T a, \optionalkeyword{const} T b) \curlybracket{ statements; } }
-        \item To call a template function \\ \inlinecode{function \optionalkeyword{<template\_arguments>}\parenthesis{function\_arguments};} 
+        \item \textbf{Templates} maintain a method independent of the data type \\ \inlinecode{template <typename T>} \\ \inlinecode{T f(\optionalkeyword{const} T a, \optionalkeyword{const} T b) \curlybracket{ statements; } }
+        \item To call a template function \inlinecode{f \optionalkeyword{<template\_args>}\parenthesis{f\_args};} 
         \begin{lstlisting}
             // The following template is to avoid writing
             // 1. int sum(int a, int b) { return a + b; }
             // 2. float sum(float a, float b) { return a + b; }
-            template <typename T> 
-            T sum(T a, T b) { return a + b; }
+            template <typename T> T sum(T a, T b) { return a + b; }
             int main() 
             {
                 sum(1, 2) // Deduces to use int version of template
@@ -170,7 +170,7 @@
         int foo; // global variable
         int do_something() { int foo; } // local variable 
         \end{lstlisting}
-        \item Name collisions can be prevented with namespace keyword \inlinecode{namespace identifier \curlybracket{ named\_objects}}
+        \item Name collisions can be prevented with namespace keyword \inlinecode{namespace identifier \curlybracket{ named\_objects }}
         \item Access of namespace is with qualifier \inlinecode{::} \\ \inlinecode{namespace gg \curlybracket{ int x }} $\mapsto$ \inlinecode{gg::x} access x
      \end{itemize}
 \end{minipage}

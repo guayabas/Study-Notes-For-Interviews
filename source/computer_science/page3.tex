@@ -1,0 +1,243 @@
+%%%%%%%%%% Page 3 - Col 1 %%%%%%%%%%
+\newpage
+\colorfulheader{computer science}
+
+\begin{minipage}[t]{0.485\textwidth}
+    To improve time complexity, \textbf{memoization} is required
+    \begin{lstlisting}
+        unordered_map<int,int> memo;
+        int dpRecursiveWithMemo(int i)
+        {
+            if (i <= 2) return i; // base case
+            if (memo.find(i) == memo.end())
+            {
+                // recurrence
+                memo[i] = dpRecursive(i - 1) + dpRecursive(i - 2);
+            }
+            return memo[i];
+        }
+        int countSteps(int n) { return dpRecursiveWithMemo(n); }
+    \end{lstlisting}
+    Which converts the time complexity to $\mathcal{O}\parenthesisA{n}$.\\
+
+    One can also change the above \textbf{Top-Down} to a \textbf{Bottom-Up} implementation. The key for it is just to modify the recursion for an iteration while preserving the 3 steps to solve a DP problem, i.e.
+    \begin{enumerate}
+        \setlength\itemsep{0pt}
+        \item \textbf{Data Structure} \texttt{dp[i]}, where \texttt{dp} is an array
+        \item \textbf{Recurrence} \texttt{dp[i] = dp[i - 1] + dp[i - 2]}
+        \item \textbf{Base Case} \texttt{dp[1] = 1}, \texttt{dp[2] = 2}
+    \end{enumerate}
+    Thus, an implementation of the bottom-up version would be
+    \begin{lstlisting}
+        int countSteps(int n)
+        {
+            if (n <= 2) return n;
+            vector<int> dp(n + 1, 0); // data structure
+            dp[1] = 1; // base case
+            dp[2] = 2; // base case
+            for (int i = 3; i <= n; i++)
+            {
+                dp[i] = dp[i - 1] + dp[i - 2]; // recurrence
+            }
+            return dp[n];
+        }
+    \end{lstlisting}
+    Notice how for this problem \texttt{dp} requires to be of length $n + 1$. This implementation would have the same complexities as before, i.e. $\mathcal{O}\parenthesisA{n}$ for time and space.\\
+
+    Lastly, one can improve the space complexity to be constant by noticing that at each step the iterative approach only cares about the \textbf{previous 2 steps}. Therefore, removing the array \texttt{dp} the \textbf{optimized solution for the climbing stairs problem is}
+    \begin{lstlisting}
+        int countStepsOptimized(int n)
+        {
+            if (n <= 2) return n;
+            step1 = 1; // base case
+            step2 = 2; // base case
+            for (int i = 3; i <= n; i++)
+            {
+                int nextStep = (step1 + step2); // recurrence
+                step1 = step2;
+                step2 = nextStep;
+            }
+            return step2;
+        }
+    \end{lstlisting}
+    Which makes a $\mathcal{O}\parenthesisA{1}$ space complexity.
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \colorfulsection{Sorting}
+    \begin{customcenter}[3pt]
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            Algorithm & Optimal & In-Place & Stable \\
+            \hline
+            Selection sort & No & Yes & No \\
+            Quicksort & No & Yes & No \\
+            Mergesort & Yes & No & Yes \\
+            Heapsort & Yes & Yes & No \\
+            \hline
+        \end{tabular}
+    \end{customcenter}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item \textbf{Selection sort} is a \quotes{panic sort} (easy to implement)
+        \item It follows from the fact that finding the minimum of an array takes $\mathcal{O}\parenthesisA{n}$ time
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                \node[draw] (n1) at (0,0) {\underline{Find first min} of array};
+                \node[draw,text width=2.5cm,text centered,below of=n1,yshift=-0.15cm] (n2){\underline{Position of min} at init of array?};
+                \node[draw,text width=1.75cm,text centered,right of=n2,xshift=2cm,yshift=-1.0cm] (n3) {\underline{SWAP} \\ \textbf{min$\leftrightarrow$init}};
+                \node[draw,text width=3.5cm,text centered,below of=n2,yshift=-1.25cm,xshift=-0cm] (n4) {Assume \underline{smaller array} from next element};
+                \draw[arrow] (n1) -- (n2);
+                \draw[arrow] (n2) -| node[anchor=south,xshift=-0.85cm] {no} (n3);
+                \draw[arrow] (n3) |- (n4);
+                \draw[arrow] (n2) -- node[anchor=east] {yes} (n4);
+                \draw[arrow] ($(n4.west)-(0.4,0.0)$) node[anchor=south,yshift=1.75cm,rotate=90] {Repeat} |- (n1.west);
+                \draw[thick] ($(n4.west)-(0.4,0.0)$) -- (n4.west);
+            \end{tikzpicture}
+        \end{customcenter}
+    \end{itemize}
+    \vspace{-5pt}
+    \begin{lstlisting}
+        // For example, if we have the array [2,0,2,1,1,0]
+        // step 1
+        //      min value: 0, init: 0, pos: 1 -> swap (0,1)
+        //      [0,2,2,1,1,0]
+        // step 2
+        //      min value: 0, init: 1, pos: 5 -> swap (1,5)
+        //      [0,0,2,1,1,2]
+        // step 3
+        //      min value: 1, init: 2, pos: 2
+        //      [0,0,1,2,1,2]
+        // step 4
+        //      min value: 1, init: 3, pos: 4 -> swap (3,4)
+        //      [0,0,1,1,2,2]
+        // step 5
+        //      min value: 2, init: 4, pos: 4
+        //      [0,0,1,1,2,2]
+        // step 5
+        //      min value: 2, init: 5, pos: 5
+        //      [0,0,1,1,2,2]
+        int SelectionSort(const vector<int> & nums)
+        {
+            for (int j = 0; j < nums.size(); ++j)
+            {
+                int minIndexPosition = j;
+                for (int i = j + 1; i < nums.size(); ++i)
+                {
+                    if (nums[i] < nums[minIndexPosition])
+                    {
+                        minIndexPosition = i;
+                    }
+                }
+                if (minIndexPosition != j)
+                {
+                    swap(nums[j], nums[minIndexPosition]);
+                }
+            }
+        }        
+    \end{lstlisting}
+\end{minipage}
+\newpage
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item \textbf{Quicksort} is a \quotes{family} of algorithms that are \textbf{divide and conquer}
+        \item The different types are based on selection of \textbf{partition scheme}
+    \end{itemize}
+    \begin{customcenter}[0pt]
+        \begin{tikzpicture}
+            \node[draw,text centered,text width=3.5cm] (n1) at (0,0) {Array with bounds $\left[b,e\right)$ has 1 element? };
+            \node[draw,below of=n1,yshift=-0.25cm,xshift=2.75cm,text centered,text width=2.75cm] (n2) {\textbf{Return} \\ (Already sorted)};
+            \node[draw,below of=n1,yshift=-1.75cm,xshift=0.0cm,text centered,text width=4.75cm] (n3) {\underline{Do partition $q$} \\ (Given pivot $p$, make 2 arrays such that $p > q$ and $p < q$)};
+            \node[draw,below of=n3,yshift=-0.4cm,xshift=-2.75cm,text width=3.0cm, text centered] (n4) {Array with bounds $\left[b,q\right)$};
+            \node[draw,below of=n3,yshift=-0.4cm,xshift=+2.75cm,text width=3.0cm, text centered] (n5) {Array with bounds $\left[q + 1,e\right)$};
+            \node[draw,below of=n3,yshift=-1.25cm] (n6) {Recurse};
+            \draw[arrow] (n1) -- (n3);
+            \draw[arrow] (n1) -| (n2);
+            \draw[arrow] (n3) -| (n4);
+            \draw[arrow] (n3) -| (n5);
+            \draw[arrow] (n4) |- (n6);
+            \draw[arrow] (n5) |- (n6);
+            \draw[thick] ($(n6.south)-(0.0,0.33)$) -| ($(n1.west)-(2.8,0.0)$);
+            \draw[thick] (n6.south) -- ($(n6.south)-(0.0,0.33)$);
+            \draw[arrow] ($(n1.west)-(2.8,0.0)$) -- (n1.west);
+        \end{tikzpicture}
+        \begin{lstlisting}
+            // For example, if we have the array [2,0,2,1,1,0]            
+            // b = 0, e = 6 [call stack 0]
+            //     pivot = 5, partition = 0
+            //     v[0]: 2 <= 0 :v[5] X
+            //     v[1]: 0 <= 0 :v[5] -> [0,2,2,1,1,0] partition = 1
+            //     v[2]: 2 <= 0 :v[5] X
+            //     v[3]: 1 <= 0 :v[5] X
+            //     v[4]: 2 <= 0 :v[5] X
+            // [0,0,2,1,1,2] return partition = 1
+            // b = 0, e = 1 -> Do nothing, 1 element [call stack 1]
+            // b = 2, e = 6 [call stack 1]
+            //     pivot = 5, partition = 2
+            //     v[2]: 2 <= 2 :v[5] -> [0,0,2,1,1,2] partition = 3
+            //     v[3]: 1 <= 2 :v[5] -> [0,0,2,1,1,2] partition = 4
+            //     v[4]: 1 <= 2 :v[5] -> [0,0,2,1,1,2] partition = 5
+            // [0,0,2,1,1,2] return partition = 5
+            // b = 2, e = 5 [call stack 2]
+            //     pivot = 4, partition = 2
+            //     v[2]: 2 <= 1 :v[4] X
+            //     v[3]: 1 <= 1 :v[4] -> [0,0,1,2,1,2] partition = 3
+            // [0,0,1,1,2,2] return partition = 3
+            // b = 2, e = 3 -> Do nothing, 1 element [call stack 3]
+            // b = 4, e = 5 -> Do nothing, 1 element [call stack 3]
+            // b = 6, e = 6 -> Do nothing, 0 element [call stack 2]
+            int QuickSort(vector<int> & nums, int b, int e)
+            {
+                if ((b - e) > 1)
+                {
+                    int q = DoPartition(nums, b, e);
+                    QuickSort(nums, b, q);
+                    QuickSort(nums, q + 1, e);
+                }
+            }
+            int DoPartition(vector<int> & nums, int b, int e)
+            {
+                int pivotIndex = e - 1;
+                int partitionIndex = b;
+                for (int i = b; i < pivotIndex; ++i)
+                {
+                    if (nums[i] <= nums[pivotIndex])
+                    {
+                        swap(nums[i], nums[paritionIndex++]);
+                    }
+                }
+                swap(nums[partitionIndex],nums[pivotIndex]);
+                return partitionIndex;
+            }
+        \end{lstlisting}
+    \end{customcenter}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item \textbf{Mergesort} is also a \textbf{divide and conquer} algorithm
+        \item \textbf{Optimal}, runs in $\mathcal{O}\parenthesisA{n\log n}$, but with $\mathcal{O}\parenthesisA{n}$ \textbf{extra space}
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                \node[draw,text centered,text width=3.5cm] (n1) at (0,0) {Array with bounds $\left[b,e\right)$ has 1 element? };
+                \node[draw,below of=n1,yshift=-0.25cm,xshift=2.75cm,text centered,text width=2.75cm] (n2) {\textbf{Return} \\ (Already sorted)};
+                \node[draw,below of=n1,yshift=-1.75cm,xshift=0.0cm,text centered,text width=4.75cm] (n3) {\underline{Find middle point $m$} \\ (Given pivot $p$, make 2 arrays such that $p > q$ and $p < q$)};
+                \node[draw,below of=n3,yshift=-0.4cm,xshift=-2.75cm,text width=3.0cm, text centered] (n4) {Array with bounds $\left[b,q\right)$};
+                \node[draw,below of=n3,yshift=-0.4cm,xshift=+2.75cm,text width=3.0cm, text centered] (n5) {Array with bounds $\left[q + 1,e\right)$};
+                \node[draw,below of=n3,yshift=-1.25cm] (n6) {Recurse};
+                \draw[arrow] (n1) -- (n3);
+                \draw[arrow] (n1) -| (n2);
+                \draw[arrow] (n3) -| (n4);
+                \draw[arrow] (n3) -| (n5);
+                \draw[arrow] (n4) |- (n6);
+                \draw[arrow] (n5) |- (n6);
+                \draw[thick] ($(n6.south)-(0.0,0.33)$) -| ($(n1.west)-(2.8,0.0)$);
+                \draw[thick] (n6.south) -- ($(n6.south)-(0.0,0.33)$);
+                \draw[arrow] ($(n1.west)-(2.8,0.0)$) -- (n1.west);
+            \end{tikzpicture}
+        \end{customcenter}
+    \end{itemize}
+\end{minipage}
+

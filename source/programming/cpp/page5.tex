@@ -79,8 +79,7 @@
         \item A \textbf{container} is an object that \textbf{stores a collection} of other objects
         \item The container \textbf{manages the storage space} for its elements and gives member \textbf{functions to access} them
         \item STL uses the namespace \inlinecode{std}
-        \item Can be subdivided in \textbf{four categories} \\ \\
-        \begin{raggedleft}
+        \begin{customcenter}[0pt]
             \begin{tabular}{|l|l|}
                 \hline
                 \multicolumn{2}{|c|}{\textbf{Sequence Containers}} \\
@@ -95,10 +94,8 @@
                 \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{n}$} \\
                 \hline
             \end{tabular}
-        \end{raggedleft}
-        \emptyline
-        \emptyline\\
-        \begin{raggedleft}
+        \end{customcenter}
+        \begin{customcenter}[0pt]
             \begin{tabular}{|l|l|}
                 \hline
                 \multicolumn{2}{|c|}{\textbf{\optionalkeyword{Ordered} Associative Containers}} \\
@@ -113,10 +110,8 @@
                 \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{\log n}$} \\
                 \hline
             \end{tabular}
-        \end{raggedleft}
-        \emptyline
-        \emptyline\\
-        \begin{raggedleft}
+        \end{customcenter}
+        \begin{customcenter}[0pt]
             \begin{tabular}{|l|l|}
                 \hline
                 \multicolumn{2}{|c|}{\textbf{Unordered Associative Containers}} \\
@@ -132,10 +127,8 @@
                 \multicolumn{2}{|c|}{\textbf{Worst case search} requires $O\parenthesisA{n}$ amortized} \\
                 \hline
             \end{tabular}
-        \end{raggedleft}
-        \emptyline
-        \emptyline\\
-        \begin{raggedleft}
+        \end{customcenter}
+        \begin{customcenter}[0pt]
             \begin{tabular}{|l|l|}
                 \hline
                 \multicolumn{2}{|c|}{\textbf{Container adaptors}} \\
@@ -149,6 +142,104 @@
                 \multicolumn{2}{|c|}{\textbf{Average search} requires $O\parenthesisA{n}$} \\
                 \hline
             \end{tabular}
-        \end{raggedleft}
+        \end{customcenter}
+        \begin{customcenter}[0pt]
+            \begin{tabular}{|l|l|l|}
+                \hline
+                & \cellcolor{blue!15}\inlinecode{vector} & \cellcolor{blue!15}\inlinecode{\optionalkeyword{forward\_}list} \\
+                \hline
+                \textbf{Memory} & Contiguous block & Random order \\
+                \hline
+                \textbf{Access} & Constant & Linear \\
+                \hline
+                \textbf{Element} & \multirow{2}{*}{None} & Pointers to \\
+                \textbf{Overhead} & & \texttt{next} and \optionalkeyword{\texttt{prev}} \\
+                \hline
+                \textbf{Resize} & Linear & Constant \\
+                \hline
+                \textbf{Safety} & Thread safe & Not thread safe \\
+                \hline
+                \textbf{Insertion} & $\mathcal{O}\parenthesisA{1}$ at end\textcolor{white}{aaa} & \multirow{2}{*}{At most $\mathcal{O}\parenthesisA{n}$} \\
+                \textbf{Deletion} & $\mathcal{O}\parenthesisA{n}$ otherwise & \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
+        \begin{customcenter}[0pt]
+            \begin{tabular}{|l|l|l|}
+                \hline
+                & \cellcolor{blue!15}\inlinecode{unordered\_map} & \cellcolor{blue!15}\inlinecode{map} \\
+                \hline
+                Order & Non-Sorted & Sorted \\
+                \hline
+                Implementation & Hash Table & Red-Black Tree \\
+                \hline
+                \multirow{2}{*}{Search} & $\mathcal{O}\parenthesisA{1}$ average & \multirow{2}{*}{$\mathcal{O}\parenthesisA{\log n}$} \\
+                & $\mathcal{O}\parenthesisA{n}$ worst & \\
+                \hline
+                Insertion & \multirow{2}{*}{Same as search} & $\mathcal{O}\parenthesisA{\log n}$ \\
+                Deletion & & + Rebalancing \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
+    \end{itemize}
+\end{minipage}
+\newpage
+\begin{minipage}[t]{0.485\textwidth}
+    \colorfulsection{Miscellaneous}
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item \textbf{Variables} are by \textbf{default mutable}, use the \inlinecode{const} keyword to make them immutable
+        \item The keyword \inlinecode{auto} can be useful to infer data types
+        \begin{lstlisting}
+            #include <ComplicatedLibraryAPI.h>
+            // Don't know type returning by API but can be deduced
+            auto MethodInAPI = IntersectionObjectAPI();
+            auto x = 1; // Infers x as an int
+            vector<int> v{1,2,3};
+            // STL iterator type is verbose, deduce it with auto
+            auto bi = v.begin()
+        \end{lstlisting}
+        \item \inlinecode{constexpr} means \quotes{\textbf{evaluate at compile time}}
+        \item RAII stands for \textbf{Resource Allocation It is Initialized}. It is an \quotes{abstract concept} for allocation$|$destruction of objects. An example are \inlinecode{unique\_ptr} and \inlinecode{shared\_ptr}
+        \item \textbf{Move semantic} is done by providing \textbf{Move constructor} and \textbf{Move assignment}
+        \item A move semantic allows \textbf{shallow copy}
+        \item The \inlinecode{std::move()} does move semantic but treat it as a \quotes{cast} and once an object is moved is considered expired
+        \item \inlinecode{variant} is a type-safe union
+        \item Prefer \textbf{separate compilation}
+        \begin{customcenter}[0pt]
+            \begin{tabular}{|c|c|c|}
+                \hline
+                \texttt{Usage.cpp} & \texttt{Vector.cpp} & \texttt{Vector.h}\\
+                \hline
+                Instatiation and use of & Implementation & \multirow{2}{*}{Interface} \\
+                objects from \texttt{Vector.cpp} & details & \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
+        \item \textbf{Avoid macros}. Including same header in multiple files can affect the meaning$|$behavior of a macro
+        \item STL algorithms (such as find, copy, sort, etc.) have a \textbf{parallel version} using the argument \inlinecode{std::execution::par}
+        \begin{lstlisting}
+            // Let v be an STL container
+            sort(v.begin(), v.end()); // Default, sequential
+            sort(std::execution::seq, v.begin(), v.end()); // Same as before
+            sort(std::execution::par, v.begin(), v.end()); // Parallel version
+        \end{lstlisting}
+        \item \inlinecode{std::array} has same performance as a \texttt{C} style array
+        \item For \inlinecode{vector}, the \textbf{access operator \inlinecode{[]} does not check bounds} as opposed to \inlinecode{.at()} 
+        \begin{lstlisting}
+            vector<int> v{1,2,3,4};
+            cout << v[10]; // Ok, will give some value but not throw
+            cout << v.at(10); // Error, terminate with out_of_range 
+        \end{lstlisting}
+        \item \inlinecode{.data()} method, for STL containers that support it, acts like a pointer to the first element
+        \begin{lstlisting}
+            void usePointer(int * ptr) { ... };
+            array<int,5> v{1,2,3,4,5};
+            usePointer(v); // Error, v is not an int *
+            usePointer(&v[0]); // Ok, pointer to 1st element
+            usePointer(v.data()); // Similar as before
+        \end{lstlisting}
+        \item \inlinecode{std::valarray} is a vector-like container that supports \textbf{element-wise operations}, \textbf{slicing}, and \textbf{shifting}. These operations are similar to what \texttt{Python} containers can offer.
+        \item Try \inlinecode{accumulate()}, \inlinecode{inner\_product()}, \inlinecode{partial\_sum()}, and \inlinecode{adjacent\_difference()} before writing a loop for computing a value from a sequence
     \end{itemize}
 \end{minipage}

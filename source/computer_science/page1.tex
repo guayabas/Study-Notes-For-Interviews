@@ -3,8 +3,8 @@
 \colorfulheader{computer science}
 
 \begin{minipage}[t]{0.485\textwidth}
-    \textbf{Bit Manipulation}
-    \begin{customcenter}[4pt]
+    \colorfulsection{Bit Manipulation}
+    \begin{customcenter}[2pt]
         \begin{tabular}{|c|c|c|c|c|c|}
              \hline
              \texttt{x} & \texttt{y} & \texttt{x \& y} & \texttt{x | y}& \texttt{x \string^ y} & {\raisebox{1.5pt}{\texttildelow}}\texttt{x} \\
@@ -19,58 +19,181 @@
              \hline
         \end{tabular}
     \end{customcenter}
-    \textbf{Data Structures}
-    \begin{itemize}
+    \colorfulsection{Data Structures}
+    \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
-        \item A \textbf{linked list} can be implemented as \\ 
-        {singly} \inlinecode{1->2->3->NULL} \\ 
-        {doubly} \inlinecode{NULL<-1<->2<->3->NULL} \\ 
-        {circular} \inlinecode{1->2->3->1} or \inlinecode{1<->2<->3<->1} 
-        \item The \textbf{queue} can be done \textbf{circular}. The $n + 1$ element is inserted in the $0$ index if it is empty
-        \item A \textbf{binary tree} (sometimes named only tree) is a hierarchical data structure that has \textbf{at most} 2 children
-        \item Representation for binary tree is \\ 
-        1. Data \inlinecode{node->data} \\ 
-        2. Pointer to left child \inlinecode{node->left} \\ 
-        3. Pointer to right child \inlinecode{node->right} 
+        \item A \textbf{linked list} can be implemented as
+        \begin{customcenter}[-2pt]
+            \begin{tabular}{|c|c|c|}
+                \hline
+                singly & doubly & circular \\
+                \inlinecode{1->2->3->$\varnothing$} & \inlinecode{$\varnothing$<-1<->2<->3->$\varnothing$} & $\substack{\text{\inlinecode{1->2->3->1}} \\ \text{\inlinecode{1<->2<->3<->1}}}$ \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
+        \item A \textbf{queue} can be done \textbf{circular}. The $n + 1$ element is inserted in the $0$ index if it is empty
+        \item A \textbf{binary tree} (aka tree) is a hierarchical data structure where each node has \textbf{at most} 2 children
+        \item Representation for binary tree
+        \begin{customcenter}[-2pt]
+            \begin{tabular}{|c|c|c|}
+                \hline
+                Data & Left child & Right child \\
+                \inlinecode{node->data} & \inlinecode{node->left} & \inlinecode{node->right} \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
         \item Traversing a binary tree can be done as \\ 
-        \textbf{Depth First} \\
-        \textcolor{white}{\hspace{2em}} Inorder (Left-Root-Right) \\
-        \textcolor{white}{\hspace{2em}} Preorder (Root-Left-Right) \\
-        \textcolor{white}{\hspace{2em}} Postorder (Left-Right-Root) \\ 
+        \textbf{Depth First}
+        \begin{customcenter}[-2pt]
+            \begin{tabular}{|c|c|c|}
+                \hline
+                Inorder & Preorder & Postorder \\
+                (L-Root-R) & (Root-L-R) & (L-R-Root) \\
+                \hline
+            \end{tabular}
+        \end{customcenter}
         \textbf{Breadth First} \\
-        \textcolor{white}{\hspace{2em}} Level order
+        Level order
         \item Maximum number of nodes of tree at level $l$ is $2^l$
-        \item For a tree of height $h$, the maximum number of nodes is $2^{\parenthesisA{h + 1}} - 1$
-        \item If not balanced the traversal complexity of a tree if height $h$ can be $O\parenthesisA{h}$
-        \item A \textbf{binary search tree} (bst) has the following properties \\
-        1. For each left subtree $\text{node}_l^{\text{value}} < \text{node}^{\text{value}}$\\
-        2. For each right subtree has $\text{node}_r^{\text{value}} > \text{node}^{\text{value}}$\\
-        3. The left and right subtree are also a bst
+        \item For a tree of height $h$ $\mapsto$ maximum number of nodes is $2^{\parenthesisA{h + 1}} - 1$
+        \item If not balanced the traversal complexity of a tree can be linear
+        \item A \textbf{balanced binary tree} is a binary tree in which the height of the left and right subtrees at any node differ \textbf{at most by one}
+        \item A \textbf{complete binary tree} has each level completely filled, except maybe for the last one which is partially filled left to right
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                \tikzstyle{treenode}=[circle,draw,minimum size=15pt]
+                \draw[step=1cm,white,very thin] (0,0) grid (9.5,-4);
+                \begin{scope}
+                    \node[treenode] at (0.5, -0.35) {} [sibling distance=1.5cm]
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=+0.25cm] {}
+                            }
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=-0.25cm] {}
+                                child {
+                                    node[treenode,xshift=-0.5cm,yshift=0.5cm] {}
+                                        child {
+                                            node[treenode,xshift=+0.5cm,yshift=0.5cm] {}
+                                        }
+                                }
+                            };
+                    \node[rectangle,draw] at (0.5, -4) {Binary};
+                \end{scope}
+                \begin{scope}
+                    \node[treenode] at (2.75, -0.35) {} [sibling distance=1.75cm]
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=+0.25cm] {}
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=+0.5cm] {}
+                                }
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=-0.5cm] {}
+                                }
+                            }
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=-0.25cm] {}
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=-0.25cm] {}
+                                }
+                        };
+                    \node[rectangle,draw] at (2.75, -4) {Complete};
+                \end{scope}
+                \begin{scope}
+                    \node[treenode] at (5.25, -0.35) {\tiny 5} [sibling distance=1.75cm]
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=+0.25cm] {\tiny 2}
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=+0.5cm] {\tiny 1}
+                                }
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=-0.5cm] {\tiny 4}
+                                        child {
+                                            node[treenode,yshift=0.5cm,xshift=-0.33cm] {\tiny 3}
+                                        }
+                                }
+                            }
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=-0.25cm] {\tiny 6}
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=+0.33cm] {\tiny 7}
+                                }
+                        };
+                    \node[rectangle,draw] at (5.25, -4) {BST};
+                \end{scope}
+                \begin{scope}
+                    \node[treenode] at (8.15, -0.35) {\tiny 50} [sibling distance=1.75cm]
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=+0.15cm] {\tiny 19}
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=+0.5cm] {\tiny 17}
+                                        child {
+                                            node[treenode,yshift=0.5cm,xshift=+0.5cm]{\tiny 02}
+                                        }
+                                        child {
+                                            node[treenode,yshift=0.5cm,xshift=-0.5cm]{\tiny 07}
+                                        }
+                                }
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=-0.5cm] {\tiny 03}
+                                }
+                            }
+                        child {
+                            node[treenode,yshift=0.5cm,xshift=-0.15cm] {\tiny 36}
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=+0.5cm] {\tiny 25}
+                                }
+                                child {
+                                    node[treenode,yshift=0.5cm,xshift=-0.5cm] {\tiny 01}
+                                }
+                        };
+                    \node[rectangle,draw] at (8.15, -4) {Max Heap};
+                \end{scope}
+            \end{tikzpicture}
+        \end{customcenter}
+        \vspace{-5pt}
+        \item A \textbf{heap} is a data structure with the following properties
+        \vspace{-5pt}
+        \begin{enumerate}[leftmargin=*]
+            \setlength\itemsep{0pt}
+            \item A complete binary tree
+            \item The value of each node must be no greater than (or no less than) the value of its child nodes
+        \end{enumerate}
+        \vspace{-5pt}
+        \item A \textbf{binary search tree} (BST) has the following properties
+        \vspace{-5pt}
+        \begin{enumerate}[leftmargin=*]
+            \setlength\itemsep{0pt}
+            \item For each left subtree $\text{node}_l^{\text{value}} < \text{node}^{\text{value}}$
+            \item For each right subtree has $\text{node}_r^{\text{value}} > \text{node}^{\text{value}}$
+            \item The left and right subtree are also a BST
+        \end{enumerate}
+        \vspace{-5pt}
         \item A \textbf{graph} consist of \\ 
         1. Finite set of vertices called \textbf{nodes} \\ 
         2. Finite set of ordered pairs $\parenthesisA{u_i, v_j}$ called \textbf{edges} \\ \bracket{Directed graphs have $\parenthesisA{u_i, v_j}\neq\parenthesisA{v_j, u_i}$} \\ 
         3. An edge may contain a \textbf{weight} (also named value or cost)
-        \item For graphs it is common to represent \\ 
-        $V\mapsto\text{Number of vertices}$ \\
-        $E\mapsto\text{Number of edges}$
-        \item Graphs can be implemented as an \textbf{adjacency matrix} or as an \textbf{adjacency list}, having the following properties
-        \begin{center}
-        \begin{tabular}{|c|c|c|}
-        \hline
-             \textbf{Graph Implementation} & \textbf{Traversal} & \textbf{Space}  \\
-        \hline
-             Matrix & $O\parenthesisA{V^2}$ & $O\parenthesisA{V^2}$ \\
-        \hline
-             List & $O\parenthesisA{V + E}$ & $O\parenthesisA{V + E}$ \\
-        \hline
-        \end{tabular}
-        \end{center}
     \end{itemize}
 \end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hspace{5pt}
+\hspace{10pt}
 %%%%%%%%%% Page 1 - Col 2 %%%%%%%%%%
 \begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item Graphs are represented by $V\mapsto\text{Number of vertices}$ and $E\mapsto\text{Number of edges}$
+        \item Graphs can be implemented as an \textbf{adjacency matrix} or as an \textbf{adjacency list}, having the following properties
+    \end{itemize}
+    \begin{customcenter}[3pt]
+        \begin{tabular}{|c|c|c|}
+        \hline
+            \textbf{Graph Implementation} & \textbf{Traversal} & \textbf{Space}  \\
+        \hline
+            Matrix & $O\parenthesisA{V^2}$ & $O\parenthesisA{V^2}$ \\
+        \hline
+            List & $O\parenthesisA{V + E}$ & $O\parenthesisA{V + E}$ \\
+        \hline
+        \end{tabular}
+    \end{customcenter}
     For example, given the following graph
     \begin{customcenter}[2pt]
         \begin{tikzpicture}[x=1cm, y=1cm, xscale=0.6, yscale=0.6, baseline=5.5pt]
@@ -119,8 +242,8 @@
     \end{minipage}
     \emptyline
     \emptyline
-    \textbf{C Memory Layout}
-    \begin{itemize}
+    \colorfulsection{C Memory Layout}
+    \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
         \item Consists \quotes{typically} of 5 sections: 1. Text segment, 2. Initialized data segment, 3. Uninitialized data segment, 4. Heap, and 5. Stack
         \item The \textbf{text segment} contains the executable instructions. Can be places below the heap or stack regions. It is \textbf{read-only}
@@ -138,199 +261,4 @@
         \item The \textbf{heap} segment is where dynamic memory allocation takes place. Begins at the end of the bss segment and grows to larger addresses. In \inlinecode{C} language the heap area can be managed by \inlinecode{malloc, realloc} and \inlinecode{free} functions. \quotes{Contiguous} heap region is not mandatory for the previous C functions resulting in the possibility of \textbf{memory fragmentation}. Allocation happens at \textbf{execution of instruction}
     \end{itemize}
 \end{minipage}
-%%%%%%%%%% Page 2 %%%%%%%%%%
-\newpage
-\colorfulheader{computer science}
-\begin{customcenter}[0pt]
-    \begin{customcenter}[2pt]
-        \textbf{\textcolor{white}{\hspace{2em}}C Memory Layout Comparison}
-    \end{customcenter}
-    \begin{tabular}{|l|c|c|}
-         \hline
-         & \textbf{Stack} & \textbf{Heap} \\
-         \hline
-         \textbf{Memory} & Allocated in contiguous block & Allocated in any random order \\ 
-         \hline
-         \textbf{Allocation/Deallocation} & Automatic by compiler & Manual by programmer \\
-         \hline
-         \textbf{Cost} & Less & More \\
-         \hline
-         \textbf{Implementation} & Easy & Hard \\
-         \hline
-         \textbf{Access Time} & Faster & Slower \\
-         \hline
-         \textbf{Main Issue} & Small memory & Memory fragmentation \\
-         \hline
-         \textbf{Safety} & Thread safe & Not thread safe (data visible to all threads) \\
-         \hline
-         \textbf{Data Type} & Linear & Hierarchical \\
-         \hline
-    \end{tabular}
-    \emptyline
-    \vspace{5pt}
-    \begin{customcenter}[2pt]
-    \textbf{\textcolor{white}{\hspace{2em}}Data Structures Complexity}
-    \end{customcenter}
-    \begin{tabular}{|l|c|c|c|c|c|}
-         \hline
-         & Accessing & Search & Insertion & Deletion & Space \\
-         \hline
-         Array & \DSC{1} & \DSC{n} & \DSC{n} & \DSC{n} & \DSC{n} \\
-         \hline
-         Stack (LIFO) & \DSC{n} & \DSC{n} & \DSC{1} & \DSC{1} & \DSC{n} \\
-         \hline
-         Queue (FIFO) & \DSC{n} & \DSC{n} & \DSC{1} & \DSC{1} & \DSC{n} \\
-         \hline 
-         Linked List & \DSC{n} & \DSC{n} & \DSC{1} & \DSC{1} & \DSC{n} \\
-         \hline
-         Hash Table & & \DSC{1} & \DSC{1} & \DSC{1} & \DSC{n} \\
-         \hline
-         Binary Search Tree$^*$ & \DSC{h} & \DSC{h} & \DSC{h} & \DSC{h} & \DSC{n} \\
-         \hline
-         Binary Heap & Min Heap \DSC{1} & \DSC{log\text{ }n} & \DSC{log\text{ }n} & \DSC{log\text{ }n} & \DSC{n} \\
-         & Max Heap \DSC{1} & & & & \\
-         \hline
-    \end{tabular}
-    \\
-    $^*h$ would be the height of the tree. If tree is balanced $h = log\text{ } n$
-\end{customcenter}
-\vspace{5pt}
-%%%%%%%%%% Page 2 - Col 1 %%%%%%%%%%
-\begin{minipage}[t]{0.485\textwidth}
-    \textbf{Dynamic Programming}\\
-    \emptyline
-    Programming paradigm to \textbf{efficiently} explore all possible solutions to a problem. The problem should have one of the following characteristics
-    \begin{itemize}
-        \setlength\itemsep{0pt}
-        \item \underline{Problem can be broken down in \textbf{overlapping subproblems}}
-        
-        A rule of thumb is to notice if \textbf{future decisions depend on earlier decision}        
-        \item \underline{Problem has an \textbf{optimal substructure}}
-
-        For example the problem would ask optimal value (min or max) of something, here are some sample phrases
-        \begin{itemize}
-            \item What is the minimum cost of...
-            \item Compute the maximum profit from...
-            \item How many ways can you...
-            \item Find the longest possible...
-        \end{itemize}
-    \end{itemize}
-    Care has to be taken to not confuse a dynamic programming (DP) problem with \textbf{greedy} problems. Both would have optimal substructure but greedy does not have overlapping characteristic.\\
-    \emptyline
-    Two ways of implementing a DP algorithm,\\ 
-    \textbf{Top-Down} (recursion) or \textbf{Bottom-Up} (iterative).\\
-    
-    An important optimization in the top-down approach is \textbf{memoization} that stored previously computed subresults (commonly in a hash) to be re-used in the future, avoiding recomputation.
-    \begin{customcenter}[8pt]
-        \begin{tabular}{|c|c|c|}
-            \hline
-            & \textbf{Top-Down} & \textbf{Bottom-Up} \\
-            \hline
-            Pro & Easy to write & Runs faster\\
-            \hline
-            Con & Overhead & Order of operations matter\\
-            \hline
-        \end{tabular}
-    \end{customcenter}
-    In DP one can define a \textbf{state} as a \textbf{set of variables that can sufficiently describe a scenario}.
-\end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hspace{5pt}
-%%%%%%%%%% Page 2 - Col 2 %%%%%%%%%%
-\begin{minipage}[t]{0.485\textwidth}
-    To \quotes{\textit{produce}} an algorithm for a DP problem, one can follow the next steps:
-    \begin{enumerate}
-        \setlength\itemsep{0pt}
-        \item Create a \textbf{function} or \textbf{data structure} that will compute the answer of the problem for \textbf{every given state}
-        \item A \textbf{recurrence relation} to transition between states
-        \item Define \textbf{bases cases} to avoid inifinite recursion or faulty iterations
-    \end{enumerate}
-    For example, the following \textbf{climbing stairs} problem
-    \begin{tcolorbox}
-        You are climbing a staircase. It takes $n$ steps to reach the top. Each time you can either climb $1$ or $2$ steps. \textbf{How many distinct ways} can you climb to the top?
-    \end{tcolorbox}
-
-    Thus, the DP steps for above problem would be
-    \begin{enumerate}
-        \setlength\itemsep{0pt}
-        \item \textbf{Function} $dp(i)$, where $i$ represents how many ways to climb to the $i^{\text{th}}$ step.
-        \item \textbf{Recurrence} $dp(i) = dp(i - 1) + dp(i - 2)$, since according to the description one can climb either $1$ or $2$ steps each time.
-        \item \textbf{Base Case} $dp(1) = 1$ and $dp(2) = 2$, since there is 1 way (1 step) to climb to step 1 and 2 ways (1 step + 1 step and 2 step) to climb to step 2.
-    \end{enumerate}
-    A minimal implementation in C\texttt{++} of above steps is
-    \begin{lstlisting}
-        int dpRecursive(int i)
-        {
-            if (i <= 2) return i; // base case
-            // recurrence
-            return dpRecursive(i - 1) + dpRecursive(i - 2);
-        }
-        int countSteps(int n) { return dpRecursive(n); }
-    \end{lstlisting}
-    Although the code would solve the problem, it has poor complexities, $\mathcal{O}\parenthesisA{2^n}$ time and $\mathcal{O}\parenthesisA{n}$ space.
-\end{minipage}
-
-%%%%%%%%%% Page 3 - Col 1 %%%%%%%%%%
-\newpage
-\colorfulheader{computer science}
-
-\begin{minipage}[t]{0.485\textwidth}
-    To improve time complexity, \textbf{memoization} is required
-    \begin{lstlisting}
-        unordered_map<int,int> memo;
-        int dpRecursiveWithMemo(int i)
-        {
-            if (i <= 2) return i; // base case
-            if (memo.find(i) == memo.end())
-            {
-                // recurrence
-                memo[i] = dpRecursive(i - 1) + dpRecursive(i - 2);
-            }
-            return memo[i];
-        }
-        int countSteps(int n) { return dpRecursiveWithMemo(n); }
-    \end{lstlisting}
-    Which converts the time complexity to $\mathcal{O}\parenthesisA{n}$.\\
-
-    One can also change the above \textbf{Top-Down} to a \textbf{Bottom-Up} implementation. The key for it is just to modify the recursion for an iteration while preserving the 3 steps to solve a DP problem, i.e.
-    \begin{enumerate}
-        \setlength\itemsep{0pt}
-        \item \textbf{Data Structure} \texttt{dp[i]}, where \texttt{dp} is an array
-        \item \textbf{Recurrence} \texttt{dp[i] = dp[i - 1] + dp[i - 2]}
-        \item \textbf{Base Case} \texttt{dp[1] = 1}, \texttt{dp[2] = 2}
-    \end{enumerate}
-    Thus, an implementation of the bottom-up version would be
-    \begin{lstlisting}
-        int countSteps(int n)
-        {
-            if (n <= 2) return n;
-            vector<int> dp(n + 1, 0); // data structure
-            dp[1] = 1; // base case
-            dp[2] = 2; // base case
-            for (int i = 3; i <= n; i++)
-            {
-                dp[i] = dp[i - 1] + dp[i - 2]; // recurrence
-            }
-            return dp[n];
-        }
-    \end{lstlisting}
-    Notice how for this problem \texttt{dp} requires to be of length $n + 1$. This implementation would have the same complexities as before, i.e. $\mathcal{O}\parenthesisA{n}$ for time and space.\\
-
-    Lastly, one can improve the space complexity to be constant by noticing that at each step the iterative approach only cares about the \textbf{previous 2 steps}. Therefore, removing the array \texttt{dp} the \textbf{optimized solution for the climbing stairs problem is}
-    \begin{lstlisting}
-        int countStepsOptimized(int n)
-        {
-            if (n <= 2) return n;
-            step1 = 1; // base case
-            step2 = 2; // base case
-            for (int i = 3; i <= n; i++)
-            {
-                int nextStep = (step1 + step2); // recurrence
-                step1 = step2;
-                step2 = nextStep;
-            }
-            return step2;
-        }
-    \end{lstlisting}
-    Which makes a $\mathcal{O}\parenthesisA{1}$ space complexity.
-\end{minipage}

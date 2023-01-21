@@ -1,0 +1,131 @@
+%%%%%%%%%% Page 2 %%%%%%%%%%
+\newpage
+\colorfulheader{computer science}
+\begin{customcenter}[0pt]
+    \begin{customcenter}[2pt]
+        \textbf{\textcolor{white}{\hspace{2em}}C Memory Layout Comparison}
+    \end{customcenter}
+    \begin{tabular}{|l|c|c|}
+         \hline
+         & \textbf{Stack} & \textbf{Heap} \\
+         \hline
+         \textbf{Memory} & Allocated in contiguous block & Allocated in any random order \\ 
+         \hline
+         \textbf{Allocatio$|$Deallocation} & Automatic by compiler & Manual by programmer \\
+         \hline
+         \textbf{Cost} & Less & More \\
+         \hline
+         \textbf{Implementation} & Easy & Hard \\
+         \hline
+         \textbf{Access Time} & Faster & Slower \\
+         \hline
+         \textbf{Main Issue} & Small memory & Memory fragmentation \\
+         \hline
+         \textbf{Safety} & Thread safe & Not thread safe (data visible to all threads) \\
+         \hline
+         \textbf{Data Type} & Linear & Hierarchical \\
+         \hline
+    \end{tabular}
+    \emptyline
+    \vspace{5pt}
+    \begin{customcenter}[2pt]
+    \textbf{\textcolor{white}{\hspace{2em}}Data Structures Complexity}
+    \end{customcenter}
+    \begin{tabular}{|l|c|c|c|c|c|}
+         \hline
+         & Accessing & Search & Insertion & Deletion & Space \\
+         \hline
+         Array & \DSC{1} & \DSC{n} & \DSC{n} & \DSC{n} & \DSC{n} \\
+         \hline
+         Stack (LIFO) & \DSC{n} & \DSC{n} & \DSC{1} & \DSC{1} & \DSC{n} \\
+         \hline
+         Queue (FIFO) & \DSC{n} & \DSC{n} & \DSC{1} & \DSC{1} & \DSC{n} \\
+         \hline 
+         Linked List & \DSC{n} & \DSC{n} & \DSC{1} & \DSC{1} & \DSC{n} \\
+         \hline
+         Hash Table & & \DSC{1} & \DSC{1} & \DSC{1} & \DSC{n} \\
+         \hline
+         Binary Search Tree$^*$ & \DSC{h} & \DSC{h} & \DSC{h} & \DSC{h} & \DSC{n} \\
+         \hline
+         Binary Heap & Min Heap \DSC{1} & \DSC{log\text{ }n} & \DSC{log\text{ }n} & \DSC{log\text{ }n} & \DSC{n} \\
+         & Max Heap \DSC{1} & & & & \\
+         \hline
+    \end{tabular}
+    \\
+    $^*h$ would be the height of the tree. If tree is balanced $h = log\text{ } n$
+\end{customcenter}
+\vspace{5pt}
+%%%%%%%%%% Page 2 - Col 1 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    \colorfulsection{Dynamic Programming}\\
+    \emptyline
+    Programming paradigm to \textbf{efficiently} explore all possible solutions to a problem. The problem should have one of the following characteristics
+    \begin{itemize}
+        \setlength\itemsep{0pt}
+        \item \underline{Problem can be broken down in \textbf{overlapping subproblems}}
+        
+        A rule of thumb is to notice if \textbf{future decisions depend on earlier decision}        
+        \item \underline{Problem has an \textbf{optimal substructure}}
+
+        For example the problem would ask optimal value (min or max) of something, here are some sample phrases
+        \begin{itemize}
+            \item What is the minimum cost of...
+            \item Compute the maximum profit from...
+            \item How many ways can you...
+            \item Find the longest possible...
+        \end{itemize}
+    \end{itemize}
+    Care has to be taken to not confuse a dynamic programming (DP) problem with \textbf{greedy} problems. Both would have optimal substructure but greedy does not have overlapping characteristic.\\
+    \emptyline
+    Two ways of implementing a DP algorithm,\\ 
+    \textbf{Top-Down} (recursion) or \textbf{Bottom-Up} (iterative).\\
+    
+    An important optimization in the top-down approach is \textbf{memoization} that stored previously computed subresults (commonly in a hash) to be re-used in the future, avoiding recomputation.
+    \begin{customcenter}[8pt]
+        \begin{tabular}{|c|c|c|}
+            \hline
+            & \textbf{Top-Down} & \textbf{Bottom-Up} \\
+            \hline
+            Pro & Easy to write & Runs faster\\
+            \hline
+            Con & Overhead & Order of operations matter\\
+            \hline
+        \end{tabular}
+    \end{customcenter}
+    In DP one can define a \textbf{state} as a \textbf{set of variables that can sufficiently describe a scenario}.
+\end{minipage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hspace{5pt}
+%%%%%%%%%% Page 2 - Col 2 %%%%%%%%%%
+\begin{minipage}[t]{0.485\textwidth}
+    To \quotes{\textit{produce}} an algorithm for a DP problem, one can follow the next steps:
+    \begin{enumerate}
+        \setlength\itemsep{0pt}
+        \item Create a \textbf{function} or \textbf{data structure} that will compute the answer of the problem for \textbf{every given state}
+        \item A \textbf{recurrence relation} to transition between states
+        \item Define \textbf{bases cases} to avoid inifinite recursion or faulty iterations
+    \end{enumerate}
+    For example, the following \textbf{climbing stairs} problem
+    \begin{tcolorbox}
+        You are climbing a staircase. It takes $n$ steps to reach the top. Each time you can either climb $1$ or $2$ steps. \textbf{How many distinct ways} can you climb to the top?
+    \end{tcolorbox}
+
+    Thus, the DP steps for above problem would be
+    \begin{enumerate}
+        \setlength\itemsep{0pt}
+        \item \textbf{Function} $dp(i)$, where $i$ represents how many ways to climb to the $i^{\text{th}}$ step.
+        \item \textbf{Recurrence} $dp(i) = dp(i - 1) + dp(i - 2)$, since according to the description one can climb either $1$ or $2$ steps each time.
+        \item \textbf{Base Case} $dp(1) = 1$ and $dp(2) = 2$, since there is 1 way (1 step) to climb to step 1 and 2 ways (1 step + 1 step and 2 step) to climb to step 2.
+    \end{enumerate}
+    A minimal implementation in C\texttt{++} of above steps is
+    \begin{lstlisting}
+        int dpRecursive(int i)
+        {
+            if (i <= 2) return i; // base case
+            // recurrence
+            return dpRecursive(i - 1) + dpRecursive(i - 2);
+        }
+        int countSteps(int n) { return dpRecursive(n); }
+    \end{lstlisting}
+    Although the code would solve the problem, it has poor complexities, $\mathcal{O}\parenthesisA{2^n}$ time and $\mathcal{O}\parenthesisA{n}$ space.
+\end{minipage}

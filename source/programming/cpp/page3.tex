@@ -78,6 +78,12 @@
         \item \inlinecode{class \optionalkeyword{class\_name}} \\
         \inlinecode{\curlybracket{ \optionalkeyword{access\_n :}\hspace{4pt}type\_m member\_name\_m; } \optionalkeyword{object};}
         \item Creation of object $\mapsto$ Constructor \inlinecode{\parenthesis{}, =, \curlybracket{}} \\ Destruction of object $\mapsto$ Destructor \inlinecode{$\sim$}
+        \item Keyword \inlinecode{explicit} avoids implicit conversions in classes. Use it for constructor that takes one argument unless there is a good reason no to
+        \begin{lstlisting}
+            class Vector { public: explicit Vector(int size); };
+            Vector v1(7); // OK, use defined constructor
+            Vector v2 = 7 // Error, operator = not made by compiler
+        \end{lstlisting}
         \item Keyword \inlinecode{this} is a pointer to the object whose member functions is being executed
         \begin{lstlisting}
             class Rectangle 
