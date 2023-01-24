@@ -186,7 +186,7 @@
 \newpage
 \begin{minipage}[t]{0.485\textwidth}
     \colorfulsection{Miscellaneous}
-    \begin{itemize}
+    \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
         \item \textbf{Variables} are by \textbf{default mutable}, use the \inlinecode{const} keyword to make them immutable
         \item The keyword \inlinecode{auto} can be useful to infer data types
@@ -241,5 +241,101 @@
         \end{lstlisting}
         \item \inlinecode{std::valarray} is a vector-like container that supports \textbf{element-wise operations}, \textbf{slicing}, and \textbf{shifting}. These operations are similar to what \texttt{Python} containers can offer.
         \item Try \inlinecode{accumulate()}, \inlinecode{inner\_product()}, \inlinecode{partial\_sum()}, and \inlinecode{adjacent\_difference()} before writing a loop for computing a value from a sequence
+    \end{itemize}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \colorfulsection{Concurrency}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item The execution of \textit{several tasks} is named \textbf{concurrency}. Used to improve
+        \begin{enumerate}[leftmargin=*]
+            \setlength\itemsep{0pt}
+            \item \textbf{Throughput} $\mapsto$ Using several processors for a single computation
+            \item \textbf{Responsiveness} $\mapsto$ One part of a program progresses while another waits for a response        
+        \end{enumerate}
+        \vspace{-3pt}
+        \item \texttt{C++} \textbf{supports it via the STL} and is aimed to provide \textit{system$-$level concurrency} using multiple threads in a single address space (with a suitable \textit{memory model} and \textit{atomic operations})
+        \item  A \textbf{task} is a computation that can \textbf{potentially be executed concurrently} with other computations. A \textbf{thread}, \inlinecode{std::thread}, is a system$-$level representation of a task in a program. A task is an argument for a thread
+        \begin{customcenter}[0pt]
+            \begin{lstlisting}
+                void task1();
+                struct task2
+                {
+                    void operator()();
+                };
+                thread t1{task1}; // task1() executed in thread i
+                thread t2{task2()}; // task2()() executed in thread j
+                t1.join() // wait for t1 to finish
+                t2.join() // wait for t2 to finish
+            \end{lstlisting}
+        \end{customcenter}
+        \item \inlinecode{.join()} ensures thread completion
+        \item Given the single address space of threads, data can be communicated between them via \textbf{shared objects}. The communication is controlled by \textbf{locks}. A \textbf{process} differs from threads in not having (generally) shared data
+        \item To pass (and$|$or) return variables one can do passing arguments or pointers
+        \begin{customcenter}[0pt]
+            \begin{lstlisting}
+                typedef const vector<float> cvfloat;
+                void f(cvfloat & v, float * res); // place result in res
+                class F
+                {
+                public:
+                    F(cvfloat & v, float * res) : v{v}, res{res} {}
+                    void operator()(); // to be callable in thread input
+                private:
+                    cvfloat & v;
+                    float * res;
+                };
+                float g(cvfloat & v); // use return value
+                void Threads(cvfloat & v1, cvfloat & v2, cvfloat & v3)
+                {
+                    float res1, res2, res3;
+                    thread t1{f, cref{v1}, &res1};
+                    thread t2{F{v2, &res2}};
+                    thread t3{[&](){res3 = g(v3)}; // capture reference
+                    t1.join(); t2.join(); t3.join(); 
+                }
+            \end{lstlisting}
+        \end{customcenter}
+        \item The \inlinecode{cref()} function (or \inlinecode{ref()}) is a \textit{type function} from \inlinecode{<functional>} header required to pass a reference in the constructor of \texttt{thread}
+        \item The syntax \inlinecode{[\&]()\{...\}} for \texttt{thread t3} is a \textbf{lambda expression}. In general form it can be defined as \\ \inlinecode{\bracket{capture clause}\parenthesis{parameters}$\mapsto$return type\curlybracket{definition}}
+    \end{itemize}
+\end{minipage}
+\newpage
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item For sharing data between tasks use \inlinecode{mutex} (\textbf{mutual exclusive object}). A \texttt{thread} acquires a \texttt{mutex} via \inlinecode{lock()} and releases via \inlinecode{unlock()}
+        \begin{customcenter}[0pt]
+            \begin{lstlisting}
+                mutex m;
+                int sharedData;
+                // RAII is being used in f() scope
+                void f()
+                {
+                    scoped_lock threadLock{m}; // acquire mutex implicit
+                    sharedData += 42;
+                    // release mutex implicit
+                }
+            \end{lstlisting}
+        \end{customcenter}
+        \item Simultaneous access to resources can lead to \textbf{deadlocks}
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                \node[draw=red,thick,minimum width=3.0cm,minimum height=3.0cm](n){};
+                \node[below of=n,yshift=-0.75cm]{\textcolor{red}{Deadlock}};
+                \node[draw,xshift=-3cm](n1){Thread 1};
+                \node[draw,above of=n1,xshift=+3cm,minimum width=2.5cm,text centered](n11){Mutex 1};
+                \node[draw,xshift=+3cm](n2){Thread 2};
+                \node[draw,below of=n2,xshift=-3cm,minimum width=2.5cm,text centered](n21){Mutex 2};
+                \draw[arrow,blue] (n1) |- node[anchor=south] {Acquire} (n11);
+                \draw[arrow,orange] (n2) |- node[anchor=north] {Acquire} (n21);
+                \draw[arrow,blue!70] ($(n11)-(1.0,0.25)$) -- node[anchor=south,rotate=-90] {Release} ($(n21)-(1.0,-0.25)$);
+                \draw[arrow,blue!40] ($(n11)-(0.5,0.25)$) -- node[anchor=south,rotate=-90] {Acquire} ($(n21)-(0.5,-0.25)$);
+                \draw[arrow,orange!70] ($(n21)+(1.0,0.25)$) -- node[anchor=south,rotate=+90] {Release} ($(n11)+(1.0,-0.25)$);
+                \draw[arrow,orange!40] ($(n21)+(0.5,0.25)$) -- node[anchor=south,rotate=+90] {Acquire} ($(n11)+(0.5,-0.25)$);
+            \end{tikzpicture}
+        \end{customcenter}
+        \item Besides \inlinecode{scoped\_lock} there are \inlinecode{unique\_lock} (unique access) and \inlinecode{shared\_lock} (able to share among threads)
     \end{itemize}
 \end{minipage}

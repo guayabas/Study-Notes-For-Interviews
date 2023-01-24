@@ -219,25 +219,25 @@
         \setlength\itemsep{0pt}
         \item \textbf{Mergesort} is also a \textbf{divide and conquer} algorithm
         \item \textbf{Optimal}, runs in $\mathcal{O}\parenthesisA{n\log n}$, but with $\mathcal{O}\parenthesisA{n}$ \textbf{extra space}
-        \begin{customcenter}[0pt]
-            \begin{tikzpicture}
-                \node[draw,text centered,text width=3.5cm] (n1) at (0,0) {Array with bounds $\left[b,e\right)$ has 1 element? };
-                \node[draw,below of=n1,yshift=-0.25cm,xshift=2.75cm,text centered,text width=2.75cm] (n2) {\textbf{Return} \\ (Already sorted)};
-                \node[draw,below of=n1,yshift=-1.75cm,xshift=0.0cm,text centered,text width=4.75cm] (n3) {\underline{Find middle point $m$} \\ (Given pivot $p$, make 2 arrays such that $p > q$ and $p < q$)};
-                \node[draw,below of=n3,yshift=-0.4cm,xshift=-2.75cm,text width=3.0cm, text centered] (n4) {Array with bounds $\left[b,q\right)$};
-                \node[draw,below of=n3,yshift=-0.4cm,xshift=+2.75cm,text width=3.0cm, text centered] (n5) {Array with bounds $\left[q + 1,e\right)$};
-                \node[draw,below of=n3,yshift=-1.25cm] (n6) {Recurse};
-                \draw[arrow] (n1) -- (n3);
-                \draw[arrow] (n1) -| (n2);
-                \draw[arrow] (n3) -| (n4);
-                \draw[arrow] (n3) -| (n5);
-                \draw[arrow] (n4) |- (n6);
-                \draw[arrow] (n5) |- (n6);
-                \draw[thick] ($(n6.south)-(0.0,0.33)$) -| ($(n1.west)-(2.8,0.0)$);
-                \draw[thick] (n6.south) -- ($(n6.south)-(0.0,0.33)$);
-                \draw[arrow] ($(n1.west)-(2.8,0.0)$) -- (n1.west);
-            \end{tikzpicture}
-        \end{customcenter}
+        % \begin{customcenter}[0pt]
+        %     \begin{tikzpicture}
+        %         \node[draw,text centered,text width=3.5cm] (n1) at (0,0) {Array with bounds $\left[b,e\right)$ has 1 element? };
+        %         \node[draw,below of=n1,yshift=-0.25cm,xshift=2.75cm,text centered,text width=2.75cm] (n2) {\textbf{Return} \\ (Already sorted)};
+        %         \node[draw,below of=n1,yshift=-1.75cm,xshift=0.0cm,text centered,text width=4.75cm] (n3) {\underline{Find middle point $m$} \\ (Given pivot $p$, make 2 arrays such that $p > q$ and $p < q$)};
+        %         \node[draw,below of=n3,yshift=-0.4cm,xshift=-2.75cm,text width=3.0cm, text centered] (n4) {Array with bounds $\left[b,q\right)$};
+        %         \node[draw,below of=n3,yshift=-0.4cm,xshift=+2.75cm,text width=3.0cm, text centered] (n5) {Array with bounds $\left[q + 1,e\right)$};
+        %         \node[draw,below of=n3,yshift=-1.25cm] (n6) {Recurse};
+        %         \draw[arrow] (n1) -- (n3);
+        %         \draw[arrow] (n1) -| (n2);
+        %         \draw[arrow] (n3) -| (n4);
+        %         \draw[arrow] (n3) -| (n5);
+        %         \draw[arrow] (n4) |- (n6);
+        %         \draw[arrow] (n5) |- (n6);
+        %         \draw[thick] ($(n6.south)-(0.0,0.33)$) -| ($(n1.west)-(2.8,0.0)$);
+        %         \draw[thick] (n6.south) -- ($(n6.south)-(0.0,0.33)$);
+        %         \draw[arrow] ($(n1.west)-(2.8,0.0)$) -- (n1.west);
+        %     \end{tikzpicture}
+        % \end{customcenter}
     \end{itemize}
 \end{minipage}
 
