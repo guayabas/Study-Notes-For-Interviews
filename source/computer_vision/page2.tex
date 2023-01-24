@@ -3,16 +3,71 @@
 \begin{minipage}{0.485\textwidth}
     \begin{itemize}[leftmargin=*]
         \setlength\itemsep{0pt}
+        \item Some of the options to \textbf{identify} in an image
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                % \draw[step=1cm,black,very thin] (0,0) grid (8,1);
+                \node[draw,minimum width=2.0cm](n1){\includegraphics[scale=0.25]{include/images/a.png}};
+                \node[above of=n1,yshift=+0.1cm]{Classification};
+                \node[below of=n1,yshift=-0.1cm]{\scriptsize{cat}};
+                \node[draw,xshift=2.35cm,minimum width=2.0cm](n2){\includegraphics[scale=0.25]{include/images/b.png}};
+                \node[above of=n2,yshift=+0.15cm]{$\substack{\text{Classification}\\\text{and Localization}}$};
+                \node[below of=n2,yshift=-0.10cm]{\scriptsize$\text{cat}\hspace{-2pt}:\hspace{-2pt}[(x,y),w, h]$};
+                \node[draw,xshift=4.80cm,minimum width=2.0cm](n3){\includegraphics[scale=0.25]{include/images/c.png}};
+                \node[above of=n3,yshift=+0.15cm]{$\substack{\text{Object}\\\text{Detection}}$};
+                \node[below of=n3,yshift=-0.55cm]{\begin{tabular}{rl}\scriptsize\textcolor{red}{cat} & \scriptsize\hspace{-12pt}$:\hspace{-2pt}\{[(x_0,y_0),w_0,h_0],$ \\[-3pt] & \scriptsize\hspace{-5pt}$[(x_1,y_1),w_1,h_1]\}$ \\[-3pt] \scriptsize\textcolor{blue}{dog} & \scriptsize\hspace{-12pt}$:\hspace{-2pt}\{[(x_0,y_0),w_0,h_0]\}$\\[-3pt] \scriptsize\textcolor{green!50!black}{duck} & \scriptsize\hspace{-12pt}$:\hspace{-2pt}\{[(x_0,y_0),w_0,h_0]\}$ \end{tabular}};
+                \node[draw,xshift=7.40cm,minimum width=2.0cm](n4){\includegraphics[scale=0.25]{include/images/d.png}};
+                \node[above of=n4,yshift=0.15cm]{$\substack{\text{Instance}\\\text{Segmentation}}$};
+                \node[below of=n4,yshift=-0.95cm,text width=2.5cm,text centered]{\begin{tabular}{rl}\scriptsize\textcolor{red}{cat} & \scriptsize\hspace{-12pt}$:\hspace{-2pt}\{[(x_i^0,y_i^0)],$\\[-3pt] & \scriptsize\hspace{-5pt}$[(x_i^1,x_i^1)]\}$\\[-3pt] \scriptsize\textcolor{blue}{dog} & \scriptsize\hspace{-12pt}$:\hspace{-2pt}\{[(x_j,y_j)]\}$\\[-3pt] \scriptsize\textcolor{green!50!black}{duck} & \scriptsize\hspace{-12pt}$:\hspace{-2pt}\{[(x_k,y_k)]\}$\end{tabular}\\\scriptsize{$i^0=i_0^n,i^1=i_0^m$}\\\scriptsize{$j=j_0^p,k=k_0^q$}};
+                \draw[decorate,decoration={brace,mirror,amplitude=4pt},very thick] (-1.1,-3.20) -- (3.4,-3.20) node[black,pos=0.5,below=4pt,anchor=north]{Single Object};
+                \draw[decorate,decoration={brace,mirror,amplitude=4pt},very thick] (+3.6,-3.20) -- (8.6,-3.20) node[black,pos=0.5,below=4pt,anchor=north]{Multiple Objects};
+            \end{tikzpicture}
+        \end{customcenter}
         \item \textbf{Sensors} comparison
         \begin{customcenter}[0pt]
-            \begin{tabular}{|c|c|c|c|}
-                \hline
-                & Camera & RADAR & LIDAR \\
-                \hline
-                Pros & & & \\
-                Cons & & & \\
-                \hline
-            \end{tabular}
+            \begin{tikzpicture}
+                % \draw[step=1cm,black,very thin] (-5,-5) grid (5,5);
+                \begin{scope}
+                    \node[xshift=0cm,yshift=5.5cm,minimum width=8cm,fill=orange,minimum height=0.05cm](n1){};
+                    \node[above of=n1,yshift=-0.65cm]{CMOS Camera};
+                    \node[below of=n1,yshift=0.5cm](n11){darkness, direct sun, glare, harsh weather};
+                    \node[draw,very thick,left of=n11,xshift=-2.75cm,minimum width=0.5cm,minimum height=0.5cm](n111){};
+                    \draw[red, line width=1mm] 
+                        (n111.south west) -- (n111.north east)
+                        (n111.south east) -- (n111.north west);
+                \end{scope}
+                \begin{scope}
+                    \node[xshift=0cm,yshift=7.0cm,minimum width=8cm,fill=blue,minimum height=0.05cm](n1){};
+                    \node[above of=n1,yshift=-0.65cm]{RADAR: \textbf{RA}dio \textbf{D}etection \textbf{A}nd \textbf{R}anging};
+                    \node[below of=n1,yshift=0.5cm](n11){works in any condition};
+                    \node[draw,very thick,left of=n11,xshift=-2.75cm,minimum width=0.5cm,minimum height=0.5cm](n111){};
+                    \draw[green, line width=1mm] ($(n111.south west) + (0.25,0.0)$) -- (n111.north east);
+                    \draw[green, line width=1mm] ($(n111.south west) + (0.25,0.0)$) -- ($(n111.south west) + (0.0,0.2)$); 
+                \end{scope}
+                \begin{scope}
+                    \node[xshift=0cm,yshift=8.5cm,minimum width=8cm,fill=cyan,minimum height=0.05cm](n1){};
+                    \node[above of=n1,yshift=-0.65cm]{LIDAR: \textbf{LI}ght \textbf{D}etection \textbf{A}nd \textbf{R}anging};
+                    \node[below of=n1,yshift=0.5cm](n11){direct sun, harsh weather};
+                    \node[draw,very thick,left of=n11,xshift=-2.75cm,minimum width=0.5cm,minimum height=0.5cm](n111){};
+                    \draw[red, line width=1mm] 
+                        (n111.south west) -- (n111.north east)
+                        (n111.south east) -- (n111.north west);
+                \end{scope}
+                \begin{scope}[rotate=-30,scale=1.0]
+                    \tkzKiviatDiagram[lattice=5]{Color,Range,Contrast Resolution,Living Objects,3D\\Reconstruction,Seepd Detection}
+                    \tkzKiviatLine[thick,color=orange,opacity=0.5,fill=orange!20](5,5,5,3,2,2)
+                    \tkzKiviatLine[thick,color=blue,opacity=0.5,fill=blue!20](0,5,2,1,3,5)
+                    \tkzKiviatLine[thick,color=cyan,opacity=0.5,fill=cyan!20](0,3,2,2,5,4)
+                \end{scope}             
+            \end{tikzpicture}
         \end{customcenter}
+        \item One can obtain \textbf{depth estimation} from vision via
+        \vspace{-4pt}
+        \begin{itemize}[leftmargin=*]
+            \setlength\itemsep{0pt}
+            \item \textbf{Stereo} (using 2 or more images)
+            \item Structure From Motion \textbf{(SFM)} based on \textit{geometric triangulation} to get pointcloud Reconstruction
+            \item Monocular depth estimation via \textbf{ML} networks
+        \end{itemize}
     \end{itemize}
 \end{minipage}
