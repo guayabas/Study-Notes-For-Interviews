@@ -78,12 +78,14 @@
 %=======================================================
 \usetikzlibrary{decorations.pathreplacing,calligraphy}
 \usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows}
 \usetikzlibrary{shapes.misc}
 \usetikzlibrary{backgrounds}
 \usetikzlibrary{calc}
 \tikzstyle{fancynode}=[rectangle,rounded corners,minimum width=2cm,minimum height=0.6cm,draw=black]
 \tikzstyle{bluenode}=[scale=0.4,diamond,draw,fill=blue!30]
-\tikzstyle{arrow}=[thick,->,>=stealth]
+% \tikzstyle{arrow}=[thick,->,>=stealth]
 \tikzset
 {
     cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
@@ -140,7 +142,7 @@
 \newcommand{\charactercode}[1]{\texttt{'#1'}}
 \newcommand{\norm}[1]{||#1||}
 \newcommand{\colorfulheader}[1]{\colorbox{cyan!10}{\makebox[\textwidth][c]{\textsc{#1}}}\\}
-\newcommand{\colorfulsection}[1]{\colorbox{mint}{\parbox[c][10pt][c]{\textwidth}{\textbf{#1}}}}
+\newcommand{\colorfulsection}[1]{\colorbox{mint}{\parbox[c][10pt][c]{\textwidth}{\centering\textbf{#1}}}}
 \newcommand{\emptyline}{\\\vspace{-1pt}}
 \newcommand{\emptyspace}{\vspace{3pt}}
 \newenvironment{customcenter}[1][\topsep]{\setlength{\topsep}{#1}\par\kern\topsep\centering}{\par\kern\topsep}

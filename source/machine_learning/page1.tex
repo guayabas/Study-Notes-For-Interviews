@@ -59,6 +59,7 @@
     ML workflow
     \begin{customcenter}[0pt]
         \begin{tikzpicture}
+            \tikzstyle{arrow}=[thick,->,>=stealth]
             \node (start) [fancynode, text centered, fill=blue!30] {Raw Data};
             \node (features) [fancynode, text width=3.5cm, right of=start, xshift=2.5cm, fill=orange!30] {Features Engineering \\ $\ast$ Splitting \\ $\ast$ Normalization \\ $\ast$ Cleaning \\ $\ast$\hspace{4pt}$\dots$ };
             \node (training) [fancynode, below of=features, xshift=-1.5cm, yshift=-1cm, fill=green!30] {Training Data};

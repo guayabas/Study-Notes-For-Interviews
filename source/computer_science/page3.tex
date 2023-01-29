@@ -83,6 +83,7 @@
         \item It follows from the fact that finding the minimum of an array takes $\mathcal{O}\parenthesisA{n}$ time
         \begin{customcenter}[0pt]
             \begin{tikzpicture}
+                \tikzstyle{arrow}=[thick,->,>=stealth]
                 \node[draw] (n1) at (0,0) {\underline{Find first min} of array};
                 \node[draw,text width=2.5cm,text centered,below of=n1,yshift=-0.15cm] (n2){\underline{Position of min} at init of array?};
                 \node[draw,text width=1.75cm,text centered,right of=n2,xshift=2cm,yshift=-1.0cm] (n3) {\underline{SWAP} \\ \textbf{min$\leftrightarrow$init}};
@@ -146,6 +147,7 @@
     \end{itemize}
     \begin{customcenter}[0pt]
         \begin{tikzpicture}
+            \tikzstyle{arrow}=[thick,->,>=stealth]
             \node[draw,text centered,text width=3.5cm] (n1) at (0,0) {Array with bounds $\left[b,e\right)$ has 1 element? };
             \node[draw,below of=n1,yshift=-0.25cm,xshift=2.75cm,text centered,text width=2.75cm] (n2) {\textbf{Return} \\ (Already sorted)};
             \node[draw,below of=n1,yshift=-1.75cm,xshift=0.0cm,text centered,text width=4.75cm] (n3) {\underline{Do partition $q$} \\ (Given pivot $p$, make 2 arrays such that $p > q$ and $p < q$)};

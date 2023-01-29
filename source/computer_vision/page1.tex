@@ -7,6 +7,7 @@
     \begin{customcenter}[0pt]
         \resizebox{7.5cm}{7.5cm}{
         \begin{tikzpicture}
+            \tikzstyle{arrow}=[thick,->,>=stealth]
             \node (cv1) [draw,text centered,text width=7cm,fill=purple!20] {\textbf{Specify Image} \\ \vspace{-6pt}\rule{\textwidth}{1pt} \\ $[\underbrace{\texttt{RGB,CYK}}_{\text{Color Model}}\dots\underbrace{\texttt{PNG,JPG}}_{\text{Compression}}\dots\underbrace{\texttt{uint32,float}}_{\text{Data Type}}\dots]$};
             \node (cv2) [draw,text centered,text width=9.5cm,fill=blue!20,below of=cv1,yshift=-1.1cm] {\textbf{Pre-processing} \\ \vspace{-6pt}\rule{\textwidth}{1pt} \\ $[\underbrace{\text{Resize \textbar\hspace{3pt}Reshape}}_{\text{Aspect Ratio, ROI, etc.}}, \underbrace{\text{Transformations}}_{\text{Rotation, Reflection, etc.}}, \underbrace{\text{RGB To Gray}}_{\text{Mapping, Filtering, etc.}}]$};
             \node (cv3) [draw,text centered, text width=7cm,fill=green!20,below of=cv2,yshift=-2.5cm] {\textbf{Algorithm} \\ \vspace{-6pt}\rule{\textwidth}{1pt} \\ $\underbrace{\text{Transformations}}_{\substack{\text{Convolution} \\ \text{Discrete Fourier Transform} \\ \text{Histograms}}}$ \\ Camera Calibration \textbar\hspace{0pt} Undistorsion \\ Feature Extraction $|$ Segmentation \\ Optical Flow \textbar\hspace{0pt} Tracking \\ $\underbrace{\text{SFM}}_{\substack{\text{Structure} \\ \text{From Motion}}}$ \textbar\hspace{0pt} $\underbrace{\text{SLAM}}_{\substack{\text{Simultaneous} \\ \text{Location And} \\ \text{Mapping}}}$};
@@ -96,6 +97,7 @@
     \item \textbf{Image Registration} is the process of \textbf{matching features} between images. Matching can be done by comparing keypoints and finding \textbf{coresspondences}
     \begin{customcenter}[-3pt]
       \begin{tikzpicture}
+        \tikzstyle{arrow}=[thick,->,>=stealth]
         \tikzstyle{appnode}=[draw,minimum height=0.75cm,minimum width=1.5cm,text width=1.5cm,text centered]
         \node[draw,fill=red!40](n1){Image Registration};
         \node[appnode,below of=n1,xshift=-3.70cm](n1a){$\substack{\text{Motion}\\\text{Tracking}}$};

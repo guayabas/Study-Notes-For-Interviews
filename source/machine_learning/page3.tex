@@ -19,6 +19,7 @@
     \textbf{Mask RCNN} (Region-Based Convolutional Neuronal Network) is a state-of-the-art \textbf{deep learning} framework for instance segmentation in computer vision. It is done by adding \textit{Fully Convolutional Networks} to \textit{Faster R-CNN}
     \begin{customcenter}[3pt]
         \begin{tikzpicture}
+            \tikzstyle{arrow}=[thick,->,>=stealth]
             \tikzstyle{rcnnnode1} = [minimum width=6cm,fill=ProcessBlue!40,rounded corners,text=black]
             \tikzstyle{rcnnnode2} = [minimum width=2.5cm,fill=ProcessBlue!40,rounded corners,text=black]
             \node (rcnn1) [rcnnnode1] at (0,0) {Backbone};
@@ -41,6 +42,7 @@
     % neural network visual representation
     \begin{customcenter}[0pt]
         \begin{tikzpicture}
+            \tikzstyle{arrow}=[thick,->,>=stealth]
             % grid of pixels
             \draw[step=0.25cm,gray,very thin] (0,0) grid (3,3);
             \draw[<-] (0.00,-0.2) -- (1.25,-0.2);
@@ -148,6 +150,7 @@
     % max pooling activation functions
     \begin{customcenter}[8pt]
         \begin{tikzpicture}
+            \tikzstyle{arrow}=[thick,->,>=stealth]
             % anchor nodes
             \node (a) at (+4,2) {};
             \node (b) at (+5,2) {};

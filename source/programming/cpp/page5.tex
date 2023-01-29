@@ -322,6 +322,7 @@
         \item Simultaneous access to resources can lead to \textbf{deadlocks}
         \begin{customcenter}[0pt]
             \begin{tikzpicture}
+                \tikzstyle{arrow}=[thick,->,>=stealth]
                 \node[draw=red,thick,minimum width=3.0cm,minimum height=3.0cm](n){};
                 \node[below of=n,yshift=-0.75cm]{\textcolor{red}{Deadlock}};
                 \node[draw,xshift=-3cm](n1){Thread 1};
