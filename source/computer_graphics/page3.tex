@@ -135,3 +135,32 @@
         \end{tikzpicture}
     \end{customcenter}
 \end{minipage}
+\emptyline
+
+\begin{minipage}[t]{0.485\textwidth}
+    \colorfulsection{Ray Tracing}
+    \emptyline
+    
+    A color in the computer needs the discretization mapping
+    \begin{align*}
+    f = \left[0, 1\right)\mapsto\bracketA{0, \dots, 255} = i
+    \end{align*}
+    Due to non-linearity on screens one might do a \textbf{gamma correction}, $i = \text{\texttt{int}}\parenthesisA{256 * f^{\gamma}}$\emptyline
+
+    Given the ray $\mathcal{R} = \mathbf{a}_r + t\mathbf{u},\; t\in\left[0,\infty\right)$ and an implicit surface $f\parenthesisA{\mathbf{p}} = 0$ closed solutions for the \textbf{intersection surface-ray} are
+    \begin{customcenter}[5pt]
+        \begin{tabular}{|l|c|}
+            \hline
+            Surface & \textbf{Intersection}\\
+            \hline
+            \textbf{Plane} & \multirow{2}{*}{$\frac{\parenthesisA{\mathbf{a}_p - \mathbf{a}_r}\cdot\mathbf{n}}{\mathbf{u}\cdot\mathbf{n}}$} \\
+            $\parenthesisA{\mathbf{p} - \mathbf{a}_p}\cdot\mathbf{n} = 0$ & \\
+            \hline
+            \textbf{Sphere} & \multirow{2}{*}{$\frac{-\mathbf{u}\cdot\mathbf{b}\pm\bracketA{\parenthesisA{\mathbf{u}\cdot\mathbf{c}}^2 - \norm{\mathbf{u}}^2\parenthesisA{\norm{\mathbf{c}}^2 - r^2}}}{\norm{\mathbf{u}}^2}^{\frac{1}{2}}\begin{aligned}&\mathbf{b} = \parenthesisA{\mathbf{a}_r-\mathbf{u}}\\&\mathbf{c} = \parenthesisA{\mathbf{a}_r - \mathbf{a}_c}\end{aligned}$}\\
+            $\norm{\mathbf{p} - \mathbf{a}_c}^2 - r^2 = 0$ &  \\[3pt]
+            \hline
+            Triangle & \\
+            \hline
+        \end{tabular}
+    \end{customcenter}
+\end{minipage}
