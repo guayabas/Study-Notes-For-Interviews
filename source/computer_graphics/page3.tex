@@ -47,6 +47,7 @@
     \end{customcenter}
 \end{minipage}
 
+\hspace{-5pt}
 \begin{minipage}[t]{0.585\textwidth}
     \begin{customcenter}[5pt]
         \textbf{Client Side (CPU)}
@@ -65,7 +66,7 @@
             \node[xshift=-2.25cm] (vs) at (5, -3.25) {\footnotesize\texttt{\{GL\_VERTEX\_SHADER,"vs.glsl",}};
             \node[xshift=+1.95cm] (fs) at (5, -3.25) {\footnotesize\texttt{GL\_FRAGMENT\_SHADER,"fs.glsl"\}}};
             \node[rowcode] (shaderfunc) at (5,-4.0) {\texttt{GLuint programID = LoadShader(}\textbf{vertex}\texttt{,}\textbf{fragment}\texttt{);}};
-            \draw[decorate,decoration={brace,amplitude=8pt},thick] (5.20,-3.75) -- (8.30,-3.75);
+            \draw[decorate,decoration={brace,amplitude=8pt},thick] (5.55,-3.75) -- (8.35,-3.75);
             \node[rowcode] at (5,-4.5) {\texttt{glUseProgram(programID);}};
             \node at (3.8,-5.25) {\tiny{$\substack{\text{VERTEX SHADER}\\\text{POSITION}}$}};
             \node at (4.5,-6.75) {\tiny{$\substack{\text{PER VERTEX}\\\text{\# ELEMENTS}}$}};
@@ -93,15 +94,15 @@
     \begin{customcenter}[5pt]
         \textbf{Server Side (GPU)}
         \begin{tikzpicture}        
-            \begin{scope}[xshift=0.75cm]
+            \begin{scope}[xshift=0.95cm]
                 \tikzstyle{rowcodeshader} = [text height=0.25cm,text width=7.5cm] 
-                \node[rectangle,fill=yellow!30,minimum width=7.7cm,minimum height=3.9cm] at (3.65,-1.5){};
-                \node[rowcodeshader] at (4,+0.0) {\texttt{\#version 330}};
-                \node[rowcodeshader] at (4,-0.5) {\texttt{layout (location = 0) in vec4 aPosition;}};
-                \node[rowcodeshader] at (4,-1.0) {\texttt{void main()\{gl\_Position = aPosition;\}}};
-                \node[rowcodeshader] at (4,-2.0) {\texttt{\#version 330}};
-                \node[rowcodeshader] at (4,-2.5) {\texttt{out vec4 fColor;}};
-                \node[rowcodeshader] at (4,-3.0) {\texttt{void main()\{fColor = vec4(1,0,0,1);\}}};
+                \node[rectangle,fill=yellow!30,minimum width=8.0cm,minimum height=3.9cm] at (3.65,-1.5){};
+                \node[rowcodeshader] at (3.75,+0.0) {\texttt{\#version 330}};
+                \node[rowcodeshader] at (3.75,-0.5) {\texttt{layout (location = 0) in vec4 aPosition;}};
+                \node[rowcodeshader] at (3.75,-1.0) {\texttt{void main()\{gl\_Position = aPosition;\}}};
+                \node[rowcodeshader] at (3.75,-2.0) {\texttt{\#version 330}};
+                \node[rowcodeshader] at (3.75,-2.5) {\texttt{out vec4 fColor;}};
+                \node[rowcodeshader] at (3.75,-3.0) {\texttt{void main()\{fColor = vec4(1,0,0,1);\}}};
             \end{scope}
             \draw[step=1cm,black,very thin,transparent] (0,0) grid (8,-10);
             \begin{scope}[xshift=0.75cm]
@@ -137,30 +138,31 @@
 \end{minipage}
 \emptyline
 
-\begin{minipage}[t]{0.485\textwidth}
+\begin{minipage}[t]{0.55\textwidth}
     \colorfulsection{Ray Tracing}
-    \emptyline
-    
-    A color in the computer needs the discretization mapping
-    \begin{align*}
-    f = \left[0, 1\right)\mapsto\bracketA{0, \dots, 255} = i
-    \end{align*}
-    Due to non-linearity on screens one might do a \textbf{gamma correction}, $i = \text{\texttt{int}}\parenthesisA{256 * f^{\gamma}}$\emptyline
-
-    Given the ray $\mathcal{R} = \mathbf{a}_r + t\mathbf{u},\; t\in\left[0,\infty\right)$ and an implicit surface $f\parenthesisA{\mathbf{p}} = 0$ closed solutions for the \textbf{intersection surface-ray} are
-    \begin{customcenter}[5pt]
-        \begin{tabular}{|l|c|}
-            \hline
-            Surface & \textbf{Intersection}\\
-            \hline
-            \textbf{Plane} & \multirow{2}{*}{$\frac{\parenthesisA{\mathbf{a}_p - \mathbf{a}_r}\cdot\mathbf{n}}{\mathbf{u}\cdot\mathbf{n}}$} \\
-            $\parenthesisA{\mathbf{p} - \mathbf{a}_p}\cdot\mathbf{n} = 0$ & \\
-            \hline
-            \textbf{Sphere} & \multirow{2}{*}{$\frac{-\mathbf{u}\cdot\mathbf{b}\pm\bracketA{\parenthesisA{\mathbf{u}\cdot\mathbf{c}}^2 - \norm{\mathbf{u}}^2\parenthesisA{\norm{\mathbf{c}}^2 - r^2}}}{\norm{\mathbf{u}}^2}^{\frac{1}{2}}\begin{aligned}&\mathbf{b} = \parenthesisA{\mathbf{a}_r-\mathbf{u}}\\&\mathbf{c} = \parenthesisA{\mathbf{a}_r - \mathbf{a}_c}\end{aligned}$}\\
-            $\norm{\mathbf{p} - \mathbf{a}_c}^2 - r^2 = 0$ &  \\[3pt]
-            \hline
-            Triangle & \\
-            \hline
-        \end{tabular}
-    \end{customcenter}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item A color in the computer needs the \textbf{discretization mapping} $f = \left[0, 1\right)\mapsto\bracketA{0, \dots, 255} = i$, which can be achieved by $i = $\texttt{int}$\parenthesisA{256\times f}$
+        \item Due to \textbf{non-linearity on screens} ($i\hspace{-2pt}=\hspace{-2pt}128$ is not half as bright as $i\hspace{-2pt}=\hspace{-2pt}255$) one might do a \textbf{gamma correction} $i = \text{\texttt{int}}\hspace{-2pt}\parenthesisA{256 \times f^{\frac{1}{\gamma}}}$
+        \item The \textbf{parameter gamma} $\gamma$ is characterized by system but ranges from 1.7 to 2.3. For example, Linux and PCs use 2.2 while Macintosh uses 1.8
+        \item Given the ray $\mathcal{R} = \mathbf{o} + t\mathbf{d},\; t\in\left[0,\infty\right)$, some closed solutions for \textbf{intersection surface-ray} are
+        \begin{customcenter}[0pt]
+            \begin{tabular}{|l|c|}
+                \hline
+                Surface & \textbf{Intersection }\parenthesis{value of $t$}\\
+                \hline
+                \multirow{2}{*}{\textit{Plane} $\mapsto$ $\parenthesisA{\mathbf{p} - \mathbf{a}}\cdot\mathbf{n} = 0$} & \multirow{2}{*}{$\frac{\parenthesisA{\mathbf{a} - \mathbf{o}}\cdot\mathbf{n}}{\mathbf{d}\cdot\mathbf{n}}$} \\
+                & \\
+                \hline
+                \multirow{2}{*}{\textit{Sphere} $\mapsto$ $\norm{\mathbf{p} - \mathbf{c}}^2 - r^2 = 0$} & \multirow{2}{*}{$\frac{-\mathbf{d}\cdot\mathbf{b}\pm\bracketA{\parenthesisA{\mathbf{d}\cdot\mathbf{b}}^2 - \norm{\mathbf{d}}^2\parenthesisA{\norm{\mathbf{b}}^2 - r^2}}}{\norm{\mathbf{u}}^2}^{\frac{1}{2}}\begin{aligned}\mathbf{b} = \parenthesisA{\mathbf{o}-\mathbf{c}}\end{aligned}$} \\
+                & \\
+                \hline
+                & \\[-8pt]
+                \textit{Triangle} & \\[-3pt]
+                $\begin{aligned}\mathbf{p}_{\alpha\beta\gamma} &= \alpha\mathbf{a}\hspace{-2pt}+\hspace{-2pt}\beta\mathbf{b}\hspace{-2pt}+\hspace{-2pt}\gamma\mathbf{c}\\ &\hspace{-14pt}\underset{\alpha + \beta + \gamma = 1}{=}\hspace{-14pt}\mathbf{a}\hspace{-2pt}+\hspace{-2pt}\beta\parenthesisA{\mathbf{b}\hspace{-2pt}-\hspace{-2pt}\mathbf{a}}\hspace{-2pt}+\hspace{-2pt}\gamma\parenthesisA{\mathbf{c}\hspace{-2pt}-\hspace{-2pt}\mathbf{a}}\end{aligned}$ & $\begin{bmatrix} \uparrow & \hspace{-8pt}\uparrow & \hspace{-8pt}\uparrow \\ \parenthesisA{\mathbf{a} - \mathbf{b}} & \hspace{-8pt}\parenthesisA{\mathbf{a} - \mathbf{c}} & \hspace{-8pt}\mathbf{d} \\ \downarrow & \hspace{-8pt}\downarrow & \hspace{-8pt}\downarrow \end{bmatrix}\begin{bmatrix}\beta \\ \gamma \\ t\end{bmatrix}\hspace{-2pt}=\hspace{-2pt}\begin{bmatrix}\uparrow\\\parenthesisA{\mathbf{a} - \mathbf{o}}\\\downarrow\end{bmatrix}$ \\
+                & $\beta + \gamma < 1,\;\beta > 0,\;\gamma > 0$\\ 
+                \hline
+            \end{tabular}
+        \end{customcenter}
+        \end{itemize}    
 \end{minipage}
