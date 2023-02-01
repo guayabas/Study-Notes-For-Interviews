@@ -339,4 +339,79 @@
         \end{customcenter}
         \item Besides \inlinecode{scoped\_lock} there are \inlinecode{unique\_lock} (unique access) and \inlinecode{shared\_lock} (able to share among threads)
     \end{itemize}
+    \colorfulsection{\texttt{C++} versions features}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item \texttt{C++11} language features\vspace{-4pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{0pt}
+            \item Uniform and general initialization via \inlinecode{\curlybracket{}}\vspace{-2pt}
+            \item Type deduction \inlinecode{auto}
+            \item Guaranted constant expression \inlinecode{constexpr}
+            \item Range \texttt{for-statement}
+            \item \inlinecode{nullptr} as null pointer keyword\vspace{-2pt}
+            \item Scoped types \inlinecode{enum} $\mapsto$ \inlinecode{enum class}
+            \item Enabling move semantics
+            \item Lambdas
+            \item Variadic templates?
+            \item Unicode characters
+            \item \inlinecode{long long} integer type
+            \item Memory alignment controls \inlinecode{alignas} and \inlinecode{alignof}
+            \item Raw string literals
+            \item \inlinecode{\_\_func\_\_} as name (string) of current function
+            \item Namespaces \inlinecode{inline}?
+            \item Inheriting constructors            
+        \end{itemize}
+        \item \texttt{C++14} language features\vspace{-4pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{0pt}
+            \item Function return-type deductions
+            \item Binary literals?
+            \item Generic lambdas
+            \item \inlinecode{[[deprecated]]} attribute
+        \end{itemize}
+        \item \texttt{C++17} language features\vspace{-4pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{0pt}
+            \item Compile-time \inlinecode{if}
+            \item \inlinecode{constexpr} lambdas\vspace{-2pt}
+            \item Variables with \inlinecode{inline}?
+            \item \inlinecode{[[fallthrough]]}, \inlinecode{[[nodiscard]]}, \inlinecode{[[maybe\_unused]]}
+            \item \inlinecode{std::byte} type
+        \end{itemize}
+    \end{itemize}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item \texttt{C++11} STL features\vspace{-4pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \item Move semantics for containers
+            \item Singly-linked list \inlinecode{forward\_list}
+            \item Hash containers \\ \inlinecode{unordered\_map}, \inlinecode{unordered\_multimap} \\ \inlinecode{unordered\_set}, \inlinecode{unordered\_multiset}
+            \item Smart pointer \inlinecode{unique\_ptr}, \inlinecode{shared\_ptr}, and \inlinecode{weak\_ptr}
+            \item Concurrency \inlinecode{thread}, \inlinecode{mutex}, \texttt{locks}
+            \item \inlinecode{tuple} container
+            \item Regular expressions \inlinecode{regex}
+            \item Random numbers \texttt{distributions} and \texttt{engines}
+            \item Integer type names such as \inlinecode{int16\_t}, \inlinecode{uint32\_t}, etc.
+            \item Fixed-size contiguous container \inlinecode{array}
+            \item \inlinecode{string} to numeric values conversions
+            \item Time utilities \inlinecode{duration} and \inlinecode{time\_point}
+            \item Lower-level concurrency type \inlinecode{atomic}
+        \end{itemize}
+        \item \texttt{C++14} STL features\vspace{-4pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \item \inlinecode{shared\_mutex}
+            \item User-defined literals?
+        \end{itemize}
+        \item \texttt{C++17} STL features\vspace{-4pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \item File system \texttt{<filesystem>}
+            \item Parallel algorithms
+            \item Mathematical special functions
+            \item \inlinecode{variant} keyword
+        \end{itemize}
+    \end{itemize}
 \end{minipage}
