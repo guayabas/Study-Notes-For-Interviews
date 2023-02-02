@@ -411,6 +411,171 @@
 \end{minipage}
 
 \begin{minipage}[t]{0.485\textwidth}
-    \vspace{10pt}
+    \vspace{5pt}
     \colorfulsection{Lighting}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item \textit{Basic simplified} model is \textbf{Phong shading}. It consists of \textbf{3 terms}: \textit{ambient}, \textit{diffuse}, \textit{specular}
+        \item \textbf{Ambient} term is a simplistic model of global illumination. It uses a \textbf{constant} color multiplied by a factor (\textit{strength})
+        \begin{lstlisting}
+            #version 330 core
+            uniform vec3 objectcolor;
+            uniform vec3 lightcolor;
+            out vec4 fcolor;
+            void main() 
+            {
+                float ambientstrength = 0.25;
+                vec3 ambientterm =  (ambientstrength * lightcolor);
+                vec3 ambientshading = (ambientterm * objectcolor);
+                fcolor = vec4(ambientshading, 1.0);
+            }
+        \end{lstlisting}
+        \item \textbf{Diffuse} term uses the normal to a surface $\parenthesisA{\mathbf{n}}$, and the light vector $\parenthesisA{\mathbf{l}}$, [direction from the \textbf{point on a surface} $\parenthesisA{\mathbf{p}_s}$ to the \textbf{light position} $\parenthesisA{\mathbf{p}_l}$] to deduce the contribution with
+        \begin{align*}
+            \mathbf{n}\cdot\mathbf{l} = \norm{\mathbf{l}}\norm{\mathbf{n}}\cos\theta
+        \end{align*}
+        \vspace{-15pt}
+        \item Using normalized vectors the dot product becomes $\mathbf{\hat{n}}\cdot\mathbf{\hat{l}} = \cos\theta$, which is in the range $\bracketA{-1,+1}$
+        \item Clamping to positive values the \textbf{diffuse term} is \underline{$\max(0, \mathbf{\hat{n}}\cdot\mathbf{\hat{l}})$}
+    \end{itemize}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \vspace{5pt}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item Notice that we can choose $\mathbf{p}_l$ and $\mathbf{p}_s$ to be in \textbf{world coordinates}. There are different parts of the graphics pipeline to have both points in the same coordinate system but \textit{one standard} way is to have it in the \textit{fragment stage}
+        \item $\mathbf{p}_s$ at the fragment stage can be computed from the vertex stage using the transformation \inlinecode{model * aposition}, for the \inlinecode{uniform mat4 model} variable and the \inlinecode{vec3 aposition} vertex attribute
+        \item $\mathbf{p}_l$ can be given directly to the fragment shader as a \inlinecode{uniform vec3 lightposition} variable
+        \item Given the \textit{selected implementation} for $\mathbf{p}_l$ and $\mathbf{p}_s$, the normal vector $n$ also requires to be in \quotes{\textit{world coordinates}}
+        \item To do blindly \inlinecode{model * anormal}, for {\inlinecode{vec3 anormal}} a vertex attribute, \textbf{would be wrong} because\vspace{-4pt}
+        \begin{enumerate}[leftmargin=*]
+            \setlength\itemsep{0pt}
+            \item A \textbf{normal represents a direction} and not a point
+            \item Homogeneous coordinates for a direction has $w = 0$. This means that \textbf{translations} (last column in transformations $\mathbf{T}$) \textbf{do not affect} $\mathbf{n}$, so one can reduce $\mathbf{T}$ to $\mathbf{T}_{3\times 3}$
+            \item \textbf{Non-uniform scaling} changes the direction of $\mathbf{n}$ making it not perpendicular anymore to the surface resulting in light distortion
+        \end{enumerate}
+        \vspace{-3pt}
+        \item The solution is to use the \textbf{normal matrix}
+        \begin{align*}
+            \mathbf{N} \equiv \parenthesisA{\mathbf{T}_{3\times 3}^{-1}}^{\text{T}}
+        \end{align*}
+    \end{itemize}
+\end{minipage}
+\newpage
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item Follow the next diagram and shaders to do diffuse lighting
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                \draw[step=1cm,white,very thin,opacity=1.0] (-5,-1.5) grid (5,1);
+                \draw[orange!60!black,thick,fill=orange!60!black] (-2.75,-1) -- (2,-1) -- (2.75,-0.5) -- (-2.0,-0.5) -- (-2.75,-1);
+                \node[xshift=0.75cm,yshift=-0.1cm] at (2,-1) {Surface};
+                \draw[-{Latex[length=2.0mm]},thick] (0,-0.75) -- node[anchor=east,xshift=-0.05cm,yshift=-0.05cm]{$\theta$} node[anchor=west] {$\mathbf{n}$} (0,0.5);
+                \node[circle,draw=yellow!80!black,fill=yellow!80!black,minimum size=4pt,scale=1.0] (lp) at (-2,1){};
+                \node[circle,draw=black,fill=black,minimum size=1pt,scale=0.35] (sp) at (0,-0.75){};
+                \draw[black,rotate=90,thick,xshift=0.1cm] (0,0) arc (0:42:1);
+                \node[left of=lp,xshift=0.3cm] {Light}; 
+                \draw[-{Latex[length=2.0mm]},thick] (0,-0.75) -- node[anchor=west,yshift=0.6cm,xshift=-0.5cm]{$\mathbf{l} = \parenthesisA{\mathbf{p}_l - \mathbf{p}_s}$} (-2,1);
+                \node[below of=lp,yshift=0.5cm] {$\mathbf{p}_l$};
+                \node[right of=sp,xshift=-0.65cm] {$\mathbf{p}_s$};
+            \end{tikzpicture}
+        \end{customcenter}
+        \begin{lstlisting}
+            #version 330 core
+            in vec3 aposition;
+            in vec3 anormal;
+            out vec3 vposition;
+            out vec3 vnormal;
+            uniform mat3 normalmatrix;
+            uniform mat4 model;
+            uniform mat4 viewprojection;
+            void main() 
+            {
+                vnormal = (normalmatrix * anormal);
+                vposition = model * vec4(aposition, 1.0);
+                gl_Position = viewprojection * vposition;
+            }
+        \end{lstlisting}
+        \begin{lstlisting}
+            #version 330 core
+            in vec3 vnormal;
+            in vec3 vposition;
+            uniform vec3 objectcolor;
+            uniform vec3 lightposition;
+            out vec4 fcolor;
+            void main() 
+            {
+                vec3 n = normalize(vnormal);
+                vec3 l = normalize(lighposition - vposition);
+                vec3 diffuseterm =  (max(0, dot(n, l)) * lightcolor);
+                vec3 diffuseshading = (diffuseterm * objectcolor);
+                fcolor = vec4(diffuseshading, 1.0);
+            }
+        \end{lstlisting}
+        \item \textbf{Specular} term is \textbf{viewer dependent}
+        \begin{customcenter}[0pt]
+            \begin{tikzpicture}
+                \draw[step=1cm,white,very thin,opacity=1.0] (-5,-1.5) grid (5,1);
+                \draw[cyan!60!black,thick,fill=cyan!60!black] (-2.75,-1) -- (2,-1) -- (2.75,-0.5) -- (-2.0,-0.5) -- (-2.75,-1);
+                \node[xshift=0.75cm,yshift=-0.1cm] at (2,-1) {Surface};
+                \draw[-{Latex[length=2.0mm]},thick,red!60] (0,-0.75) -- node[black,yshift=0.2cm]{$\mathbf{r}$} (2,1);
+                \draw[-{Latex[length=2.0mm]},thick] (0,-0.75) -- node[anchor=west] {$\mathbf{n}$} (0,0.5);
+                \node[circle,draw=yellow!80!black,fill=yellow!80!black,minimum size=4pt,scale=1.0] (lp) at (-2,1){};
+                \node[circle,draw=black,fill=black,minimum size=1pt,scale=0.35] (sp) at (0,-0.75){};
+                \node[left of=lp,xshift=0.3cm] {Light}; 
+                \draw[-{Latex[length=2.0mm]},thick] (-2,1) -- node[anchor=east,yshift=-0.2cm,xshift=0.0cm]{$\mathbf{l} = \parenthesisA{\mathbf{p}_s - \mathbf{p}_l}$} (0,-0.75);
+                \node[below of=lp,yshift=0.5cm] {$\mathbf{p}_l$};
+                \node[right of=sp,xshift=-0.7cm,yshift=-0.15cm] {$\mathbf{p}_s$};
+                \draw[-{Latex[length=2.0mm]},thick,blue!80] (0,-0.75) -- node[black,xshift=-0.1cm,yshift=0.325cm]{$\phi$} (3,0);
+                \draw[xshift=3cm,rotate=25,thick] (0,+0.15) -- (0.25,0) node[xshift=0.65cm,rotate=20,yshift=0.2cm] {Viewer} node[yshift=-0.45cm,xshift=-0.8cm] {$\mathbf{v}$} node[yshift=-0.5cm] {$\mathbf{p}_v$} -- (0,-0.15);
+                \draw[black,rotate=00,thick,xshift=1.2cm,yshift=-0.45cm] (0,0) arc (0:35:1);
+            \end{tikzpicture}
+        \end{customcenter}
+        \item The specular term is represented by $\phi$ and using the dot product trick again it can be deduced as
+        \begin{align*}
+            (\max(0,\cos\phi))^{\gamma} = (\max(0,\mathbf{\hat{v}}\cdot\mathbf{\hat{r}}))^{\gamma}
+        \end{align*}
+        \item $\mathbf{\hat{v}}$ is the normalized \textbf{viewer direction}. It is computed from the viewer position $\mathbf{p}_v$ and the surface position $\mathbf{p}_s$
+        \begin{align*}
+            \mathbf{v} = (\mathbf{p}_v - \mathbf{p}_s)
+        \end{align*}
+        \item $\mathbf{\hat{r}}$ is the normalized \textbf{reflection direction}. The computation for the reflection follows from computing the rejection of $\mathbf{\hat{l}}$ from $\mathbf{\hat{n}}$
+        \begin{align*}
+            \mathbf{\hat{r}} = \mathbf{\hat{l}} - 2\mathbf{\hat{l}}_{||\mathbf{\hat{n}}} \equiv \mathbf{\hat{l}} - 2(\mathbf{\hat{l}}\cdot\mathbf{\hat{n}})\mathbf{\hat{n}}
+        \end{align*}
+        \item Notice how for the specular term $\mathbf{l}$ is the vector \textbf{from the light to the surface} as opposed to \textit{from the surface to the light} in the diffuse term 
+        \item The \textbf{parameter $\gamma$} is a \textit{power curve} value that makes the specular light to be \textbf{brightest} when $\mathbf{v}$ and $\mathbf{r}$ are \textbf{parallel} while decaying when moving the viewer from the reflection
+    \end{itemize}
+\end{minipage}
+\hspace{10pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \begin{itemize}[leftmargin=*]
+        \setlength\itemsep{0pt}
+        \item The reflection direction be computed directly in a shader via \inlinecode{reflect()} function
+        \begin{lstlisting}
+            #version 330 core
+            in vec3 vnormal;
+            in vec3 vposition;
+            in vec3 veye;
+            uniform vec3 objectcolor;
+            uniform vec3 lightposition;
+            uniform float gamma;
+            out vec4 fcolor;
+            void main() 
+            {
+                vec3 l = normalize(vposition - lightposition);
+                vec3 n = normalize(vnormal);
+                vec3 v = normalize(veye - vposition);
+                vec3 r = reflect(l, n);
+                vec3 specularterm =  pow(max(0, dot(v, r)), gamma);
+                vec3 color = (lightcolor * objectcolor);
+                vec3 specularshading = (specularterm * color);
+                fcolor = vec4(specularshading, 1.0);
+            }
+        \end{lstlisting}
+        \item All previous calculations can be done in \textit{view space}. The advantage of that is having the viewer position for free (as $(0,0,0)$). If using such space, relevant vectors need to be multiplied by the \textbf{view matrix} as well. Don't forget that in such case the normal matrix needs to be recomputed as well.
+        \item Previous implementation does lighting in the fragment shader. If computations are made in the vertex shader (you gain speed with fewer vertices than pixels but you lose smoothness as the fragments would be interpolated from the values of vertices) is called \textbf{Gouraud shading}
+    \end{itemize}
 \end{minipage}
