@@ -3,78 +3,95 @@
 \colorfulheader{computer graphics}
 
 \begin{minipage}[t]{\textwidth}
+    \vspace{-15pt}
     \begin{customcenter}[0pt]
-        \textbf{OpenGL Core Pipeline}
+        \colorfulsection{OpenGL Core Pipeline}
         \begin{tikzpicture}
             \tikzstyle{arrow}=[thick,->,>=stealth]
             % \draw[step=1cm,blue,very thin] (0,0) grid (20,+3);
             % \draw[step=1cm,red ,very thin] (0,0) grid (20,-3);
-            \node (descr1symbol) [ellipse,yshift=-2.5cm,fill=blue!30] {\textcolor{blue!30}{a}};
-            \node (descr1text) [right of=descr1symbol,xshift=0.95cm] {Supplied by the user};
-            \node (descr2symbol) [ellipse,yshift=-2.5cm,xshift=4.5cm,fill=green!30] {\textcolor{green!30}{a}};
-            \node (descr2text) [right of=descr2symbol,xshift=0.75cm] {Mandatory stages};
-            \node (descr3symbol) [ellipse,yshift=-2.5cm,xshift=8.5cm,fill=red!30] {\textcolor{red!30}{a}};
-            \node (descr3text) [right of=descr3symbol,xshift=0.85cm] {Non-programmable};
-            \node (input) [ellipse,minimum height=1cm,text centered,fill=blue!30] {VBO};
-            \node (gi) [rounded corners,above of=input,fill=cyan!30,minimum height=1cm,yshift=0.25cm] {$\substack{\text{Geometry}\\\text{Information}}$};
-            \node (input-text) [above of=gi,yshift=-0.25cm] {\textbf{INPUT}};
-            \node (vp) [rounded corners,minimum width=2.5cm,minimum height=1cm,right of=input,text centered,fill=green!30,xshift=1.25cm] {$\substack{\text{Vertex}\\\text{Processor}}$};
-            \node (vs) [ellipse,minimum height=1cm,minimum width=2cm,above of=vp,fill=blue!30,yshift=0.25cm] {$\substack{\text{Vertex}\\\text{Shader}}$};
-            \node (pa) [minimum width=4cm,minimum height=1cm,right of=vp,text centered,fill=red!30,xshift=2.75cm] {$\substack{\text{Primitive Assembly}\\\text{And Clipping}}$};
-            \node (gs) [ellipse,minimum height=1cm,minimum width=2cm,above left of=pa,yshift=0.5cm,fill=blue!30,xshift=-0.5cm] {$\substack{\text{Geometry}\\\text{Shader}}$};
-            \node (ts) [ellipse,minimum height=1cm,minimum width=2cm,above right of=pa,yshift=0.5cm,fill=blue!30,xshift=+0.5cm] {$\substack{\text{Tessellation}\\\text{Shader}}$};
-            \node (ra) [minimum width=2.5cm,minimum height=1cm,right of=pa,text centered,fill=red!30,xshift=2.8cm] {Rasterizer};
-            \node (fp) [rounded corners,minimum width=2.5cm,minimum height=1cm,right of=ra,text centered,fill=green!30,xshift=2cm] {$\substack{\text{Fragment}\\\text{Processor}}$};
-            \node (fs) [ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm,xshift=-1cm] {$\substack{\text{Fragment}\\\text{Shader}}$};
-            \node (td) [ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm,xshift=1cm] {$\substack{\text{Texture}\\\text{Data}}$};
-            \node (fb) [minimum width=2.5cm,minimum height=1cm,right of=fp,text centered,fill=blue!30,xshift=2cm] {Framebuffer};
-            \node (fbo) [ellipse,minimum width=1cm,minimum height=1cm,fill=blue!30,above of=fb,yshift=0.25cm] {FBO};            
-            \node (dt) [fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=-1.15cm] {$\substack{\text{Depth}\\\text{Test}}$};
-            \node (ab) [fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=+0.4cm] {$\substack{\text{Alpha}\\\text{Blending}}$};
-            \node (so) [fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=+2cm] {$\substack{\text{Stencil}\\\text{Operations}}$};
-            \draw [decorate,decoration = {brace,mirror,amplitude=10pt},ultra thick] (13.75,-1.8) -- (18.75,-1.8) node[black,pos=0.5,below=8pt,anchor=north]{Fragment Test (Seen, Discard, etc.)};
-            \node (display) [minimum width=2.5cm,minimum height=1cm,fill=cyan!30,right of=fb,xshift=2cm] {Display};
-            \node (output-text) [above of=display,yshift=-0.25cm] {\textbf{OUTPUT}};
-            % connections
-            \draw[arrow] (input) -- (vp);
-            \draw[arrow] (vp) -- (pa);
-            \draw[arrow] (pa) -- (ra);
-            \draw[arrow] (ra) -- (fp);
-            \draw[arrow] (fp) -- (fb);
-            \draw[arrow] (fb) -- (fbo);
-            \draw[arrow] (fb) -- (display);
-            \draw[arrow] (fs) -- (fp);
-            \draw[arrow] (td) -- (fp);
-            \draw[arrow] (gs) -- (pa);
-            \draw[arrow] (ts) -- (pa);
-            \draw[arrow] (vs) -- (vp);
-            \draw[arrow] (fbo) -- (td);
-            \draw[arrow] (gi) -- (input);
-            \draw[arrow] (dt) -- (fb);
-            \draw[arrow] (ab) -- (fb);
-            \draw[arrow] (so) -- (fb);
+            \begin{scope}[xshift=0.8cm]
+                \node (descr1symbol) [draw,ellipse,yshift=-2.5cm,fill=blue!30] {\textcolor{blue!30}{a}};
+                \node (descr1text) [right of=descr1symbol,xshift=0.95cm] {Supplied by the user};
+                \node (descr2symbol) [draw,ellipse,yshift=-2.5cm,xshift=4.5cm,fill=green!30] {\textcolor{green!30}{a}};
+                \node (descr2text) [right of=descr2symbol,xshift=0.75cm] {Mandatory stage};
+                \node (descr3symbol) [draw,ellipse,yshift=-2.5cm,xshift=8.5cm,fill=red!30] {\textcolor{red!30}{a}};
+                \node (descr3text) [right of=descr3symbol,xshift=0.85cm] {Non-programmable};
+                % Start of Pipeline
+                \node (input) [draw,ellipse,minimum height=1cm,text centered,fill=blue!30] {\footnotesize{VAO}};
+                \node (gi) [draw,rounded corners,above of=input,fill=cyan!30,minimum height=1cm,yshift=0.25cm] {$\substack{\text{Geometry}\\\text{Information}}$};
+                \node (input-text) [above of=gi,yshift=-0.25cm] {\textbf{INPUT}};
+                \node (vp) [draw,rounded corners,minimum width=2.7cm,minimum height=1cm,right of=input,text centered,fill=green!30,xshift=1.35cm] {$\substack{\text{Vertex}\\\text{Processor}}$};
+                \node [draw,rounded corners,minimum width=2.4cm,minimum height=0.1cm,below of=vp,yshift=0.2725cm,fill=blue!30] {\scriptsize{Vertex Specification}};
+
+                \node (vs) [draw,ellipse,minimum height=1cm,minimum width=2cm,above of=vp,fill=blue!30,yshift=0.25cm] {$\substack{\text{Vertex}\\\text{Shader}}$};
+
+                \node (vpp)[draw,minimum width=2.0cm,minimum height=1cm,fill=red!30,right of=vp,xshift=1.75cm] {$\substack{\text{Vertex}\\\text{Postprocessor}}$};
+                \node (pa) [draw,minimum width=2cm,minimum height=1cm,right of=vpp,text centered,fill=red!30,xshift=1.4cm] {$\substack{\text{Primitive}\\\text{Assembly}}$};
+
+                \node (gs) [draw,ellipse,minimum height=1cm,minimum width=2cm,above left of=pa,yshift=0.5cm,fill=blue!30,xshift=-0.5cm] {$\substack{\text{Geometry}\\\text{Shader}}$};
+                \node (ts) [draw,ellipse,minimum height=1cm,minimum width=2cm,above right of=pa,yshift=0.5cm,fill=blue!30,xshift=+0.5cm] {$\substack{\text{Tessellation}\\\text{Shader}}$};
+
+                \node (ra) [draw,minimum width=1.65cm,minimum height=1cm,right of=pa,text centered,fill=red!30,xshift=1.25cm] {\footnotesize{Rasterizer}};
+                \node (fp) [draw,rounded corners,minimum width=2.7cm,minimum height=1cm,right of=ra,text centered,fill=blue!30,xshift=1.6cm] {$\substack{\text{Fragment}\\\text{Processor}}$};
+                \node (fs) [draw,ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm,xshift=-1cm] {$\substack{\text{Fragment}\\\text{Shader}}$};
+                \node (td) [draw,ellipse,minimum height=1cm,minimum width=2cm,above of=fp,fill=blue!30,yshift=0.25cm,xshift=1cm] {$\substack{\text{Texture}\\\text{Data}}$};
+                \node (fb) [draw,minimum width=2.5cm,minimum height=1cm,right of=fp,text centered,fill=blue!30,xshift=2.0cm] {\footnotesize{Framebuffer}};
+                \node (fbo) [draw,ellipse,minimum width=1cm,minimum height=1cm,fill=blue!30,above of=fb,yshift=0.25cm] {\footnotesize{FBO}};            
+                \node (dt) [draw,fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.0cm,yshift=-0.25cm,xshift=-1.4cm] {$\substack{\text{Depth}\\\text{Test}}$};
+                \node (ab) [draw,fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=+0.0cm] {$\substack{\text{Alpha}\\\text{Blending}}$};
+                \node (so) [draw,fill=blue!30,below of=fb,minimum height=1cm,minimum width=1.5cm,yshift=-0.25cm,xshift=+1.7cm] {$\substack{\text{Stencil}\\\text{Operations}}$};
+                \draw [decorate,decoration = {brace,mirror,amplitude=10pt},ultra thick] (13.325,-1.8) -- (18.0,-1.8) node[black,pos=0.5,below=8pt,anchor=north]{$\substack{\text{Fragment}\\\text{Sample}}$ Operations (Seen, Discard, Scissor, etc.)};
+                \node (display) [rounded corners,draw,minimum width=2.0cm,minimum height=1cm,fill=cyan!30,right of=fb,xshift=1.7cm] {\footnotesize{Display}};
+                \node (output-text) [above of=display,yshift=-0.25cm] {\textbf{OUTPUT}};
+                % End of pipeline
+                % connections
+                \draw[arrow] (input) -- (vp);
+                \draw[arrow] (vp) -- (vpp);
+                \draw[arrow] (vpp) -- (pa);
+                \draw[arrow] (pa) -- (ra);
+                \draw[arrow] (ra) -- (fp);
+                \draw[arrow] (fp) -- (fb);
+                \draw[arrow] (fb) -- (fbo);
+                \draw[arrow] (fb) -- (display);
+                \draw[arrow] (fs) -- (fp);
+                \draw[arrow] (td) -- (fp);
+                \draw[arrow] (gs) -- (pa);
+                \draw[arrow] (ts) -- (pa);
+                \draw[arrow] (vs) -- (vp);
+                \draw[arrow] (fbo) -- (td);
+                \draw[arrow] (gi) -- (input);
+                \draw[arrow] ($(dt.north) + (0.0,0.05)$) -| ($(fb.south) - (0.2,0.0)$);
+                \draw[arrow] (ab) -- (fb);
+                \draw[arrow] ($(so.north) + (0.0,0.05)$) -| ($(fb.south) + (0.2,0.0)$);
+            \end{scope}
             % why the below of= does not work with other nodes that are not a fixed one?
-            \begin{scope}[below of=input,xshift=-0.25cm,yshift=-0.7cm,scale=0.7]
+            \begin{scope}[below of=input,xshift=0.7cm,yshift=-0.9cm,scale=0.7]
                 % input points
                 \node[scale=0.35,circle,fill=red] at (0.00,0.00) {};
                 \node[scale=0.35,circle,fill=red] at (0.60,0.25) {};
                 \node[scale=0.35,circle,fill=red] at (0.25,0.75) {};
                 \node[scale=0.35,circle,fill=red] at (1.15,0.95) {};
                 \node[scale=0.35,circle,fill=red] at (1.05,0.45) {};
-                \draw[thick,->] (-0.2,-0.2) -- (+1.25,-0.20);
-                \draw[thick,->] (-0.2,-0.2) -- (-0.20,+1.25);
+                \draw[thick,-{Latex[length=2.0mm]}] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,-{Latex[length=2.0mm]}] (-0.2,-0.2) -- (-0.20,+1.25);
             \end{scope}
-            \begin{scope}[below of=input,xshift=2.00cm,yshift=-0.7cm,scale=0.7]
+            \begin{scope}[below of=input,xshift=3.00cm,yshift=-0.9cm,scale=0.7]
                 % transformed points
                 \node[scale=0.35,circle,fill=blue] at (0.00,0.00) {};
                 \node[scale=0.35,circle,fill=blue] at (0.60,0.25) {};
                 \node[scale=0.35,circle,fill=blue] at (0.25,0.75) {};
                 \node[scale=0.35,circle,fill=red] at (0.95,0.95) {};
                 \node[scale=0.35,circle,fill=red] at (1.25,0.45) {};
-                \draw[thick,->] (-0.2,-0.2) -- (+1.25,-0.20);
-                \draw[thick,->] (-0.2,-0.2) -- (-0.20,+1.25);
+                \draw[thick,-{Latex[length=2.0mm]}] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,-{Latex[length=2.0mm]}] (-0.2,-0.2) -- (-0.20,+1.25);
             \end{scope}
-            \begin{scope}[below of=input,xshift=4.5cm,yshift=-0.7cm,scale=0.7]
+            \begin{scope}[below of=input,xshift=5.75cm,yshift=-0.9cm,scale=0.7]
+                % postprocessing points
+                \draw[thick,-{Latex[length=2.0mm]}] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,-{Latex[length=2.0mm]}] (-0.2,-0.2) -- (-0.20,+1.25);
+            \end{scope}
+            \begin{scope}[below of=input,xshift=6.75cm,yshift=-0.9cm,scale=0.7]
                 % shape assembly
                 \node[scale=0.35,circle,fill=blue] at (2.00,0.00) {};
                 \node[scale=0.35,circle,fill=blue] at (2.60,0.25) {};
@@ -85,14 +102,14 @@
                 \draw[blue,line width=2pt](2.60,0.25) -- (2.25,0.75){};
                 \draw[blue,line width=2pt](2.25,0.75) -- (2.00,0.00){};
                 \draw[red,line width=2pt](2.95,0.95) -- (3.25,0.45){};
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
+                \draw[thick,-{Latex[length=2.0mm]},xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,-{Latex[length=2.0mm]},xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
             \end{scope}
-            \begin{scope}[below of=input,xshift=8cm,yshift=-0.7cm,scale=0.7]
+            \begin{scope}[below of=input,xshift=8.75cm,yshift=-0.9cm,scale=0.7]
                 % grid of pixels
                 \draw[step=5pt,black,xshift=2cm] (0,0) grid (1.59,1.24);
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
+                \draw[thick,-{Latex[length=2.0mm]},xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,-{Latex[length=2.0mm]},xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
                 \filldraw[fill=blue,xshift=2cm] (0*0.175,0*0.175) rectangle (1*0.175,1*0.175);
                 \filldraw[fill=blue,xshift=2cm] (0*0.175,1*0.175) rectangle (1*0.175,2*0.175);
                 \filldraw[fill=blue,xshift=2cm] (0*0.175,2*0.175) rectangle (1*0.175,3*0.175);
@@ -108,11 +125,11 @@
                 \filldraw[fill=red,xshift=2cm] (6*0.175,3*0.175) rectangle (7*0.175,4*0.175);
                 \filldraw[fill=red,xshift=2cm] (7*0.175,2*0.175) rectangle (8*0.175,3*0.175);
             \end{scope}
-            \begin{scope}[below of=input,xshift=11cm,yshift=-0.7cm,scale=0.7]
+            \begin{scope}[below of=input,xshift=11.25cm,yshift=-0.9cm,scale=0.7]
                 % grid of pixels with modified colors
                 \draw[step=5pt,black,xshift=2cm] (0,0) grid (1.59,1.24);
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
-                \draw[thick,->,xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
+                \draw[thick,-{Latex[length=2.0mm]},xshift=2cm] (-0.2,-0.2) -- (+1.25,-0.20);
+                \draw[thick,-{Latex[length=2.0mm]},xshift=2cm] (-0.2,-0.2) -- (-0.20,+1.25);
                 \filldraw[fill=blue!70!green,xshift=2cm] (0*0.175,0*0.175) rectangle (1*0.175,1*0.175);
                 \filldraw[fill=blue!60!green,xshift=2cm] (0*0.175,1*0.175) rectangle (1*0.175,2*0.175);
                 \filldraw[fill=blue!50!green,xshift=2cm] (0*0.175,2*0.175) rectangle (1*0.175,3*0.175);
@@ -130,19 +147,119 @@
             \end{scope}
         \end{tikzpicture}
     \end{customcenter}
-    \begin{enumerate}
-        \setlength\itemsep{0pt}
-        \item \textbf{Vertex Processor}: Transforms vertex position/attributes (color, normal, texture)
-        \item \textbf{Primitive Assembly And Clipping}: Assembles data into primitives (points, lines, triangles)
-        \item \textbf{Rasterizer}: Determine which pixel locations are associated with each primitive
-        \item \textbf{Fragment Processor}: Decides appearance of each fragment (lighting/texture mapping)
-    \end{enumerate}
+    \begin{minipage}[t]{0.3125\textwidth}
+        \colorfulsection{Vertex Processor}
+        \vspace{-10pt}
+        \begin{mdframed}[]
+            \centering{Transforms vertex attributes\\ (position, color, normal, texture)}
+        \end{mdframed}
+        \vspace{-13pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{-2pt}
+            \item Retrieves \textbf{vertex arrays from CPU} via Vertex Array Object (VAO) with\vspace{-4pt}
+            \begin{itemize}[leftmargin=*,label=$\bullet$]
+                \setlength\itemsep{0pt}
+                \item $\substack{\text{Vertex Buffer Object}\\\text{VBO}}$ $\mapsto$ \textbf{geometry}
+                \item $\substack{\text{Index Buffer Object}\\\text{IBO}}$ $\mapsto$ \textbf{topology}
+            \end{itemize}
+            \item Retrieves \textbf{shaders} uniforms
+            \item \textbf{Execution is parallel} for each vertex
+            \item Programmer has \textbf{no knowledge} of order execution
+            \item Output \textbf{must} be in \textbf{normalize device coordinates} (aka \textit{clip coordinates})\vspace{-4pt}
+            \begin{itemize}[leftmargin=*,label=$\bullet$]
+                \setlength\itemsep{0pt}
+                \item Vector in \textbf{homogeneous coordinates} with $\parenthesisA{x,y,z}$ in the range $\bracketA{-1,1}$ (viewing volume)
+                \item Coordinates range can be achieved by \textit{model}$\parenthesisA{\mathbf{M}}$, \textit{view}$\parenthesisA{\mathbf{V}}$, and \textit{projection}$\parenthesisA{\mathbf{P}}$ transformations. 
+            \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \hspace{10pt}
+    \begin{minipage}[t]{0.3125\textwidth}
+        \colorfulsection{Vertex Post Processor}
+        \vspace{-10pt}
+        \begin{mdframed}[]
+            \centering{Geometry tests for vertex data \\ (clipping, perspective division, etc.)}
+        \end{mdframed}
+        \vspace{-13pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{-2pt}
+            \item All primitives in the viewing volume boundary are \textbf{broken into smaller primitives} that are inside the volume (\textbf{clipping})
+            \item \textbf{Perspective division} by $w$
+            \item Vertex is mapped into discrete screen coordinates (\textbf{viewport transformation}) according to the output framebuffer
+        \end{itemize}
+    \end{minipage}
+    \hspace{10pt}
+    \begin{minipage}[t]{0.3125\textwidth}
+        \colorfulsection{Primitive Assembly}
+        \vspace{-10pt}
+        \begin{mdframed}[]
+                \centering{Assembles data into primitives \\ (points, lines, triangles)}
+        \end{mdframed}
+        \vspace{-13pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{-2pt}
+            \item Vertices are made primitives. \textbf{Typically triangles}.
+            \item \textbf{Face culling} is optional\vspace{-4pt}
+            \begin{itemize}[leftmargin=*,label=$\bullet$]
+                \setlength\itemsep{0pt}
+                \item Normal of rendering plane $\mathbf{k}$
+                \item Normal of triangle $\mathbf{n} = \parenthesisA{\mathbf{p}_1 - \mathbf{p}_0}\times\parenthesisA{\mathbf{p}_2 - \mathbf{p}_0}$
+                \item Dot product $\mathbf{n}\cdot\mathbf{k}$ provides direction (\textbf{back} or \textbf{front}) of triangle facing the camera
+            \end{itemize}
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}[t]{0.3125\textwidth}
+        \colorfulsection{Rasterizer}
+        \vspace{-10pt}
+        \begin{mdframed}[]
+                \centering{Maps primitives to pixel locations}
+        \end{mdframed}
+        \vspace{-13pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{-2pt}
+            \item Primitives are rasterized in the \textbf{order given} by previous stage
+            \item Result is a \textbf{fragment}, which are the set of properties to compute the final color of the pixel
+            \item \textbf{Multisampling} is optional and if enabled creates a fragment per sample
+        \end{itemize}
+    \end{minipage}
+    \hspace{10pt}
+    \begin{minipage}[t]{0.3125\textwidth}
+        \colorfulsection{Fragment Processor}
+        \vspace{-10pt}
+        \begin{mdframed}[]
+                \centering{Decides appearance of each fragment \\ (lighting$|$texture mapping)}
+        \end{mdframed}
+        \vspace{-13pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{-2pt}
+            \item \textbf{Execution is parallel} for each fragment$|$sample
+            \item Programmer has \textbf{no knowledge} of order execution
+            \item You can \textbf{discard} a fragment
+            \item Output is \textbf{one color} per each output to the framebuffer expected \textbf{plus depth} and stencil values
+            \item If \textit{fragment shader} is not supplied, color is \textit{undefined}
+        \end{itemize}
+    \end{minipage}
+    \hspace{10pt}
+    \begin{minipage}[t]{0.3125\textwidth}
+        \colorfulsection{Per Fragment$|$Sample Operations}
+        \vspace{-10pt}
+        \begin{mdframed}[]
+                \centering{Check if fragment$|$sample will become a pixel in framebuffer}
+        \end{mdframed}
+        \vspace{-13pt}
+        \begin{itemize}[leftmargin=*,label=$\blacksquare$]
+            \setlength\itemsep{-2pt}
+            \item \textbf{Pixel ownership}: If pixel is not owned by OpenGL context test fails
+            \item \textbf{Scissor}: Fails if pixel is outside a \textbf{user defined rectangle}
+            \item \textbf{Depth}: Pixel depth is compared with one currently in the framebuffer, if less overwrites buffer and test passes, if not fragment is discarded
+            \item \textbf{Blending}: Uses alpha value to perfom transparency
+            \item \textbf{Writing Framebuffer}: You can disable certain channels to not be written into
+        \end{itemize}
+    \end{minipage}
 \end{minipage}
-\emptyline
-\vspace{5pt}
-
+\newpage
 \begin{minipage}[t]{0.485\textwidth}
-    \textbf{Transformations}
+    \colorfulsection{Transformations}
     \begin{customcenter}[5pt]
         \begin{tikzpicture}
             % \draw[step=1cm,black,very thin] (0,0) grid (10,8);
@@ -229,15 +346,17 @@
         }^{c\theta = \cos\theta,\;s\theta = \sin\theta}
     \end{align*}
 \end{minipage}
-\begin{minipage}[t]{0.485\textwidth}    
-    \begin{customcenter}[5pt]
+\hspace{3pt}
+\begin{minipage}[t]{0.485\textwidth}
+    \vspace{-13.5pt}
+    \begin{customcenter}[0pt]
         \begin{tikzpicture}
             \tikzstyle{arrow}=[thick,->,>=stealth]
-            \draw[step=1cm,white,very thin,opacity=0.0] (0,0) grid (10,-15);            
-            \begin{scope}[xshift=-0.25cm]
+            % \draw[step=1cm,black,very thin,opacity=1.0] (0,0) grid (10,-15);            
+            \begin{scope}[xshift=-0.0cm]
                 % boxes
                 \node[rectangle,draw,minimum width=5.75cm,minimum height=9cm,line width=2pt] (descrcoordinates) at (5,-4.05){};
-                \node[yshift=5pt] at (descrcoordinates.north){\textbf{Graphics Coordinate System}};
+                \node[yshift=10pt] at (descrcoordinates.north){\colorfulsection{Graphics Coordinate System}};
                 \node[rectangle,draw=blue,minimum width=4.25cm,minimum height=5cm,line width=1.5pt] (descrhomogeneous) at (5,-3.32){};
                 \node[rotate=-90,yshift=5pt] at (descrhomogeneous.east){Homogeneous};
                 % nodes
@@ -264,14 +383,14 @@
             \node[left of=hocc,yshift=+0.700cm,xshift=-0.52cm] (orthonode) {};
             \draw[arrow] (descrortho.east) |- (orthonode);
             % zfighting
-            \node[xshift=2.45cm,draw,fill=red!40] (descrzfight) at (stop.east) {$z$-fighting};
+            \node[xshift=2.0cm,draw,fill=red!40] (descrzfight) at (stop.east) {$z$-fighting};
             \node[yshift=10pt,above of=descrzfight,fill=orange!40,draw] (descrzfightreason) {$\substack{\text{Caused by}\\\text{floating point}\\\text{precision}}$};
             \node[yshift=11pt,above of=descrzfightreason,fill=green!40,draw] (solzfighting) {$\substack{\text{Possible solutions}\\\bullet\text{ Keep \texttt{near}$|$\texttt{far} close}\\\bullet\text{ Do not compress } z}$};
             \draw[arrow] (stop) -- (descrzfight);
             \draw[arrow] (descrzfight) -- (descrzfightreason);
             \draw[arrow] (descrzfightreason) -- (solzfighting);
             \node[rectangle,draw,minimum width=8cm,minimum height=4.5cm,line width=2pt] (vbobox) at (5.1,-12){};
-            \node[yshift=7pt] at (vbobox.north) {\textbf{VBO Arrangement}};
+            \node[yshift=10pt] at (vbobox.north) {\colorfulsection{VBO Arrangement}};
             \begin{scope}[xshift=1cm,yshift=1cm]
                 \node[] at (2,-11.25) {\textbf{Separate VBO}};
                 \node[rectangle,draw,fill=red!20,minimum width=3cm,minimum height=1cm,line width=1pt] () at (2,-12) {VERTICES};
@@ -289,4 +408,9 @@
             \end{scope}
         \end{tikzpicture}
     \end{customcenter}
+\end{minipage}
+
+\begin{minipage}[t]{0.485\textwidth}
+    \vspace{10pt}
+    \colorfulsection{Lighting}
 \end{minipage}
